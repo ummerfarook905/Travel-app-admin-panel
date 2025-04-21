@@ -1,15 +1,18 @@
 
 
+import { BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
-
+import AppRoutes from './routes/AppRoutes';
 function App() {
   
 
   return (
     <>
-      <div className='flex flex-col items-center justify-center min-h-screen'>
-    <h1>hy team</h1>
-    </div>
+      
+      <Router>
+      
+      <AppRoutes/>
+      </Router>
     </>
   )
 }
