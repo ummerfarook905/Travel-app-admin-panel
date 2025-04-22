@@ -1,44 +1,36 @@
-import { Routes ,Route} from "react-router-dom"
+// AppRoutes.jsx
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/login";
 import Dashboard from "../pages/dashboard";
-
- import NotFound from "../pages/NotFound";
-import ProtectedRoute from "../components/ProtectedRoute";  
+import ProtectedRoute from "../components/ProtectedRoute";
 import RoleBasedRoute from "../components/RoleBasedRoute";
-import { Navigate } from "react-router-dom";
+import NotFound from "../pages/NotFound";
+import Unauthorized from "../pages/Unauthorized";
 
 const AppRoutes = () => {
-    return(
-        <Routes>
+  return (
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/unauthorized" element={<Unauthorized />} />
+      
+      {/* Protected Routes */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <RoleBasedRoute allowedRoles={["admin"]}>
+              <Dashboard />
+            </RoleBasedRoute>
+          </ProtectedRoute>
+        }
+      />
 
-             {/* Redirect root path to /login */}
-      <Route path="/" element={<Navigate to="/login" />} />
+      {/* Redirects */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
 
-            {/* PUBLIC ROUTE */}
-            <Route path="/login" element={<Login/>} />
-
-
-
-            {/* PROTECTED ROUTE */}
-            <Route path="/dashboard" element={
-               <ProtectedRoute>
-               <RoleBasedRoute allowedRoles={["admin"]}>
-                 <Dashboard />
-               </RoleBasedRoute>
-             </ProtectedRoute>
-            } />
-
-          
-            {/* 404 PAGE */}
-            <Route path="*" element={<NotFound />} />
-
-
-          
-          
-            
-
-
-        </Routes>
-    )
-}
-export default AppRoutes
+export default AppRoutes;
