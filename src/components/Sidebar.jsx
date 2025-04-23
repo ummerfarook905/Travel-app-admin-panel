@@ -1,4 +1,15 @@
 import { NavLink } from "react-router-dom";
+import { 
+  FiUsers, 
+  FiClock, 
+  FiCheckCircle, 
+  FiMapPin, 
+  FiStar,
+  FiBookmark,
+  FiCalendar
+} from "react-icons/fi";
+import { BiHomeAlt } from "react-icons/bi";
+import { FaHotel, FaUmbrellaBeach } from "react-icons/fa";
 
 export default function Sidebar() {
   return (
@@ -9,13 +20,14 @@ export default function Sidebar() {
           <NavLink
             to="/dashboard"
             className={({ isActive }) =>
-              `block p-2 rounded transition-colors duration-200 ${
+              `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive
-           ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-           : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
               }`
             }
           >
+            <BiHomeAlt className="mr-3 text-lg" />
             Dashboard
           </NavLink>
         </li>
@@ -23,113 +35,120 @@ export default function Sidebar() {
           <NavLink
             to="/users"
             className={({ isActive }) =>
-              `block p-2 rounded transition-colors duration-200 ${
+              `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive
-           ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-           : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
               }`
             }
           >
-            
+            <FiUsers className="mr-3 text-lg" />
             Users
           </NavLink>
         </li>
         <li className="mb-2">
           <NavLink
-            to="*"
+            to="/pending-adventures"
             className={({ isActive }) =>
-              `block p-2 rounded transition-colors duration-200 ${
+              `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive
-           ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-           : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
               }`
             }
           >
-           Pending Adventures
+            <FiClock className="mr-3 text-lg" />
+            Pending Adventures
           </NavLink>
         </li>
         <li className="mb-2">
           <NavLink
-            to="*"
+            to="/verified-adventures"
             className={({ isActive }) =>
-              `block p-2 rounded transition-colors duration-200 ${
+              `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive
-           ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-           : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
               }`
             }
           >
+            <FiCheckCircle className="mr-3 text-lg" />
             Verified Adventures
           </NavLink>
         </li>
         <li className="mb-2">
           <NavLink
-            to="*"
+            to="/destinations"
             className={({ isActive }) =>
-              `block p-2 rounded transition-colors duration-200 ${
+              `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive
-           ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-           : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
               }`
             }
           >
-           Destinations
+            <FiMapPin className="mr-3 text-lg" />
+            Destinations
           </NavLink>
         </li>
         <li className="mb-2">
           <NavLink
-            to="*"
+            to="/pending-hotels"
             className={({ isActive }) =>
-              `block p-2 rounded transition-colors duration-200 ${
+              `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive
-           ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-           : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
               }`
             }
           >
+            <FaHotel className="mr-3 text-lg" />
             Pending Hotels
           </NavLink>
         </li>
         <li className="mb-2">
           <NavLink
-            to="*"
+            to="/verified-hotels"
             className={({ isActive }) =>
-              `block p-2 rounded transition-colors duration-200 ${
+              `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive
-           ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-           : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
               }`
             }
           >
-          Verified Hotels
+            <FiStar className="mr-3 text-lg" />
+            Verified Hotels
           </NavLink>
         </li>
         <li className="mb-2">
           <NavLink
-            to="*"
+            to="/hotel-bookings"
             className={({ isActive }) =>
-              `block p-2 rounded transition-colors duration-200 ${
+              `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive
-           ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-           : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
               }`
             }
           >
-           Hotel Bookings
+            <FiBookmark className="mr-3 text-lg" />
+            Hotel Bookings
           </NavLink>
         </li>
         <li className="mb-2">
           <NavLink
-            to="*"
+            to="/adventure-bookings"
             className={({ isActive }) =>
-              `block p-2 rounded transition-colors duration-200 ${
+              `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive
-           ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-           : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
               }`
             }
           >
-           Adventures Bookings
+            <FaUmbrellaBeach className="mr-3 text-lg" />
+            Adventures Bookings
           </NavLink>
         </li>
       </ul>
