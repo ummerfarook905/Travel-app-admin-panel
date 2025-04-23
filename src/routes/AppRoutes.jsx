@@ -1,47 +1,44 @@
-import { Routes ,Route} from "react-router-dom"
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Login from "../pages/login";
 import Signup from "../pages/Signup";
-
-import Dashboard from "../pages/dashboard";
-
- import NotFound from "../pages/NotFound";
-import ProtectedRoute from "../components/ProtectedRoute";  
+import Dashboard from "../pages/DashBoard";
+import Users from "../pages/Users";
+import NotFound from "../pages/NotFound";
+import ProtectedRoute from "../components/ProtectedRoute";
 import RoleBasedRoute from "../components/RoleBasedRoute";
-import { Navigate } from "react-router-dom";
+import DashboardLayout from "../Layouts/DashboardLayout";
+
+// Protected Layout Wrapper
+const ProtectedLayout = () => (
+  <ProtectedRoute>
+    <RoleBasedRoute allowedRoles={["admin"]}>
+      <DashboardLayout>
+        <Outlet /> {/* This renders the nested routes */}
+      </DashboardLayout>
+    </RoleBasedRoute>
+  </ProtectedRoute>
+);
 
 const AppRoutes = () => {
-    return(
-        <Routes>
-
-             {/* Redirect root path to /login */}
+  return (
+    <Routes>
+      {/* Redirect root path to /login */}
       <Route path="/" element={<Navigate to="/login" />} />
 
-            {/* PUBLIC ROUTE */}
-            <Route path="/login" element={<Login/>} />
-            <Route path="/signup" element={<Signup/>} />
+      {/* PUBLIC ROUTES */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
 
+      {/* PROTECTED ROUTES */}
+      <Route element={<ProtectedLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/users" element={<Users />} />
+      </Route>
 
+      {/* 404 PAGE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
 
-            {/* PROTECTED ROUTE */}
-            <Route path="/dashboard" element={
-               <ProtectedRoute>
-               <RoleBasedRoute allowedRoles={["admin"]}>
-                 <Dashboard />
-               </RoleBasedRoute>
-             </ProtectedRoute>
-            } />
-
-          
-            {/* 404 PAGE */}
-            <Route path="*" element={<NotFound />} />
-
-
-          
-          
-            
-
-
-        </Routes>
-    )
-}
-export default AppRoutes
+export default AppRoutes;
