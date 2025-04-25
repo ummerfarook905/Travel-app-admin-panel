@@ -1,14 +1,16 @@
+// ProtectedRoute.jsx
 import { Navigate } from "react-router-dom";
-import { isAuthenticated } from "../utils/auth";
+import { useAuth } from "../context/AuthContext";
+import LoadingSpinner from "./LoadingSpinner";
 
 const ProtectedRoute = ({ children }) => {
-    // If not authenticated, redirect to login
-    if (!isAuthenticated()) {
-        return <Navigate to="/login" replace />;
-    }
+  const { isAuthenticated, isLoading } = useAuth();
 
-    // Otherwise, render children
-    return children;
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;
