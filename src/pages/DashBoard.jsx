@@ -1,39 +1,29 @@
-// src/pages/dashboard.jsx
-import { useAuth } from "../context/AuthContext";
+import StatsCard from "../components/StatsCard";
+import { FiUsers, FiMapPin } from "react-icons/fi";
+import { FaUmbrellaBeach, FaHotel } from "react-icons/fa";
+import RightSidebar from "../components/RightSidebar";
 
-const Dashboard = () => {
-  const { user, logout } = useAuth();
+export default function Dashboard() {
+  const stats = [
+    { title: "Users", value: "932", icon: <FiUsers className="text-2xl" /> },
+    { title: "Destinations", value: "754", icon: <FiMapPin className="text-2xl" /> },
+    { title: "Hotels", value: "40", icon: <FaHotel className="text-2xl" /> },
+    { title: "Adventures", value: "32K", icon: <FaUmbrellaBeach className="text-2xl" /> },
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-          <button
-            onClick={logout}
-            className="bg-[#00493E] text-white px-4 py-2 rounded hover:bg-[#006B56] transition-colors"
-          >
-            Logout
-          </button>
+    <div className="flex h-screen">
+      {/* Main Content - takes remaining space */}
+      <div className="flex-1 overflow-y-auto p-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {stats.map((stat, index) => (
+            <StatsCard key={index} {...stat} />
+          ))}
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main>
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">
-              Welcome Admin{user?.email && `, ${user.email}`}!
-            </h2>
-            <p className="text-gray-600">
-              You have successfully accessed the admin dashboard.
-            </p>
-          </div>
-        </div>
-      </main>
+      </div>
+      
+      {/* Right Sidebar - fixed width, no gap */}
+      <RightSidebar />
     </div>
   );
-};
-
-export default Dashboard;
+}

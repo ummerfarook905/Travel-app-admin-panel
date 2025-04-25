@@ -1,33 +1,41 @@
-// AppRoutes.jsx
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Login from "../pages/login";
-import Dashboard from "../pages/dashboard";
+import Signup from "../pages/Signup";
+import Dashboard from "../pages/DashBoard";
+import Users from "../pages/Users";
+import NotFound from "../pages/NotFound";
 import ProtectedRoute from "../components/ProtectedRoute";
 import RoleBasedRoute from "../components/RoleBasedRoute";
-import NotFound from "../pages/NotFound";
-import Unauthorized from "../pages/Unauthorized";
+import DashboardLayout from "../Layouts/DashboardLayout";
+
+// Protected Layout Wrapper
+const ProtectedLayout = () => (
+  <ProtectedRoute>
+    <RoleBasedRoute allowedRoles={["admin"]}>
+      <DashboardLayout>
+        <Outlet /> {/* This renders the nested routes */}
+      </DashboardLayout>
+    </RoleBasedRoute>
+  </ProtectedRoute>
+);
 
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/unauthorized" element={<Unauthorized />} />
-      
-      {/* Protected Routes */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <RoleBasedRoute allowedRoles={["admin"]}>
-              <Dashboard />
-            </RoleBasedRoute>
-          </ProtectedRoute>
-        }
-      />
+      {/* Redirect root path to /login */}
+      <Route path="/" element={<Navigate to="/login" />} />
 
-      {/* Redirects */}
+      {/* PUBLIC ROUTES */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+
+      {/* PROTECTED ROUTES */}
+      <Route element={<ProtectedLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/users" element={<Users />} />
+      </Route>
+
+      {/* 404 PAGE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
