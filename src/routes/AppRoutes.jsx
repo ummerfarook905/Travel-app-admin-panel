@@ -9,6 +9,7 @@ import RoleBasedRoute from "../components/RoleBasedRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import UserForm from "../components/UserForm";
 import Pending_Adventures from "../pages/Pending_Adventures";
+import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -38,6 +39,8 @@ const AppRoutes = () => {
         <Route path="/users/new" element={<UserForm/> }/>
         <Route path="/users/edit/:id" element={<UserForm />} />
         <Route path="/pending_adventures" element={<Pending_Adventures/>} />
+        <Route path="/pending-adventures" element={<Pending_Adventures />} />
+        <Route path="/pending-adventures/:id" element={<DetailedPending_Adventures />} />
 
       </Route>
 

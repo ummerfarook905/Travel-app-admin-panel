@@ -27,7 +27,7 @@ export default function Sidebar() {
   const navItems = [
     { to: "/dashboard", icon: <BiHomeAlt className="mr-3 text-lg" />, text: "Dashboard" },
     { to: "/users", icon: <FiUsers className="mr-3 text-lg" />, text: "Users" },
-    { to: "/pending_adventures", icon: <FiClock className="mr-3 text-lg" />, text: "Pending Adventures" },
+    { to: "/pending-adventures", icon: <FiClock className="mr-3 text-lg" />, text: "Pending Adventures" },
     { to: "/verified-adventures", icon: <FiCheckCircle className="mr-3 text-lg" />, text: "Verified Adventures" },
     { to: "/destinations", icon: <FiMapPin className="mr-3 text-lg" />, text: "Destinations" },
     { to: "/pending-hotels", icon: <FaHotel className="mr-3 text-lg" />, text: "Pending Hotels" },
