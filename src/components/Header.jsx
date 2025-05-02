@@ -11,6 +11,8 @@ const pageTitles = {
   "/dashboard": "Dashboard Overview",
   "/users": "User Management",
   "/pending-adventures": "Pending Adventures",
+  "/pending-adventures/:id": "Pending Adventures",
+
   "/profile": "My Profile",
   "/settings": "Settings",
 
@@ -20,8 +22,13 @@ const pageTitles = {
 const Header = ({ toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
-  const title = pageTitles[currentPath] || "Admin Panel";
+  const getTitle = (path) => {
+    if (path.startsWith("/pending-adventures/")) return "Pending Adventures";
+    return pageTitles[path] || "Admin Panel";
+  };
   
+  const title = getTitle(currentPath);
+    
   const [notifications, setNotifications] = useState([
     { id: 1, message: "New booking received", time: "10 mins ago", read: false },
     { id: 2, message: "System update available", time: "1 hour ago", read: false },
