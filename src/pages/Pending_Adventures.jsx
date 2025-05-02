@@ -1,4 +1,4 @@
-// src/pages/Pending_Adventures.js
+// src/pages/Pending_Adventures.jsx
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
