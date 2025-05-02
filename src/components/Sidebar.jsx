@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { 
   FiUsers, 
@@ -6,152 +7,89 @@ import {
   FiMapPin, 
   FiStar,
   FiBookmark,
-  FiCalendar
+  FiX,
+  FiMenu
 } from "react-icons/fi";
 import { BiHomeAlt } from "react-icons/bi";
 import { FaHotel, FaUmbrellaBeach } from "react-icons/fa";
 
 export default function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
+
+  const navItems = [
+    { to: "/dashboard", icon: <BiHomeAlt className="mr-3 text-lg" />, text: "Dashboard" },
+    { to: "/users", icon: <FiUsers className="mr-3 text-lg" />, text: "Users" },
+    { to: "/pending_adventures", icon: <FiClock className="mr-3 text-lg" />, text: "Pending Adventures" },
+    { to: "/verified-adventures", icon: <FiCheckCircle className="mr-3 text-lg" />, text: "Verified Adventures" },
+    { to: "/destinations", icon: <FiMapPin className="mr-3 text-lg" />, text: "Destinations" },
+    { to: "/pending-hotels", icon: <FaHotel className="mr-3 text-lg" />, text: "Pending Hotels" },
+    { to: "/verified-hotels", icon: <FiStar className="mr-3 text-lg" />, text: "Verified Hotels" },
+    { to: "/hotel-bookings", icon: <FiBookmark className="mr-3 text-lg" />, text: "Hotel Bookings" },
+    { to: "/adventure-bookings", icon: <FaUmbrellaBeach className="mr-3 text-lg" />, text: "Adventures Bookings" }
+  ];
+
   return (
-    <div className="bg-[#00493E] text-white w-64 min-h-screen p-4">
-      <h1 className="text-2xl font-bold mb-8">A Travel App</h1>
-      <ul>
-        <li className="mb-2">
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              `flex items-center p-2 rounded transition-colors duration-200 ${
-                isActive
-                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-              }`
-            }
-          >
-            <BiHomeAlt className="mr-3 text-lg" />
-            Dashboard
-          </NavLink>
-        </li>
-        <li className="mb-2">
-          <NavLink
-            to="/users"
-            className={({ isActive }) =>
-              `flex items-center p-2 rounded transition-colors duration-200 ${
-                isActive
-                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-              }`
-            }
-          >
-            <FiUsers className="mr-3 text-lg" />
-            Users
-          </NavLink>
-        </li>
-        <li className="mb-2">
-          <NavLink
-            to="/pending_adventures"
-            className={({ isActive }) =>
-              `flex items-center p-2 rounded transition-colors duration-200 ${
-                isActive
-                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-              }`
-            }
-          >
-            <FiClock className="mr-3 text-lg" />
-            Pending Adventures
-          </NavLink>
-        </li>
-        <li className="mb-2">
-          <NavLink
-            to="/verified-adventures"
-            className={({ isActive }) =>
-              `flex items-center p-2 rounded transition-colors duration-200 ${
-                isActive
-                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-              }`
-            }
-          >
-            <FiCheckCircle className="mr-3 text-lg" />
-            Verified Adventures
-          </NavLink>
-        </li>
-        <li className="mb-2">
-          <NavLink
-            to="/destinations"
-            className={({ isActive }) =>
-              `flex items-center p-2 rounded transition-colors duration-200 ${
-                isActive
-                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-              }`
-            }
-          >
-            <FiMapPin className="mr-3 text-lg" />
-            Destinations
-          </NavLink>
-        </li>
-        <li className="mb-2">
-          <NavLink
-            to="/pending-hotels"
-            className={({ isActive }) =>
-              `flex items-center p-2 rounded transition-colors duration-200 ${
-                isActive
-                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-              }`
-            }
-          >
-            <FaHotel className="mr-3 text-lg" />
-            Pending Hotels
-          </NavLink>
-        </li>
-        <li className="mb-2">
-          <NavLink
-            to="/verified-hotels"
-            className={({ isActive }) =>
-              `flex items-center p-2 rounded transition-colors duration-200 ${
-                isActive
-                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-              }`
-            }
-          >
-            <FiStar className="mr-3 text-lg" />
-            Verified Hotels
-          </NavLink>
-        </li>
-        <li className="mb-2">
-          <NavLink
-            to="/hotel-bookings"
-            className={({ isActive }) =>
-              `flex items-center p-2 rounded transition-colors duration-200 ${
-                isActive
-                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-              }`
-            }
-          >
-            <FiBookmark className="mr-3 text-lg" />
-            Hotel Bookings
-          </NavLink>
-        </li>
-        <li className="mb-2">
-          <NavLink
-            to="/adventure-bookings"
-            className={({ isActive }) =>
-              `flex items-center p-2 rounded transition-colors duration-200 ${
-                isActive
-                  ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                  : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-              }`
-            }
-          >
-            <FaUmbrellaBeach className="mr-3 text-lg" />
-            Adventures Bookings
-          </NavLink>
-        </li>
-      </ul>
-    </div>
+    <>
+      {/* Mobile toggle button */}
+      <button
+        onClick={toggleSidebar}
+        className="md:hidden fixed top-4 left-4 z-50 bg-[#00493E] text-white p-2 rounded-md"
+      >
+        <FiMenu size={24} />
+      </button>
+
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0  bg-opacity-50 z-40 md:hidden"
+          onClick={closeSidebar}
+        ></div>
+      )}
+
+      {/* Sidebar */}
+      <div
+        className={`bg-[#00493E] text-white w-64 min-h-screen p-4 fixed md:relative z-50 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        }`}
+      >
+        {/* Close button inside sidebar */}
+        <button
+          onClick={closeSidebar}
+          className="md:hidden absolute top-4 right-4 text-white hover:text-gray-200"
+        >
+          <FiX size={24} />
+        </button>
+
+        <h1 className="text-2xl font-bold mb-8 mt-2">A Travel App</h1>
+        <ul>
+          {navItems.map((item, index) => (
+            <li key={index} className="mb-2">
+              <NavLink
+                to={item.to}
+                className={({ isActive }) =>
+                  `flex items-center p-2 rounded transition-colors duration-200 ${
+                    isActive
+                      ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
+                      : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
+                  }`
+                }
+                onClick={closeSidebar}
+              >
+                {item.icon}
+                {item.text}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
