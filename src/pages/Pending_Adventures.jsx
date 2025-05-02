@@ -22,14 +22,16 @@ const Pending_Adventures = () => {
       phone: '+1 234 567 890',
       email: 'kayaking@example.com',
       username: 'kayakPro',
-      description: 'Explore the crystal-clear waters of Lake Tahoe with expert kayaking guides.',
+      description: `Explore the crystal-clear waters of Lake Tahoe with expert kayaking guides.
+  Experience the serene beauty of the surrounding mountains while paddling in calm waters.
+  Perfect for both beginners and seasoned adventurers seeking outdoor thrills.`,
       price: '45',
       coverImage: "https://images.unsplash.com/photo-1501785888041-af3e28568cce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Lake+Tahoe,CA&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CLake+Tahoe,CA&key=YOUR_API_KEY",
       images: [
-        "https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80", // Kayaking
-        "https://images.unsplash.com/photo-1470114716159-e389f8712fda?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80", // Lake
-        "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"  // Paddles
+        "https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+        "https://images.unsplash.com/photo-1470114716159-e389f8712fda?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+        "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
       ]
     },
     {
@@ -41,14 +43,16 @@ const Pending_Adventures = () => {
       phone: '+91 98765 43210',
       email: 'paraglide@adventure.com',
       username: 'skyRider',
-      description: 'Fly high above the coast of Varkala and enjoy an adrenaline rush like no other!',
+      description: `Fly high above the coast of Varkala and enjoy an adrenaline rush like no other!
+  Capture stunning aerial views of the Arabian Sea as you glide over scenic cliffs.
+  Our certified instructors ensure a safe and thrilling paragliding experience.`,
       price: '60',
       coverImage: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Varkala,Kerala&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CVarkala,Kerala&key=YOUR_API_KEY",
       images: [
-        "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80", // Paragliding
-        "https://images.unsplash.com/photo-1505228395891-9a51e5e8bf86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80", // Cliff view
-        "https://images.unsplash.com/photo-1504609773096-104ff2c73ca4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"  // Sunset
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+        "https://images.unsplash.com/photo-1505228395891-9a51e5e8bf86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+        "https://images.unsplash.com/photo-1504609773096-104ff2c73ca4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
       ]
     },
     {
@@ -60,18 +64,20 @@ const Pending_Adventures = () => {
       phone: '+41 123 456 789',
       email: 'hiking@alps.com',
       username: 'alpineExplorer',
-      description: 'Challenging hikes through breathtaking alpine landscapes with experienced guides.',
+      description: `Challenging hikes through breathtaking alpine landscapes with experienced guides.
+  Discover hidden trails, glacial valleys, and panoramic mountain views along the way.
+  An unforgettable journey for nature lovers and adventure seekers alike.`,
       price: '75',
       coverImage: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Swiss+Alps&zoom=8&size=600x400&maptype=terrain&markers=color:red%7CSwiss+Alps&key=YOUR_API_KEY",
       images: [
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80", // Mountains
-        "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80", // Hiking trail
-        "https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"  // Summit
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+        "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+        "https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
       ]
     }
   ];
-
+  
   const handleApprove = (adventure) => {
     console.log('Approving:', adventure);
     // API call to approve adventure
