@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import StatsCard from "../components/StatsCard";
-import { FiUsers, FiMapPin } from "react-icons/fi";
+import { FiUsers, FiMapPin, FiSidebar } from "react-icons/fi";
 import { FaUmbrellaBeach, FaHotel } from "react-icons/fa";
 import RightSidebar from "../components/RightSidebar";
 
 export default function Dashboard() {
+  const [showRightSidebar, setShowRightSidebar] = useState(false);
   const stats = [
     { title: "Users", value: "932", icon: <FiUsers className="text-2xl" /> },
     { title: "Destinations", value: "754", icon: <FiMapPin className="text-2xl" /> },
@@ -12,18 +14,33 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="flex h-screen">
-      {/* Main Content - takes remaining space */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {stats.map((stat, index) => (
-            <StatsCard key={index} {...stat} />
-          ))}
+    <div className="flex h-full">
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold text-[#00493E]">Dashboard Overview</h1>
+            {/* Show Sidebar Button - Only on mobile */}
+            <button 
+              onClick={() => setShowRightSidebar(true)}
+              className="md:hidden flex items-center gap-2 bg-[#00493E] text-white px-3 py-2 rounded-lg"
+            >
+              <FiSidebar />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            {stats.map((stat, index) => (
+              <StatsCard key={index} {...stat} />
+            ))}
+          </div>
         </div>
       </div>
       
-      {/* Right Sidebar - fixed width, no gap */}
-      <RightSidebar />
+      <RightSidebar 
+        isOpen={showRightSidebar} 
+        onClose={() => setShowRightSidebar(false)}
+      />
     </div>
   );
 }
