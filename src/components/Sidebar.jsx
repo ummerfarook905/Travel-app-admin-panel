@@ -48,7 +48,7 @@ export default function Sidebar() {
         </li>
         <li className="mb-2">
           <NavLink
-            to="/pending-adventures"
+            to="/pending_adventures"
             className={({ isActive }) =>
               `flex items-center p-2 rounded transition-colors duration-200 ${
                 isActive

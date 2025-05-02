@@ -8,6 +8,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import RoleBasedRoute from "../components/RoleBasedRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import UserForm from "../components/UserForm";
+import Pending_Adventures from "../pages/Pending_Adventures";
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -36,6 +37,8 @@ const AppRoutes = () => {
         <Route path="/users" element={<Users />} />
         <Route path="/users/new" element={<UserForm/> }/>
         <Route path="/users/edit/:id" element={<UserForm />} />
+        <Route path="/pending_adventures" element={<Pending_Adventures/>} />
+
       </Route>
 
       {/* 404 PAGE */}
