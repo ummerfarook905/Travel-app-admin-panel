@@ -5,6 +5,8 @@ import { FaUserCircle } from "react-icons/fa";
 const pageTitles = {
   "/dashboard": "Dashboard Overview",
   "/users": "User Management",
+  "/pending_adventures": "Pending Adventures",
+
   "/settings": "System Settings"
 };
 
