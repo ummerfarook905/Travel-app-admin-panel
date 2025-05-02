@@ -10,7 +10,11 @@ import ProfileDropdown from "./ProfileDropdown";
 const pageTitles = {
   "/dashboard": "Dashboard Overview",
   "/users": "User Management",
-  // ... other paths
+  "/pending-adventures": "pending Adventures",
+  "/profile": "My Profile",
+  "/settings": "Settings",
+
+
 };
 
 const Header = ({ toggleSidebar }) => {
@@ -57,8 +61,8 @@ const Header = ({ toggleSidebar }) => {
   }, []);
 
   return (
-    <header className="bg-white shadow-sm p-4 flex items-center justify-between relative">
-      {/* Left Section */}
+<header className="bg-white shadow-sm p-4 flex items-center justify-between relative">
+{/* Left Section */}
       <div className="flex items-center space-x-4">
         <button 
           onClick={toggleSidebar}
