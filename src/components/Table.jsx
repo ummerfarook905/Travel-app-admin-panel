@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Table = ({ 
   headers, 
@@ -6,13 +7,25 @@ const Table = ({
   onEdit, 
   onDelete,
   idColor = "text-[#00493E]",
-  nameAsLink = false
+  nameAsLink = false,
+  onNameClick // Add this new prop
 }) => {
   const [activeMenu, setActiveMenu] = useState(null);
+  const navigate = useNavigate();
 
   const toggleMenu = (rowIndex, e) => {
     e.stopPropagation();
     setActiveMenu(activeMenu === rowIndex ? null : rowIndex);
+  };
+
+  const handleNameClick = (row, e) => {
+    e.preventDefault();
+    if (onNameClick) {
+      onNameClick(row);
+    } else {
+      // Default behavior if no onNameClick provided
+      navigate(`/adventures/${row.id}`);
+    }
   };
 
   return (
@@ -47,13 +60,13 @@ const Table = ({
                       header.key === 'id' ? idColor : 'text-gray-900'
                     }`}
                   >
-                    {nameAsLink && colIndex === 0 ? (
-                      <a 
-                        href={`/adventures/${cellData.toLowerCase().replace(/\s+/g, '-')}`}
+                    {nameAsLink && header.key === 'name' ? (
+                      <button
+                        onClick={(e) => handleNameClick(row, e)}
                         className="text-blue-600 hover:text-blue-800 hover:underline"
                       >
                         {cellContent}
-                      </a>
+                      </button>
                     ) : cellContent}
                   </td>
                 );
