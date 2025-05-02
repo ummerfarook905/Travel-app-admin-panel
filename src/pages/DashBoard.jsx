@@ -18,7 +18,7 @@ export default function Dashboard() {
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto">
         <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-end mb-6"> {/* Changed to justify-end */}
             {/* Show Sidebar Button - Only on mobile */}
             <button 
               onClick={() => setShowRightSidebar(true)}

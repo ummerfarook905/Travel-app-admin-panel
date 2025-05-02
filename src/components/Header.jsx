@@ -10,7 +10,7 @@ import ProfileDropdown from "./ProfileDropdown";
 const pageTitles = {
   "/dashboard": "Dashboard Overview",
   "/users": "User Management",
-  "/pending-adventures": "pending Adventures",
+  "/pending-adventures": "Pending Adventures",
   "/profile": "My Profile",
   "/settings": "Settings",
 
