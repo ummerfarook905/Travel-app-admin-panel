@@ -9,8 +9,7 @@ const Pending_Adventures = () => {
     { key: 'id', label: 'ID' },
     { key: 'joined', label: 'Joined on' },
     { key: 'updated', label: 'Updated On' },
-    { key: 'location', label: 'Location' },
-    { key: 'action', label: 'Action' }
+    { key: 'location', label: 'Location' }
   ];
   
   const data = [
@@ -72,32 +71,54 @@ const Pending_Adventures = () => {
       ]
     }
   ];
-  
 
-  const handleEdit = (adventure) => {
-    console.log('Editing:', adventure);
+  const handleApprove = (adventure) => {
+    console.log('Approving:', adventure);
+    // API call to approve adventure
+    // alert(`Adventure ${adventure.id} approved!`);
+    // Then refresh data or update local state
   };
 
-  const handleDelete = (adventure) => {
-    console.log('Deleting:', adventure);
+  const handleReject = (adventure) => {
+    console.log('Rejecting:', adventure);
+    // API call to reject adventure
+    // alert(`Adventure ${adventure.id} rejected!`);
+    // Then refresh data or update local state
   };
 
-  const handleNameClick = (adventure) => {
+  const handleViewDetails = (adventure) => {
     const urlId = adventure.id.replace('#', '');
     navigate(`/pending-adventures/${urlId}`, { 
       state: { adventure } 
     });
   };
 
+  // Define custom actions for pending adventures
+  const actions = [
+    {
+      label: 'Approve',
+      variant: 'success',
+      handler: handleApprove
+    },
+    {
+      label: 'Reject',
+      variant: 'danger',
+      handler: handleReject
+    },
+    {
+      label: 'View Details',
+      handler: handleViewDetails
+    }
+  ];
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <Table 
         headers={headers}
         rows={data}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onNameClick={handleNameClick}
+        actions={actions}
         nameAsLink={true}
+        onNameClick={handleViewDetails}
       />
     </div>
   );
