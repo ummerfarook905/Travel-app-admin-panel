@@ -9,6 +9,14 @@ import RoleBasedRoute from "../components/RoleBasedRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Pending_Adventures from "../pages/Pending_Adventures";
 import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
+// import VerifiedAdventures from "../pages/VerifiedAdventures";
+// import Destinations from "../pages/Destinations";
+// import PendingHotels from "../pages/PendingHotels";
+// import VerifiedHotels from "../pages/VerifiedHotels";
+// import HotelBookings from "../pages/HotelBookings";
+// import AdventureBookings from "../pages/AdventureBookings";
+import Settings from "../pages/Settings";
+import Profile from "../pages/Profile";
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -33,11 +41,31 @@ const AppRoutes = () => {
 
       {/* PROTECTED ROUTES */}
       <Route element={<ProtectedLayout />}>
+        {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
+        
+        {/* User Management */}
         <Route path="/users" element={<Users />} />
+        
+        {/* Adventures */}
         <Route path="/pending-adventures" element={<Pending_Adventures />} />
         <Route path="/pending-adventures/:id" element={<DetailedPending_Adventures />} />
-
+        {/* <Route path="/verified-adventures" element={<VerifiedAdventures />} /> */}
+        
+        {/* Destinations */}
+        {/* <Route path="/destinations" element={<Destinations />} /> */}
+        
+        {/* Hotels */}
+        {/* <Route path="/pending-hotels" element={<PendingHotels />} /> */}
+        {/* <Route path="/verified-hotels" element={<VerifiedHotels />} /> */}
+        
+        {/* Bookings */}
+        {/* <Route path="/hotel-bookings" element={<HotelBookings />} /> */}
+        {/* <Route path="/adventure-bookings" element={<AdventureBookings />} /> */}
+        
+        {/* Settings & Profile */}
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
 
       {/* 404 PAGE */}
