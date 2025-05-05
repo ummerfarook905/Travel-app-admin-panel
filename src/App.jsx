@@ -5,15 +5,17 @@ import { AuthProvider } from './context/AuthContext';
 
 import { UserProvider } from './context/UserContext';
 
+import { AdventuresProvider } from './context/AdventuresContext';
+
 function App() {
   return (
     <>
       <Router>
-      <AuthProvider>
-      <UserProvider>
-      <AppRoutes/>
-      </UserProvider>
-      </AuthProvider>
+        <AuthProvider>
+          <AdventuresProvider>
+            <AppRoutes/>
+          </AdventuresProvider>
+        </AuthProvider>
       </Router>
     </>
   )
