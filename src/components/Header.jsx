@@ -12,7 +12,8 @@ const pageTitles = {
   "/users": "User Management",
   "/pending-adventures": "Pending Adventures",
   "/pending-adventures/:id": "Pending Adventures",
-
+  "/verified-adventures":"Varified Adventures",
+  "/verified-adventures/:id": "Varified Adventures",
   "/profile": "My Profile",
   "/settings": "Settings",
 
@@ -24,6 +25,7 @@ const Header = ({ toggleSidebar }) => {
   const currentPath = location.pathname;
   const getTitle = (path) => {
     if (path.startsWith("/pending-adventures/")) return "Pending Adventures";
+    if (path.startsWith("/verified-adventures/")) return "Varified Adventures";
     return pageTitles[path] || "Admin Panel";
   };
   
