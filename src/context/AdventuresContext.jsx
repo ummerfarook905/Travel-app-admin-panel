@@ -133,7 +133,46 @@ const initialState = {
         ]
       }
       
-    // ... other verified adventures
+
+  ],
+    //  Bookings
+  bookings: [
+    {
+      id: 'book#1',
+      adventureId: '#ADV12345', // matches Kayaking adventure
+      adventureName: 'Kayaking',
+      userName: 'Alex Johnson',
+      userEmail: 'alex@example.com',
+      checkIn: '2023-06-15',
+      checkOut: '2023-06-17',
+      price: 135, // 3 days × $45
+      status: 'confirmed',
+      guests: 2
+    },
+    {
+      id: 'book#2',
+      adventureId: '#ADV86420', // matches Northern Lights Tour
+      adventureName: 'Northern Lights Tour',
+      userName: 'Sarah Miller',
+      userEmail: 'sarah@example.com',
+      checkIn: '2023-12-10',
+      checkOut: '2023-12-12',
+      price: 220, // 2 days × $110
+      status: 'confirmed',
+      guests: 1
+    },
+    {
+      id: 'book#3',
+      adventureId: '#ADV24680', // matches Mountain Hiking
+      adventureName: 'Mountain Hiking',
+      userName: 'David Wilson',
+      userEmail: 'david@example.com',
+      checkIn: '2023-07-05',
+      checkOut: '2023-07-10',
+      price: 375, // 5 days × $75
+      status: 'pending',
+      guests: 3
+    }
   ]
 };
 
@@ -168,10 +207,34 @@ const adventureReducer = (state, action) => {
         ...state,
         verified: state.verified.filter(a => a.id !== action.payload.id)
       };
+    case 'CANCEL_BOOKING':
+      return {
+        ...state,
+        bookings: state.bookings.map(booking => 
+          booking.id === action.payload.id 
+            ? { ...booking, status: 'cancelled' } 
+            : booking
+        )
+      };
+    case 'CONFIRM_BOOKING':
+      return {
+        ...state,
+        bookings: state.bookings.map(booking => 
+          booking.id === action.payload.id 
+            ? { ...booking, status: 'confirmed' } 
+            : booking
+        )
+      };
+    case 'DELETE_BOOKING':
+      return {
+        ...state,
+        bookings: state.bookings.filter(booking => booking.id !== action.payload.id)
+      };
     default:
       return state;
   }
 };
+
 
 export const AdventuresProvider = ({ children }) => {
   const [state, dispatch] = useReducer(adventureReducer, initialState);
