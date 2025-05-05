@@ -1,49 +1,50 @@
-// contexts/UserContext.js
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { debounce } from 'lodash';
-
-const mockUsers = [
-  {
-    id: '#123456789',
-    name: 'Somoruba William',
-    joinedOn: 'March 26, 2021',
-    updatedOn: 'March 28, 2022',
-    contact: {
-      phone: '+1 234 567 890',
-      email: 'william@example.com'
-    }
-  },
-  {
-    id: '#123456781',
-    name: 'Anjana George',
-    joinedOn: 'April 26, 2023',
-    updatedOn: 'March 28, 2025',
-    contact: {
-      phone: '+1 234 567 890',
-      email: 'anjana@example.com'
-    }
-  },
-  {
-    id: '#123456782',
-    name: 'Vinisha Vijayakumar',
-    joinedOn: 'April26, 2024',
-    updatedOn: 'April 28, 2025',
-    contact: {
-      phone: '+1 234 567 890',
-      email: 'vinisha@example.com'
-    }
-  },
-];
+import { useNavigate } from 'react-router-dom';
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredUsers, setFilteredUsers] = useState(mockUsers);
+  
+  const [allUsers, setAllUsers] = useState([
+    {
+      id: '#123456789',
+      name: 'Somoruba William',
+      joinedOn: 'March 26, 2021',
+      updatedOn: 'March 28, 2022',
+      contact: {
+        phone: '+1 234 567 890',
+        email: 'william@example.com'
+      }
+    },
+    {
+      id: '#123456781',
+      name: 'Anjana George',
+      joinedOn: 'April 26, 2023',
+      updatedOn: 'March 28, 2025',
+      contact: {
+        phone: '+1 234 567 890',
+        email: 'anjana@example.com'
+      }
+    },
+    {
+      id: '#123456782',
+      name: 'Vinisha Vijayakumar',
+      joinedOn: 'April26, 2024',
+      updatedOn: 'April 28, 2025',
+      contact: {
+        phone: '+1 234 567 890',
+        email: 'vinisha@example.com'
+      }
+    },
+  ]);
+
+  const [filteredUsers, setFilteredUsers] = useState(allUsers);
   const [selectedUsers, setSelectedUsers] = useState(new Set());
   const [activeActionMenu, setActiveActionMenu] = useState(null);
   const [editingUser, setEditingUser] = useState(null);
-  const [showUserForm, setShowUserForm] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
@@ -51,13 +52,13 @@ export function UserProvider({ children }) {
   // Search and Filtering Logic
   const debouncedSearch = useCallback(
     debounce((query) => {
-      const filtered = mockUsers.filter(user =>
+      const filtered = allUsers.filter(user =>
         user.name.toLowerCase().includes(query.toLowerCase()) ||
         user.id.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredUsers(filtered);
     }, 300),
-    []
+    [allUsers]
   );
 
   // Selection Handlers
@@ -91,7 +92,8 @@ export function UserProvider({ children }) {
   };
 
   const confirmDelete = () => {
-    const updatedUsers = filteredUsers.filter(user => user.id !== userToDelete);
+    const updatedUsers = allUsers.filter(user => user.id !== userToDelete);
+    setAllUsers(updatedUsers);
     setFilteredUsers(updatedUsers);
     setShowConfirmDialog(false);
     setToastMessage('User deleted successfully');
@@ -99,27 +101,38 @@ export function UserProvider({ children }) {
   };
 
   const handleUpdate = (userId) => {
-    const userToEdit = filteredUsers.find(user => user.id === userId);
+    const cleanId = userId.startsWith('#') ? userId.slice(1) : userId;
+    const userToEdit = allUsers.find(user => user.id === userId);
     setEditingUser(userToEdit);
-    setShowUserForm(true);
+    navigate(`/users/edit/${cleanId}`);
   };
 
   const handleSave = (savedUser) => {
-    if(editingUser) {
-      setFilteredUsers(prevUsers => 
-        prevUsers.map(user => user.id === savedUser.id ? savedUser : user)
+    if (editingUser) {
+      setAllUsers(prev =>
+        prev.map(user => user.id === savedUser.id ? savedUser : user)
+      );
+      setFilteredUsers(prev =>
+        prev.map(user => user.id === savedUser.id ? savedUser : user)
       );
     } else {
-      setFilteredUsers(prevUsers => [...prevUsers, savedUser]);
+      setAllUsers(prev => [...prev, savedUser]);
+      setFilteredUsers(prev => [...prev, savedUser]);
     }
     setEditingUser(null);
-    setShowUserForm(false);
+    navigate('/users');
   };
 
-  const openUserForm = () => {
-    setEditingUser(null);
-    setShowUserForm(true);
+  const openUserForm = (isEditing = false) => {
+    if (!isEditing) {
+      setEditingUser(null);
+    }
+    navigate('/users/new');
   };
+
+  // Derived value
+  const isAllSelected = filteredUsers.length > 0 &&
+    selectedUsers.size === filteredUsers.length;
 
   const value = {
     searchQuery,
@@ -127,15 +140,15 @@ export function UserProvider({ children }) {
     filteredUsers,
     selectedUsers,
     activeActionMenu,
+    setActiveActionMenu,
     editingUser,
-    showUserForm,
     showConfirmDialog,
     userToDelete,
     toastMessage,
     debouncedSearch,
     toggleSelection,
     toggleAllSelection,
-    isAllSelected: filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length,
+    isAllSelected,
     handleActionClick,
     handleDelete,
     confirmDelete,
@@ -144,7 +157,6 @@ export function UserProvider({ children }) {
     openUserForm,
     setToastMessage,
     setShowConfirmDialog,
-    setShowUserForm,
     setEditingUser
   };
 

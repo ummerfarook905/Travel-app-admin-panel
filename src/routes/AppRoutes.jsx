@@ -7,6 +7,7 @@ import NotFound from "../pages/NotFound";
 import ProtectedRoute from "../components/ProtectedRoute";
 import RoleBasedRoute from "../components/RoleBasedRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
+import UserForm from "../components/UserForm";
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -33,6 +34,8 @@ const AppRoutes = () => {
       <Route element={<ProtectedLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/users/new" element={<UserForm/> }/>
+        <Route path="/users/edit/:id" element={<UserForm />} />
       </Route>
 
       {/* 404 PAGE */}
