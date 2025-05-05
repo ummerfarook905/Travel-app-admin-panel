@@ -98,6 +98,7 @@ const DetailedVerified_Adventures = () => {
           coverImage={adventure.coverImage || 'https://source.unsplash.com/random/800x400/?adventure'}
           profileImage={adventure.coverImage || 'https://source.unsplash.com/random/300x300/?profile'}
           title={adventure.name}
+          status={adventure.status}
         />
 
         <div className="p-4 md:p-6 space-y-8">

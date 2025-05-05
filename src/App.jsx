@@ -12,9 +12,7 @@ function App() {
     <>
       <Router>
         <AuthProvider>
-          <AdventuresProvider>
             <AppRoutes/>
-          </AdventuresProvider>
         </AuthProvider>
       </Router>
     </>
