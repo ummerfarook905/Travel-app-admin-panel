@@ -54,7 +54,13 @@ const Verified_Adventures = () => {
       dispatch(deleteAdventure({ id: adventure.id }));
     }
   };
-
+  const handleEdit = (adventure) => {
+    const urlId = adventure.id.replace('#', '');
+    navigate(`/edit-adventure/${urlId}`, {
+      state: { adventure }
+    });
+  };
+  
   const actions = [
     {
       label: 'View Details',
@@ -76,12 +82,17 @@ const Verified_Adventures = () => {
       label: 'Delete',
       variant: 'danger',
       handler: handleDelete
-    }
+    },
+    {
+      label: 'Edit',
+      variant: 'primary',
+      handler: handleEdit
+    },
+    
   ];
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Verified Adventures</h1>
       
       {location.state?.message && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
