@@ -11,13 +11,7 @@ import { FiUser } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { 
-  approveAdventure, 
-  rejectAdventure,
-  deactivateAdventure,
-  activateAdventure,
-  deleteAdventure
-} from "../redux/adventuresSlice";
+import { deleteAdventure } from "../redux/adventuresSlice";
 import Rating from "../components/ReviewList";
 
 const DetailedVerified_Adventures = () => {
@@ -28,7 +22,6 @@ const DetailedVerified_Adventures = () => {
   const [adventure, setAdventure] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // First try to get adventure from location state
   useEffect(() => {
     if (state?.adventure) {
       setAdventure(state.adventure);
@@ -51,54 +44,14 @@ const DetailedVerified_Adventures = () => {
     }
   };
 
-  const handleReject = async () => {
-    try {
-      await dispatch(rejectAdventure({ id })).unwrap();
-      toast.success("Adventure rejected successfully");
-      navigate('/pending-adventures');
-    } catch (error) {
-      console.error("Error rejecting adventure:", error);
-      toast.error(error.message || "Failed to reject adventure");
-    }
-  };
-
-  const handleApprove = async () => {
-    try {
-      await dispatch(approveAdventure({ id })).unwrap();
-      toast.success("Adventure approved successfully");
-      navigate('/verified-adventures', {
-        state: { message: `Adventure ${id} approved!` }
-      });
-    } catch (error) {
-      console.error("Error approving adventure:", error);
-      toast.error(error.message || "Failed to approve adventure");
-    }
-  };
-
-  const handleDeactivate = async () => {
-    try {
-      await dispatch(deactivateAdventure({ id })).unwrap();
-      toast.success("Adventure deactivated successfully");
-      fetchAdventure(); // Refresh the adventure data
-    } catch (error) {
-      console.error("Error deactivating adventure:", error);
-      toast.error(error.message || "Failed to deactivate adventure");
-    }
-  };
-
-  const handleActivate = async () => {
-    try {
-      await dispatch(activateAdventure({ id })).unwrap();
-      toast.success("Adventure activated successfully");
-      fetchAdventure(); // Refresh the adventure data
-    } catch (error) {
-      console.error("Error activating adventure:", error);
-      toast.error(error.message || "Failed to activate adventure");
-    }
+  const handleEdit = () => {
+    navigate(`/edit-adventure/${id.replace('#', '')}`, {
+      state: { adventure }
+    });
   };
 
   const handleDelete = async () => {
-    if (window.confirm(`Are you sure you want to delete ${adventure.name}?`)) {
+    if (window.confirm(`Are you sure you want to permanently delete "${adventure.name}"?`)) {
       try {
         await dispatch(deleteAdventure({ id })).unwrap();
         toast.success("Adventure deleted successfully");
@@ -145,12 +98,25 @@ const DetailedVerified_Adventures = () => {
           coverImage={adventure.coverImage || 'https://source.unsplash.com/random/800x400/?adventure'}
           profileImage={adventure.coverImage || 'https://source.unsplash.com/random/300x300/?profile'}
           title={adventure.name}
-          status={adventure.status}
         />
 
         <div className="p-4 md:p-6 space-y-8">
           <InfoGrid items={infoItems} />
-
+          <div className="flex justify-end space-x-4">
+            {/* buttons*/}
+            <button
+              onClick={handleEdit}
+              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
+            >
+              Edit 
+            </button>
+            <button
+              onClick={handleDelete}
+              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
+            >
+              Delete 
+            </button>
+          </div>
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
             <div className="flex-1 min-w-0">
               <SectionTitle>About This Adventure</SectionTitle>
@@ -184,18 +150,9 @@ const DetailedVerified_Adventures = () => {
             </div>
           </div>
 
-          <ActionButtons 
-            onReject={handleReject} 
-            onApprove={handleApprove}
-            onDeactivate={handleDeactivate}
-            onActivate={handleActivate}
-            onDelete={handleDelete}
-            showApprove={!adventure.status || adventure.status === 'pending'}
-            showDeactivate={adventure.status === 'Active'}
-            showActivate={adventure.status === 'Inactive'}
-          />
+
         </div>
-        <Rating/>
+        <Rating />
       </div>
     </div>
   );
