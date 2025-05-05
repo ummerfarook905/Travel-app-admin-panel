@@ -18,6 +18,7 @@ import {
   activateAdventure,
   deleteAdventure
 } from "../redux/adventuresSlice";
+import Rating from "../components/ReviewList";
 
 const DetailedVerified_Adventures = () => {
   const { state } = useLocation();
@@ -194,6 +195,7 @@ const DetailedVerified_Adventures = () => {
             showActivate={adventure.status === 'Inactive'}
           />
         </div>
+        <Rating/>
       </div>
     </div>
   );

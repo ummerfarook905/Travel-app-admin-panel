@@ -4,8 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../components/Table";
 import { useEffect } from "react";
 import { 
-  deactivateAdventure, 
-  activateAdventure, 
+
   deleteAdventure 
 } from "../redux/adventuresSlice";
 
@@ -31,7 +30,6 @@ const Verified_Adventures = () => {
     { key: 'joined', label: 'Joined on' },
     { key: 'updated', label: 'Updated On' },
     { key: 'location', label: 'Location' },
-    { key: 'status', label: 'Status' }
   ];
 
   const handleViewDetails = (adventure) => {
@@ -41,13 +39,7 @@ const Verified_Adventures = () => {
     });
   };
 
-  const handleDeactivate = (adventure) => {
-    dispatch(deactivateAdventure({ id: adventure.id }));
-  };
-
-  const handleActivate = (adventure) => {
-    dispatch(activateAdventure({ id: adventure.id }));
-  };
+  
 
   const handleDelete = (adventure) => {
     if (window.confirm(`Are you sure you want to delete ${adventure.name}?`)) {
@@ -66,18 +58,7 @@ const Verified_Adventures = () => {
       label: 'View Details',
       handler: handleViewDetails
     },
-    {
-      label: 'Deactivate',
-      variant: 'warning',
-      handler: handleDeactivate,
-      showCondition: (adventure) => adventure.status === 'Active'
-    },
-    {
-      label: 'Activate',
-      variant: 'success',
-      handler: handleActivate,
-      showCondition: (adventure) => adventure.status !== 'Active'
-    },
+  
     {
       label: 'Delete',
       variant: 'danger',
