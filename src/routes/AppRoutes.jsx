@@ -18,6 +18,7 @@ import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 import Varified_Adventures from "../pages/Varified_Adventures";
+import DetailedVarified_Adventures from "../pages/DetailedVarified_Adventures";
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -53,7 +54,8 @@ const AppRoutes = () => {
         <Route path="/pending-adventures" element={<Pending_Adventures />} />
         <Route path="/pending-adventures/:id" element={<DetailedPending_Adventures />} />
         <Route path="/verified-adventures" element={<Varified_Adventures/>} />
-        
+        <Route path="/verified-adventures/:id" element={<DetailedVarified_Adventures/>} />
+
         {/* Destinations */}
         {/* <Route path="/destinations" element={<Destinations />} /> */}
         
