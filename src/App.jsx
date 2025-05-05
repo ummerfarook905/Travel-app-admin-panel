@@ -3,13 +3,17 @@ import './App.css'
 import AppRoutes from './routes/AppRoutes';
 import { AuthProvider } from './context/AuthContext';
 
+import { UserProvider } from './context/UserContext';
+
 function App() {
   return (
     <>
       <Router>
-        <AuthProvider>
-            <AppRoutes/>
-        </AuthProvider>
+      <AuthProvider>
+      <UserProvider>
+      <AppRoutes/>
+      </UserProvider>
+      </AuthProvider>
       </Router>
     </>
   )
