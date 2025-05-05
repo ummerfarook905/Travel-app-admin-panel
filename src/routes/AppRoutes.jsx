@@ -9,7 +9,6 @@ import RoleBasedRoute from "../components/RoleBasedRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Pending_Adventures from "../pages/Pending_Adventures";
 import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
-// import VerifiedAdventures from "../pages/VerifiedAdventures";
 // import Destinations from "../pages/Destinations";
 // import PendingHotels from "../pages/PendingHotels";
 // import VerifiedHotels from "../pages/VerifiedHotels";
@@ -17,6 +16,7 @@ import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
 // import AdventureBookings from "../pages/AdventureBookings";
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
+import Varified_Adventures from "../pages/Varified_Adventures";
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -50,7 +50,7 @@ const AppRoutes = () => {
         {/* Adventures */}
         <Route path="/pending-adventures" element={<Pending_Adventures />} />
         <Route path="/pending-adventures/:id" element={<DetailedPending_Adventures />} />
-        {/* <Route path="/verified-adventures" element={<VerifiedAdventures />} /> */}
+        <Route path="/verified-adventures" element={<Varified_Adventures/>} />
         
         {/* Destinations */}
         {/* <Route path="/destinations" element={<Destinations />} /> */}
