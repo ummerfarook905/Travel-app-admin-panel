@@ -1,4 +1,5 @@
 import { useLocation, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import AdventureHeader from "../components/AdventureHeader";
 import InfoGrid from "../components/InfoGrid";
 import ImageGallery from "../components/ImageGallery";
@@ -8,10 +9,14 @@ import { GrLocation } from "react-icons/gr";
 import { IoCallOutline } from "react-icons/io5";
 import { MdMailOutline } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
+import { approveAdventure, rejectAdventure } from "../redux/adventuresSlice";
+import { useNavigate } from "react-router-dom";
 
 const DetailedPending_Adventures = () => {
   const { state } = useLocation();
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   if (!state?.adventure) {
     return (
@@ -24,11 +29,17 @@ const DetailedPending_Adventures = () => {
   const adventure = state.adventure;
 
   const handleReject = () => {
-    console.log("Rejecting adventure:", id);
+    dispatch(rejectAdventure({ id: adventure.id }));
+    navigate('/pending-adventures', {
+      state: { message: `Adventure ${adventure.id} rejected successfully!` }
+    });
   };
 
   const handleApprove = () => {
-    console.log("Approving adventure:", id);
+    dispatch(approveAdventure({ id: adventure.id }));
+    navigate('/verified-adventures', {
+      state: { message: `Adventure ${adventure.id} approved successfully!` }
+    });
   };
 
   const infoItems = [
@@ -57,20 +68,19 @@ const DetailedPending_Adventures = () => {
 
           {/* About + Price in one line */}
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-  <div className="flex-1 min-w-0">
-    <SectionTitle>About This Adventure</SectionTitle>
-    <p className="text-gray-700 text-sm md:text-base mt-2 leading-relaxed text-justify">
-      {adventure.description}
-    </p>
-  </div>
-  <div className="shrink-0 md:ml-6 mt-2 md:mt-7">
-    <div className="bg-[#00493E] text-white rounded-lg px-6 py-3 flex items-center shadow">
-      <span className="text-lg font-bold">${adventure.price}</span>
-      <span className="ml-2 text-sm opacity-90">/ person</span>
-    </div>
-  </div>
-</div>
-
+            <div className="flex-1 min-w-0">
+              <SectionTitle>About This Adventure</SectionTitle>
+              <p className="text-gray-700 text-sm md:text-base mt-2 leading-relaxed text-justify">
+                {adventure.description}
+              </p>
+            </div>
+            <div className="shrink-0 md:ml-6 mt-2 md:mt-7">
+              <div className="bg-[#00493E] text-white rounded-lg px-6 py-3 flex items-center shadow">
+                <span className="text-lg font-bold">${adventure.price}</span>
+                <span className="ml-2 text-sm opacity-90">/ person</span>
+              </div>
+            </div>
+          </div>
 
           {/* Location & Gallery */}
           <div>

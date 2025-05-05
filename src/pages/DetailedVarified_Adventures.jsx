@@ -10,11 +10,20 @@ import { MdMailOutline } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { 
+  approveAdventure, 
+  rejectAdventure,
+  deactivateAdventure,
+  activateAdventure,
+  deleteAdventure
+} from "../redux/adventuresSlice";
 
-const DetailedVarified_Adventures = () => {
+const DetailedVerified_Adventures = () => {
   const { state } = useLocation();
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [adventure, setAdventure] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,14 +33,12 @@ const DetailedVarified_Adventures = () => {
       setAdventure(state.adventure);
       setLoading(false);
     } else {
-      // If no state, fetch from API using the id
       fetchAdventure();
     }
   }, [id, state]);
 
   const fetchAdventure = async () => {
     try {
-      // Replace with your actual API endpoint
       const response = await fetch(`/api/adventures/${id.replace('#', '')}`);
       const data = await response.json();
       setAdventure(data);
@@ -45,31 +52,60 @@ const DetailedVarified_Adventures = () => {
 
   const handleReject = async () => {
     try {
-      // API call to reject adventure
-      await fetch(`/api/adventures/${id}/reject`, {
-        method: 'POST'
-      });
+      await dispatch(rejectAdventure({ id })).unwrap();
       toast.success("Adventure rejected successfully");
       navigate('/pending-adventures');
     } catch (error) {
       console.error("Error rejecting adventure:", error);
-      toast.error("Failed to reject adventure");
+      toast.error(error.message || "Failed to reject adventure");
     }
   };
 
   const handleApprove = async () => {
     try {
-      // API call to approve adventure
-      await fetch(`/api/adventures/${id}/approve`, {
-        method: 'POST'
-      });
+      await dispatch(approveAdventure({ id })).unwrap();
       toast.success("Adventure approved successfully");
       navigate('/verified-adventures', {
         state: { message: `Adventure ${id} approved!` }
       });
     } catch (error) {
       console.error("Error approving adventure:", error);
-      toast.error("Failed to approve adventure");
+      toast.error(error.message || "Failed to approve adventure");
+    }
+  };
+
+  const handleDeactivate = async () => {
+    try {
+      await dispatch(deactivateAdventure({ id })).unwrap();
+      toast.success("Adventure deactivated successfully");
+      fetchAdventure(); // Refresh the adventure data
+    } catch (error) {
+      console.error("Error deactivating adventure:", error);
+      toast.error(error.message || "Failed to deactivate adventure");
+    }
+  };
+
+  const handleActivate = async () => {
+    try {
+      await dispatch(activateAdventure({ id })).unwrap();
+      toast.success("Adventure activated successfully");
+      fetchAdventure(); // Refresh the adventure data
+    } catch (error) {
+      console.error("Error activating adventure:", error);
+      toast.error(error.message || "Failed to activate adventure");
+    }
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm(`Are you sure you want to delete ${adventure.name}?`)) {
+      try {
+        await dispatch(deleteAdventure({ id })).unwrap();
+        toast.success("Adventure deleted successfully");
+        navigate('/verified-adventures');
+      } catch (error) {
+        console.error("Error deleting adventure:", error);
+        toast.error(error.message || "Failed to delete adventure");
+      }
     }
   };
 
@@ -108,6 +144,7 @@ const DetailedVarified_Adventures = () => {
           coverImage={adventure.coverImage || 'https://source.unsplash.com/random/800x400/?adventure'}
           profileImage={adventure.coverImage || 'https://source.unsplash.com/random/300x300/?profile'}
           title={adventure.name}
+          status={adventure.status}
         />
 
         <div className="p-4 md:p-6 space-y-8">
@@ -148,8 +185,13 @@ const DetailedVarified_Adventures = () => {
 
           <ActionButtons 
             onReject={handleReject} 
-            onApprove={handleApprove} 
+            onApprove={handleApprove}
+            onDeactivate={handleDeactivate}
+            onActivate={handleActivate}
+            onDelete={handleDelete}
             showApprove={!adventure.status || adventure.status === 'pending'}
+            showDeactivate={adventure.status === 'Active'}
+            showActivate={adventure.status === 'Inactive'}
           />
         </div>
       </div>
@@ -157,4 +199,4 @@ const DetailedVarified_Adventures = () => {
   );
 };
 
-export default DetailedVarified_Adventures;
+export default DetailedVerified_Adventures;
