@@ -14,11 +14,13 @@ import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
 // import PendingHotels from "../pages/PendingHotels";
 // import VerifiedHotels from "../pages/VerifiedHotels";
 // import HotelBookings from "../pages/HotelBookings";
-// import AdventureBookings from "../pages/AdventureBookings";
+
+
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 import Varified_Adventures from "../pages/Varified_Adventures";
 import DetailedVarified_Adventures from "../pages/DetailedVarified_Adventures";
+import AdventuresBooking from "../pages/AdventuresBooking";
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -65,7 +67,7 @@ const AppRoutes = () => {
         
         {/* Bookings */}
         {/* <Route path="/hotel-bookings" element={<HotelBookings />} /> */}
-        {/* <Route path="/adventure-bookings" element={<AdventureBookings />} /> */}
+         <Route path="/adventure-bookings" element={<AdventuresBooking/>} /> 
         
         {/* Settings & Profile */}
         <Route path="/settings" element={<Settings />} />
