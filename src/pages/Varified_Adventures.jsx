@@ -1,11 +1,18 @@
-// src/pages/Varified_Adventures.js
-import { useAdventures } from "../context/AdventuresContext";
+// src/pages/Verified_Adventures.js
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../components/Table";
 import { useEffect } from "react";
+import { 
+  deactivateAdventure, 
+  activateAdventure, 
+  deleteAdventure 
+} from "../redux/adventuresSlice";
 
-const Varified_Adventures = () => {
-  const { verified, dispatch } = useAdventures();
+const Verified_Adventures = () => {
+  // Get verified adventures from Redux store
+  const verified = useSelector(state => state.adventures.verified);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -35,16 +42,16 @@ const Varified_Adventures = () => {
   };
 
   const handleDeactivate = (adventure) => {
-    dispatch({ type: 'DEACTIVATE', payload: adventure });
+    dispatch(deactivateAdventure({ id: adventure.id }));
   };
 
   const handleActivate = (adventure) => {
-    dispatch({ type: 'ACTIVATE', payload: adventure });
+    dispatch(activateAdventure({ id: adventure.id }));
   };
 
   const handleDelete = (adventure) => {
     if (window.confirm(`Are you sure you want to delete ${adventure.name}?`)) {
-      dispatch({ type: 'DELETE', payload: adventure });
+      dispatch(deleteAdventure({ id: adventure.id }));
     }
   };
 
@@ -93,4 +100,4 @@ const Varified_Adventures = () => {
   );
 };
 
-export default Varified_Adventures;
+export default Verified_Adventures;

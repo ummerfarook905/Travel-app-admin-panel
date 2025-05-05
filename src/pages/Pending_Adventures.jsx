@@ -1,10 +1,13 @@
 // src/pages/Pending_Adventures.js
-import { useAdventures } from "../context/AdventuresContext";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
+import { approveAdventure, rejectAdventure } from "../redux/adventuresSlice";
 
 const Pending_Adventures = () => {
-  const { pending, dispatch } = useAdventures();
+  // Get pending adventures from Redux store
+  const pending = useSelector(state => state.adventures.pending);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   
   const headers = [
@@ -16,7 +19,7 @@ const Pending_Adventures = () => {
   ];
   
   const handleApprove = (adventure) => {
-    dispatch({ type: 'APPROVE', payload: adventure });
+    dispatch(approveAdventure({ id: adventure.id }));
     navigate('/verified-adventures', { 
       state: { 
         message: `Adventure ${adventure.id} approved successfully!`
@@ -25,7 +28,7 @@ const Pending_Adventures = () => {
   };
 
   const handleReject = (adventure) => {
-    dispatch({ type: 'REJECT', payload: adventure });
+    dispatch(rejectAdventure({ id: adventure.id }));
     alert(`Adventure ${adventure.id} rejected!`);
   };
 
