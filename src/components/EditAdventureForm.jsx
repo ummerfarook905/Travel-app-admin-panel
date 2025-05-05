@@ -30,131 +30,143 @@ const EditAdventureForm = ({ adventureData, onChange, onSubmit, onCancel }) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="bg-white rounded-xl shadow-md mx-2 sm:mx-4 md:mx-6 lg:mx-8">
-      <h2 className="text-xl font-semibold text-white bg-[#00493E] py-3 px-4 rounded-t-xl mb-6">
-        Adventure Details
-      </h2>
+    <form onSubmit={onSubmit} className="bg-white rounded-xl shadow-md mx-auto max-w-7xl">
+      {/* Header */}
+      <div className="bg-[#00493E] px-5 py-4 md:px-6 md:py-4 rounded-t-xl">
+        <h2 className="text-lg md:text-xl font-semibold text-white text-center">
+          Adventure Details
+        </h2>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 px-4 sm:px-6 py-4 gap-4 sm:gap-6">
+      {/* Form Content */}
+      <div className="grid grid-cols-1 md:grid-cols-2 px-4 sm:px-5 md:px-6 py-5 gap-5 md:gap-6">
         {/* Left Column */}
-        <div className="space-y-4 sm:space-y-6">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Adventure Name *</label>
+        <div className="space-y-4 md:space-y-5">
+          {/* Adventure Name */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Adventure Name *</label>
             <input
               type="text"
               name="name"
-              placeholder="Enter Adventure Name"
+              placeholder="Enter adventure name"
               value={adventureData.name || ""}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Location Map Link *</label>
+          {/* Map Link */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Location Map Link *</label>
             <input
               type="text"
               name="mapLink"
-              placeholder="Enter Location Map Link"
+              placeholder="Enter map URL"
               value={adventureData.mapLink || ""}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Description *</label>
+          {/* Description */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Description *</label>
             <textarea
               name="description"
               rows="4"
-              placeholder="Provide a brief description"
+              placeholder="Describe the adventure"
               value={adventureData.description || ""}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Price *</label>
+          {/* Price */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Price *</label>
             <input
               type="number"
               name="price"
-              placeholder="Enter Price"
+              placeholder="Enter price"
               value={adventureData.price || ""}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Max Persons *</label>
+          {/* Max Persons */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Max Persons *</label>
             <input
               type="number"
               name="maxPersons"
-              placeholder="Enter Max Number"
+              placeholder="Enter maximum capacity"
               value={adventureData.maxPersons || ""}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Start Time *</label>
+          {/* Start Time */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Start Time *</label>
             <input
               type="time"
               name="startTime"
               value={adventureData.startTime || "09:00"}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
               required
             />
           </div>
         </div>
 
         {/* Right Column */}
-        <div className="space-y-4 sm:space-y-6">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Location *</label>
+        <div className="space-y-4 md:space-y-5 mt-4 md:mt-0">
+          {/* Location */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Location *</label>
             <input
               type="text"
               name="location"
-              placeholder="Enter Location"
+              placeholder="Enter location"
               value={adventureData.location || ""}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Contact Number *</label>
+          {/* Contact */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Contact Number *</label>
             <input
               type="text"
               name="contact"
-              placeholder="Enter Contact"
+              placeholder="Enter contact number"
               value={adventureData.contact || ""}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
               required
             />
           </div>
 
-          {/* Media Uploads - Responsive Grid */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 mt-4 sm:mt-6">
+          {/* Media Uploads */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 mt-3">
             {/* Photos Section */}
-            <div className="col-span-1">
+            <div className="col-span-1 space-y-3">
               {photos.map((photo, index) => (
-                <div key={`photo-${index}`} className="mb-3">
-                  <div className="border-dashed border-2 border-gray-300 p-4 sm:p-6 rounded-lg text-center">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <div key={`photo-${index}`}>
+                  <div className="border-dashed border border-gray-300 p-4 rounded-lg">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       {photos.length > 1 ? `Photo ${index + 1} *` : "Photo *"}
                     </label>
-                    <label className="inline-flex items-center justify-center w-full px-3 py-2 bg-gray-100 text-gray-700 rounded cursor-pointer border border-gray-300 hover:bg-gray-200">
-                      <span className="truncate max-w-[120px] sm:max-w-[180px]">
-                        {photo ? photo.name : "Choose Photo"}
+                    <label className="flex flex-col items-center justify-center w-full p-2 bg-gray-50 rounded border border-gray-200 cursor-pointer hover:bg-gray-100">
+                      <span className="text-sm text-gray-500 truncate w-full text-center">
+                        {photo ? photo.name : "Select file"}
                       </span>
                       <input
                         type="file"
@@ -168,7 +180,7 @@ const EditAdventureForm = ({ adventureData, onChange, onSubmit, onCancel }) => {
                       <button
                         type="button"
                         onClick={() => removePhoto(index)}
-                        className="mt-2 text-red-500 hover:text-red-700 text-sm"
+                        className="mt-2 text-xs text-red-600 hover:text-red-800"
                       >
                         Remove
                       </button>
@@ -176,28 +188,26 @@ const EditAdventureForm = ({ adventureData, onChange, onSubmit, onCancel }) => {
                   </div>
                 </div>
               ))}
-              <div className="text-center">
-                <button
-                  type="button"
-                  onClick={addPhotoField}
-                  className="w-full sm:w-auto px-4 py-2 bg-[#00493E] text-white rounded hover:bg-[#036657] text-sm sm:text-base"
-                >
-                  + Add Photo
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={addPhotoField}
+                className="w-full py-2 text-sm font-medium text-[#00493E] border border-[#00493E] rounded-lg hover:bg-[#00493E] hover:text-white transition-colors"
+              >
+                + Add Photo
+              </button>
             </div>
 
             {/* Videos Section */}
-            <div className="col-span-1">
+            <div className="col-span-1 space-y-3">
               {videos.map((video, index) => (
-                <div key={`video-${index}`} className="mb-3">
-                  <div className="border-dashed border-2 border-gray-300 p-4 sm:p-6 rounded-lg text-center">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <div key={`video-${index}`}>
+                  <div className="border-dashed border border-gray-300 p-4 rounded-lg">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       {videos.length > 1 ? `Video ${index + 1} *` : "Video *"}
                     </label>
-                    <label className="inline-flex items-center justify-center w-full px-3 py-2 bg-gray-100 text-gray-700 rounded cursor-pointer border border-gray-300 hover:bg-gray-200">
-                      <span className="truncate max-w-[120px] sm:max-w-[180px]">
-                        {video ? video.name : "Choose Video"}
+                    <label className="flex flex-col items-center justify-center w-full p-2 bg-gray-50 rounded border border-gray-200 cursor-pointer hover:bg-gray-100">
+                      <span className="text-sm text-gray-500 truncate w-full text-center">
+                        {video ? video.name : "Select file"}
                       </span>
                       <input
                         type="file"
@@ -211,7 +221,7 @@ const EditAdventureForm = ({ adventureData, onChange, onSubmit, onCancel }) => {
                       <button
                         type="button"
                         onClick={() => removeVideo(index)}
-                        className="mt-2 text-red-500 hover:text-red-700 text-sm"
+                        className="mt-2 text-xs text-red-600 hover:text-red-800"
                       >
                         Remove
                       </button>
@@ -219,59 +229,61 @@ const EditAdventureForm = ({ adventureData, onChange, onSubmit, onCancel }) => {
                   </div>
                 </div>
               ))}
-              <div className="text-center">
-                <button
-                  type="button"
-                  onClick={addVideoField}
-                  className="w-full sm:w-auto px-4 py-2 bg-[#00493E] text-white rounded hover:bg-[#036657] text-sm sm:text-base"
-                >
-                  + Add Video
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={addVideoField}
+                className="w-full py-2 text-sm font-medium text-[#00493E] border border-[#00493E] rounded-lg hover:bg-[#00493E] hover:text-white transition-colors"
+              >
+                + Add Video
+              </button>
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Extra per Head</label>
+          {/* Extra per Head */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Extra per Head</label>
             <input
               type="number"
               name="extraHead"
-              placeholder="Enter Extra Cost"
+              placeholder="Enter additional cost"
               value={adventureData.extraHead || ""}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Closing Time *</label>
+          {/* Closing Time */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-gray-700">Closing Time *</label>
             <input
               type="time"
               name="endTime"
               value={adventureData.endTime || "13:00"}
               onChange={onChange}
-              className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg"
+              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent"
               required
             />
           </div>
         </div>
       </div>
 
-      {/* Form Footer - Responsive Buttons */}
-      <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4 px-4 sm:px-6 pb-4 sm:pb-6">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="bg-gray-300 text-black px-4 py-2 sm:px-6 sm:py-3 rounded-lg hover:bg-gray-400"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="bg-green-900 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg hover:bg-green-800"
-        >
-          Submit
-        </button>
+      {/* Form Footer */}
+      <div className="px-5 py-4 md:px-6 md:py-5 border-t border-gray-200">
+        <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="px-5 py-2.5 text-sm font-medium text-white bg-[#00493E] rounded-lg hover:bg-[#00382E] focus:outline-none focus:ring-2 focus:ring-[#00382E]"
+          >
+            Save 
+          </button>
+        </div>
       </div>
     </form>
   );
