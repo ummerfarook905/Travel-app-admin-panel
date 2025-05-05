@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FiX } from 'react-icons/fi';
-import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useUsers } from '../context/UserContext';
 
-const UserForm = ({ user, onSave, onClose, isEditing }) => {
+const UserForm = () => {
+  const navigate = useNavigate();
+  const { id } = useParams(); // Get the clean ID from URL
+  const {
+    editingUser,
+    handleSave,
+    setEditingUser,
+    filteredUsers
+  } = useUsers();
+
   const [formData, setFormData] = React.useState({
     id: '',
     name: '',
@@ -12,17 +22,32 @@ const UserForm = ({ user, onSave, onClose, isEditing }) => {
   });
 
   useEffect(() => {
-    setFormData({
-      id: user?.id || '',
-      name: user?.name || '',
-      joinedOn: user?.joinedOn || new Date().toISOString().split('T')[0],
-      updatedOn: user?.updatedOn || new Date().toISOString().split('T')[0],
-      contact: {
-        phone: user?.contact?.phone || '',
-        email: user?.contact?.email || ''
+    if (id) {
+      // For edit mode - add # back to the ID when looking up the user
+      const userToEdit = filteredUsers.find(user => user.id === `#${id}`);
+      if (userToEdit) {
+        setFormData({
+          id: userToEdit.id,
+          name: userToEdit.name,
+          joinedOn: userToEdit.joinedOn,
+          updatedOn: userToEdit.updatedOn,
+          contact: {
+            phone: userToEdit.contact?.phone || '',
+            email: userToEdit.contact?.email || ''
+          }
+        });
       }
-    });
-  }, [user]);
+    } else {
+      // For new user mode
+      setFormData({
+        id: '',
+        name: '',
+        joinedOn: new Date().toISOString().split('T')[0],
+        updatedOn: new Date().toISOString().split('T')[0],
+        contact: { phone: '', email: '' }
+      });
+    }
+  }, [id, filteredUsers]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,8 +70,16 @@ const UserForm = ({ user, onSave, onClose, isEditing }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData);
+    handleSave(formData);
+    navigate('/users');
   };
+
+  const handleClose = () => {
+    setEditingUser(null);
+    navigate('/users');
+  };
+
+  const isEditing = !!id; // Check if we're in edit mode based on URL param
 
   return (
     <div className="fixed inset-0 bg-gray-100/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -56,7 +89,7 @@ const UserForm = ({ user, onSave, onClose, isEditing }) => {
             {isEditing ? 'Edit User' : 'Create New User'}
           </h2>
           <button 
-            onClick={onClose}
+            onClick={handleClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
           >
             <FiX className="w-6 h-6" />
@@ -113,7 +146,7 @@ const UserForm = ({ user, onSave, onClose, isEditing }) => {
           <div className="flex justify-end space-x-3">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               className="px-5 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors border border-gray-300"
             >
               Cancel
