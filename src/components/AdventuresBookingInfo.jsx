@@ -1,6 +1,7 @@
 import React from "react";
 import AdventureBookingImages from "../components/AdventureBookingImages";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaRegClock } from "react-icons/fa";
+
 
 const AdventureBookingInfo = ({ title, location, description, images, checkIn, checkOut, rating = 4 }) => {
   const totalStars = 5;
@@ -28,14 +29,16 @@ const AdventureBookingInfo = ({ title, location, description, images, checkIn, c
       <AdventureBookingImages images={images} />
 
       {/* Check-in/out Times */}
-      <div className="flex gap-8 text-sm">
-        <div>
-          Check-out Time: <strong>{checkOut}</strong>
-        </div>
-        <div>
-          Check-in Time: <strong>{checkIn}</strong>
-        </div>
-      </div>
+      <div className="flex gap-8 text-sm items-center mt-2">
+  <div className="flex items-center gap-2">
+    <FaRegClock className="text-blue-600" />
+    <span className="text-gray-700">Check-out time: <strong>{checkOut}</strong></span>
+  </div>
+  <div className="flex items-center gap-2">
+    <FaRegClock className="text-blue-600" />
+    <span className="text-gray-700">Check-in time: <strong>{checkIn}</strong></span>
+  </div>
+</div>
     </div>
   );
 };
