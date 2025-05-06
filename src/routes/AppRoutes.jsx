@@ -9,18 +9,19 @@ import RoleBasedRoute from "../components/RoleBasedRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Pending_Adventures from "../pages/Pending_Adventures";
 import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
-// import Destinations from "../pages/Destinations";
-// import PendingHotels from "../pages/PendingHotels";
-// import VerifiedHotels from "../pages/VerifiedHotels";
-// import HotelBookings from "../pages/HotelBookings";
-
-
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 import Varified_Adventures from "../pages/Varified_Adventures";
 import DetailedVarified_Adventures from "../pages/DetailedVarified_Adventures";
 import AdventuresBooking from "../pages/AdventuresBooking";
 import EditAdventure from "../pages/EditAdventure";
+import Pending_Hotels from "../pages/Pending_Hotels";
+import Varified_Hotels from "../pages/Varified_Hotels";
+import DetailedPending_Hotels from "../pages/DetailedPending_Hotels";
+import DetailedVarified_Hotels from "../pages/DetailedVarified_Hotels";
+// import Destinations from "../pages/Destinations";
+// import HotelBookings from "../pages/HotelBookings";
+
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -62,8 +63,11 @@ const AppRoutes = () => {
         {/* <Route path="/destinations" element={<Destinations />} /> */}
         
         {/* Hotels */}
-        {/* <Route path="/pending-hotels" element={<PendingHotels />} /> */}
-        {/* <Route path="/verified-hotels" element={<VerifiedHotels />} /> */}
+        <Route path="/pending-hotels" element={<Pending_Hotels/>} />
+        <Route path="/pending-hotels/:id" element={<DetailedPending_Hotels/>} />
+        <Route path="/verified-hotels" element={<Varified_Hotels/>} />
+        <Route path="/verified-hotels/:id" element={<DetailedVarified_Hotels/>} />
+
         
         {/* Bookings */}
         {/* <Route path="/hotel-bookings" element={<HotelBookings />} /> */}
