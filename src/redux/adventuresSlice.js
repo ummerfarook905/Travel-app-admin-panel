@@ -143,6 +143,42 @@ const initialState = {
       status: 'confirmed',
       guests: 2
     },
+    // {
+    //   id: 'book#2',
+    //   adventureId: '#ADV12346',
+    //   adventureName: 'Mountain Hiking',
+    //   userName: 'Sarah Lee',
+    //   userEmail: 'sarah@example.com',
+    //   checkIn: '2023-07-10',
+    //   checkOut: '2023-07-12',
+    //   price: 200,
+    //   status: 'pending',
+    //   guests: 4
+    // },
+    // {
+    //   id: 'book#3',
+    //   adventureId: '#ADV12347',
+    //   adventureName: 'Scuba Diving',
+    //   userName: 'John Smith',
+    //   userEmail: 'john@example.com',
+    //   checkIn: '2023-08-05',
+    //   checkOut: '2023-08-07',
+    //   price: 250,
+    //   status: 'confirmed',
+    //   guests: 1
+    // },
+    // {
+    //   id: 'book#4',
+    //   adventureId: '#ADV12348',
+    //   adventureName: 'Safari Tour',
+    //   userName: 'Emily Davis',
+    //   userEmail: 'emily@example.com',
+    //   checkIn: '2023-09-20',
+    //   checkOut: '2023-09-22',
+    //   price: 300,
+    //   status: 'cancelled',
+    //   guests: 3
+    // }
     // ... other initial bookings (same as your context)
   ]
 };

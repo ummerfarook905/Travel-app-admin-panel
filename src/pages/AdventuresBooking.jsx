@@ -9,12 +9,15 @@ import {
 } from '../redux/adventuresSlice';
 
 const AdventuresBooking = () => {
+  
   const bookings = useSelector(state => state.adventures.bookings);
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+    console.log(bookings)
     if (location.state?.message) {
       const timer = setTimeout(() => {
         navigate(location.pathname, { replace: true, state: {} });
@@ -128,6 +131,7 @@ const AdventuresBooking = () => {
           onNameClick={handleViewDetails}
         />
       </div>
+     
     </div>
   );
 };
