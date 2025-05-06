@@ -84,7 +84,7 @@ const Table = ({
                       header.key === 'id' ? idColor : 'text-gray-900'
                     }`}
                   >
-                    {nameAsLink && header.key === 'name' ? (
+                    {nameAsLink && (header.key === 'name' || header.key === 'adventureName')? (
                       <button
                         onClick={(e) => handleNameClick(row, e)}
                         className="text-blue-600 hover:text-blue-800 hover:underline"

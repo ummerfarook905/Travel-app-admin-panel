@@ -10,6 +10,7 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import UserForm from "../components/UserForm";
 import Pending_Adventures from "../pages/Pending_Adventures";
 import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
+import Detailed_advantures from "../pages/Detailed_Advantures_Booking";
 
 import Destination from "../pages/Destination";
 // import PendingHotels from "../pages/PendingHotels";
@@ -71,6 +72,7 @@ const AppRoutes = () => {
         {/* Bookings */}
         {/* <Route path="/hotel-bookings" element={<HotelBookings />} /> */}
          <Route path="/adventure-bookings" element={<AdventuresBooking/>} /> 
+         <Route path="/adventure-bookings/:id" element={<Detailed_advantures/>} /> 
         
         {/* Settings & Profile */}
         <Route path="/settings" element={<Settings />} />
