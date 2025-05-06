@@ -29,7 +29,7 @@ export default function Sidebar() {
     { to: "/users", icon: <FiUsers className="mr-3 text-lg" />, text: "Users" },
     { to: "/pending-adventures", icon: <FiClock className="mr-3 text-lg" />, text: "Pending Adventures" },
     { to: "/verified-adventures", icon: <FiCheckCircle className="mr-3 text-lg" />, text: "Verified Adventures" },
-    { to: "/destinations", icon: <FiMapPin className="mr-3 text-lg" />, text: "Destinations" },
+    { to: "/destination", icon: <FiMapPin className="mr-3 text-lg" />, text: "Destinations" },
     { to: "/pending-hotels", icon: <FaHotel className="mr-3 text-lg" />, text: "Pending Hotels" },
     { to: "/verified-hotels", icon: <FiStar className="mr-3 text-lg" />, text: "Verified Hotels" },
     { to: "/hotel-bookings", icon: <FiBookmark className="mr-3 text-lg" />, text: "Hotel Bookings" },

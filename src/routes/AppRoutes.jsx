@@ -10,7 +10,8 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import UserForm from "../components/UserForm";
 import Pending_Adventures from "../pages/Pending_Adventures";
 import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
-// import Destinations from "../pages/Destinations";
+
+import Destination from "../pages/Destination";
 // import PendingHotels from "../pages/PendingHotels";
 // import VerifiedHotels from "../pages/VerifiedHotels";
 // import HotelBookings from "../pages/HotelBookings";
@@ -61,7 +62,7 @@ const AppRoutes = () => {
         <Route path="/edit-adventure/:id" element={<EditAdventure/>} />
 
         {/* Destinations */}
-        {/* <Route path="/destinations" element={<Destinations />} /> */}
+        <Route path="/destination" element={<Destination/>} />
         
         {/* Hotels */}
         {/* <Route path="/pending-hotels" element={<PendingHotels />} /> */}
