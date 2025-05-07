@@ -1,8 +1,77 @@
+// src/pages/Pending_Hotels.js
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Table from "../components/Table";
+import { approveHotel, rejectHotel } from "../redux/hotelsSlice";
 
 const Pending_Hotels = () => {
+  // Get pending hotels from Redux store
+  const pending = useSelector(state => state.hotels.pending);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const headers = [
+    { key: 'name', label: 'Hotel Name' },
+    { key: 'id', label: 'ID' },
+    { key: 'joined', label: 'Joined on' },
+    { key: 'updated', label: 'Updated On' },
+    { key: 'location', label: 'Location' },
+    { key: 'rooms', label: 'Rooms' }
+  ];
+  
+  const handleApprove = (hotel) => {
+    dispatch(approveHotel({ id: hotel.id }));
+    navigate('/verified-hotels', { 
+      state: { 
+        message: `Hotel ${hotel.id} approved successfully!`
+      } 
+    });
+  };
+
+  const handleReject = (hotel) => {
+    dispatch(rejectHotel({ id: hotel.id }));
+    alert(`Hotel ${hotel.id} rejected!`);
+  };
+
+  const handleViewDetails = (hotel) => {
+    const urlId = hotel.id.replace('#', '');
+    navigate(`/pending-hotels/${urlId}`, { 
+      state: { hotel } 
+    });
+  };
+
+  const actions = [
+    {
+      label: 'Approve',
+      variant: 'success',
+      handler: handleApprove
+    },
+    {
+      label: 'Reject',
+      variant: 'danger',
+      handler: handleReject
+    },
+    {
+      label: 'View Details',
+      handler: handleViewDetails
+    }
+  ];
+
   return (
-    <div>
-      Pending Hotels
+    <div className="p-8 max-w-7xl mx-auto">
+      {pending.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-gray-500">No pending hotels awaiting approval</p>
+        </div>
+      ) : (
+        <Table 
+          headers={headers}
+          rows={pending}
+          actions={actions}
+          nameAsLink={true}
+          onNameClick={handleViewDetails}
+        />
+      )}
     </div>
   );
 };
