@@ -75,6 +75,7 @@ const EditAdventure = () => {
       required: true, 
       column: 'right' 
     },
+    // Media uploads will appear automatically after contact field
     { 
       name: 'extraHead', 
       label: 'Extra per Head', 
@@ -91,7 +92,6 @@ const EditAdventure = () => {
       column: 'right' 
     }
   ];
-
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     setFormData({
