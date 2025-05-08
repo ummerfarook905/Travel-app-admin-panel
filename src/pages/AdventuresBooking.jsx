@@ -9,12 +9,15 @@ import {
 } from '../redux/adventuresSlice';
 
 const AdventuresBooking = () => {
+  
   const bookings = useSelector(state => state.adventures.bookings);
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+    console.log(bookings)
     if (location.state?.message) {
       const timer = setTimeout(() => {
         navigate(location.pathname, { replace: true, state: {} });
@@ -106,8 +109,8 @@ const AdventuresBooking = () => {
   ];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Adventure Bookings</h1>
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6">Adventure Bookings</h1>
       
       {location.state?.message && (
         <div className={`mb-4 p-4 rounded ${
@@ -119,13 +122,16 @@ const AdventuresBooking = () => {
         </div>
       )}
       
-      <Table 
-        headers={headers}
-        rows={bookings}
-        actions={actions}
-        nameAsLink={true}
-        onNameClick={handleViewDetails}
-      />
+      <div className="overflow-x-auto">
+        <Table 
+          headers={headers}
+          rows={bookings}
+          actions={actions}
+          nameAsLink={true}
+          onNameClick={handleViewDetails}
+        />
+      </div>
+     
     </div>
   );
 };

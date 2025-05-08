@@ -9,6 +9,14 @@ import RoleBasedRoute from "../components/RoleBasedRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Pending_Adventures from "../pages/Pending_Adventures";
 import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
+import Detailed_advantures from "../pages/Detailed_Advantures_Booking";
+
+import Destination from "../pages/Destination";
+// import PendingHotels from "../pages/PendingHotels";
+// import VerifiedHotels from "../pages/VerifiedHotels";
+// import HotelBookings from "../pages/HotelBookings";
+
+
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 import Varified_Adventures from "../pages/Varified_Adventures";
@@ -60,7 +68,7 @@ const AppRoutes = () => {
         <Route path="/edit-adventure/:id" element={<EditAdventure/>} />
 
         {/* Destinations */}
-        {/* <Route path="/destinations" element={<Destinations />} /> */}
+        <Route path="/destination" element={<Destination/>} />
         
         {/* Hotels */}
         <Route path="/pending-hotels" element={<Pending_Hotels/>} />
@@ -72,6 +80,7 @@ const AppRoutes = () => {
         {/* Bookings */}
         {/* <Route path="/hotel-bookings" element={<HotelBookings />} /> */}
          <Route path="/adventure-bookings" element={<AdventuresBooking/>} /> 
+         <Route path="/adventure-bookings/:id" element={<Detailed_advantures/>} /> 
         
         {/* Settings & Profile */}
         <Route path="/settings" element={<Settings />} />

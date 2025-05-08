@@ -21,6 +21,9 @@ const pageTitles = {
 
   "/profile": "My Profile",
   "/settings": "Settings",
+  "/adventure-bookings": " Adventures Bookings",
+  "/adventure-bookings/:id": "Adventures Bookings",
+
 
 
 };
@@ -31,8 +34,12 @@ const Header = ({ toggleSidebar }) => {
   const getTitle = (path) => {
     if (path.startsWith("/pending-adventures/")) return "Pending Adventures";
     if (path.startsWith("/verified-adventures/")) return "Varified Adventures";
+<<<<<<< HEAD
     if (path.startsWith("/pending-hotels/")) return "Pending Hotels";
     if (path.startsWith("/verified-hotels/")) return "Varified Hotels";
+=======
+    if (path.startsWith("/advanture-bookings/")) return "Adventures Bookings";
+>>>>>>> feature/pending_adventures
     return pageTitles[path] || "Admin Panel";
   };
   
