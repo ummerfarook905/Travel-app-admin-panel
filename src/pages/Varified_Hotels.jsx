@@ -68,7 +68,6 @@ const Verified_Hotels = () => {
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Verified Hotels</h1>
       
       {location.state?.message && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">

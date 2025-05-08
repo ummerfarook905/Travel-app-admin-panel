@@ -116,13 +116,13 @@ const DetailedVerified_Hotels = () => {
           <div className="flex justify-end space-x-4">
             <button
               onClick={handleEdit}
-              className="px-5 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
             >
               Edit 
             </button>
             <button
               onClick={handleDelete}
-              className="px-5 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors"
+              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
             >
               Delete 
             </button>

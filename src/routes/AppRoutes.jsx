@@ -24,6 +24,7 @@ import DetailedVarified_Hotels from "../pages/DetailedVarified_Hotels";
 // import Destinations from "../pages/Destinations";
 import HotelBookings from "../pages/HotelBookings";
 import DetailedHotelBookings from "../pages/DetailedHotelBooking";
+import EditHotel from "../pages/EditHotel";
 
 
 // Protected Layout Wrapper
@@ -70,6 +71,7 @@ const AppRoutes = () => {
         <Route path="/pending-hotels/:id" element={<DetailedPending_Hotels/>} />
         <Route path="/verified-hotels" element={<Varified_Hotels/>} />
         <Route path="/verified-hotels/:id" element={<DetailedVarified_Hotels/>} />
+        <Route path="/edit-hotel/:id" element={<EditHotel/>} />
 
         
         {/* Bookings */}

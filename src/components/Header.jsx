@@ -37,6 +37,8 @@ const Header = ({ toggleSidebar }) => {
     if (path.startsWith("/pending-adventures/")) return "Pending Adventures";
     if (path.startsWith("/verified-adventures/")) return "Varified Adventures";
     if (path.startsWith("/advanture-bookings/")) return "Adventures Bookings";
+    if (path.startsWith("/verified-hotels/")) return "Verified Hotels";
+
     if (path.startsWith("/hotel-bookings/")) return "Hotel Bookings";
 
     return pageTitles[path] || "Admin Panel";
