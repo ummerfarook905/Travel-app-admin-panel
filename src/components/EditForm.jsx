@@ -97,7 +97,7 @@ const EditForm = ({
     <form onSubmit={onSubmit} className="bg-white rounded-xl shadow-md mx-auto max-w-7xl">
       {/* Header */}
       <div className="bg-[#00493E] px-5 py-4 md:px-6 md:py-4 rounded-t-xl">
-        <h2 className="text-lg md:text-xl font-semibold text-white text-center">
+        <h2 className="text-lg md:text-xl font-semibold text-white ">
           {formTitle}
         </h2>
       </div>
