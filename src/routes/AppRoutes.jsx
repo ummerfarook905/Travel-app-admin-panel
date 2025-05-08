@@ -10,13 +10,7 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import Pending_Adventures from "../pages/Pending_Adventures";
 import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
 import Detailed_advantures from "../pages/Detailed_Advantures_Booking";
-
 import Destination from "../pages/Destination";
-// import PendingHotels from "../pages/PendingHotels";
-// import VerifiedHotels from "../pages/VerifiedHotels";
-// import HotelBookings from "../pages/HotelBookings";
-
-
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 import Varified_Adventures from "../pages/Varified_Adventures";
@@ -28,7 +22,8 @@ import Varified_Hotels from "../pages/Varified_Hotels";
 import DetailedPending_Hotels from "../pages/DetailedPending_Hotels";
 import DetailedVarified_Hotels from "../pages/DetailedVarified_Hotels";
 // import Destinations from "../pages/Destinations";
-// import HotelBookings from "../pages/HotelBookings";
+import HotelBookings from "../pages/HotelBookings";
+import DetailedHotelBookings from "../pages/DetailedHotelBooking";
 
 
 // Protected Layout Wrapper
@@ -78,7 +73,9 @@ const AppRoutes = () => {
 
         
         {/* Bookings */}
-        {/* <Route path="/hotel-bookings" element={<HotelBookings />} /> */}
+        <Route path="/hotel-bookings" element={<HotelBookings />} />
+        <Route path="/hotel-bookings/:id" element={<DetailedHotelBookings />} />
+
          <Route path="/adventure-bookings" element={<AdventuresBooking/>} /> 
          <Route path="/adventure-bookings/:id" element={<Detailed_advantures/>} /> 
         

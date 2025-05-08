@@ -78,34 +78,7 @@ const initialState = {
       ]
     }
   ],
-  bookings: [
-    {
-      id: 'book#HTL1',
-      hotelId: '#HTL24680',
-      hotelName: 'Urban Oasis Hotel',
-      userName: 'Sarah Miller',
-      userEmail: 'sarah@example.com',
-      checkIn: '2023-07-10',
-      checkOut: '2023-07-15',
-      price: 1900,
-      status: 'confirmed',
-      guests: 2,
-      roomType: 'Deluxe King'
-    },
-    {
-      id: 'book#HTL2',
-      hotelId: '#HTL24680',
-      hotelName: 'Urban Oasis Hotel',
-      userName: 'James Wilson',
-      userEmail: 'james@example.com',
-      checkIn: '2023-08-05',
-      checkOut: '2023-08-10',
-      price: 2200,
-      status: 'pending',
-      guests: 4,
-      roomType: 'Executive Suite'
-    }
-  ]
+  
 };
 
 const hotelsSlice = createSlice({
@@ -125,21 +98,7 @@ const hotelsSlice = createSlice({
     deleteHotel: (state, action) => {
       state.verified = state.verified.filter(h => h.id !== action.payload.id);
     },
-    cancelBooking: (state, action) => {
-      const booking = state.bookings.find(b => b.id === action.payload.id);
-      if (booking) {
-        booking.status = 'cancelled';
-      }
-    },
-    confirmBooking: (state, action) => {
-      const booking = state.bookings.find(b => b.id === action.payload.id);
-      if (booking) {
-        booking.status = 'confirmed';
-      }
-    },
-    deleteBooking: (state, action) => {
-      state.bookings = state.bookings.filter(b => b.id !== action.payload.id);
-    },
+
     addRoom: (state, action) => {
       const hotel = state.verified.find(h => h.id === action.payload.hotelId);
       if (hotel) {
