@@ -1,16 +1,11 @@
-// src/pages/Verified_Hotels.js
+// Updated Verified_Hotels.js
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../components/Table";
 import { useEffect } from "react";
-import { 
-  deactivateHotel,
-  activateHotel,
-  deleteHotel 
-} from "../redux/hotelsSlice";
+import { deleteHotel } from "../redux/hotelsSlice";
 
 const Verified_Hotels = () => {
-  // Get verified hotels from Redux store
   const verified = useSelector(state => state.hotels.verified);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,7 +26,6 @@ const Verified_Hotels = () => {
     { key: 'joined', label: 'Joined on' },
     { key: 'updated', label: 'Updated On' },
     { key: 'location', label: 'Location' },
-    { key: 'status', label: 'Status' },
     { key: 'rooms', label: 'Rooms' }
   ];
 
@@ -40,14 +34,6 @@ const Verified_Hotels = () => {
     navigate(`/verified-hotels/${urlId}`, { 
       state: { hotel } 
     });
-  };
-
-  const handleToggleStatus = (hotel) => {
-    if (hotel.status === 'Active') {
-      dispatch(deactivateHotel({ id: hotel.id }));
-    } else {
-      dispatch(activateHotel({ id: hotel.id }));
-    }
   };
 
   const handleDelete = (hotel) => {
@@ -67,11 +53,6 @@ const Verified_Hotels = () => {
     {
       label: 'View Details',
       handler: handleViewDetails
-    },
-    {
-      label: (hotel) => hotel.status === 'Active' ? 'Deactivate' : 'Activate',
-      variant: (hotel) => hotel.status === 'Active' ? 'warning' : 'success',
-      handler: handleToggleStatus
     },
     {
       label: 'Delete',
@@ -101,7 +82,6 @@ const Verified_Hotels = () => {
         actions={actions}
         nameAsLink={true}
         onNameClick={handleViewDetails}
-        rowClassName={(hotel) => hotel.status === 'Inactive' ? 'bg-gray-100' : ''}
       />
     </div>
   );

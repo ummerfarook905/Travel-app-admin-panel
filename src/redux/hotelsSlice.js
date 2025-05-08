@@ -1,3 +1,4 @@
+// Updated hotelsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -68,7 +69,6 @@ const initialState = {
       rating: 4.7,
       amenities: ['Rooftop Pool', 'Fitness Center', 'Restaurant', 'Bar', 'Free WiFi'],
       rooms: 200,
-      status: 'Active',
       coverImage: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=New+York,NY&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CNew+York&key=YOUR_API_KEY",
       images: [
@@ -116,23 +116,11 @@ const hotelsSlice = createSlice({
       const hotel = state.pending.find(h => h.id === action.payload.id);
       if (hotel) {
         state.pending = state.pending.filter(h => h.id !== action.payload.id);
-        state.verified.push({ ...hotel, status: 'Active' });
+        state.verified.push(hotel);
       }
     },
     rejectHotel: (state, action) => {
       state.pending = state.pending.filter(h => h.id !== action.payload.id);
-    },
-    deactivateHotel: (state, action) => {
-      const hotel = state.verified.find(h => h.id === action.payload.id);
-      if (hotel) {
-        hotel.status = 'Inactive';
-      }
-    },
-    activateHotel: (state, action) => {
-      const hotel = state.verified.find(h => h.id === action.payload.id);
-      if (hotel) {
-        hotel.status = 'Active';
-      }
     },
     deleteHotel: (state, action) => {
       state.verified = state.verified.filter(h => h.id !== action.payload.id);
@@ -175,8 +163,6 @@ const hotelsSlice = createSlice({
 export const {
   approveHotel,
   rejectHotel,
-  deactivateHotel,
-  activateHotel,
   deleteHotel,
   cancelBooking,
   confirmBooking,

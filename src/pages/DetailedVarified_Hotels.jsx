@@ -1,4 +1,4 @@
-// src/pages/DetailedVerified_Hotels.js
+// Updated DetailedVerified_Hotels.js
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import AdventureHeader from "../components/AdventureHeader";
 import InfoGrid from "../components/InfoGrid";
@@ -12,7 +12,7 @@ import { FaBed, FaStar, FaWifi, FaSwimmingPool, FaUtensils, FaParking } from "re
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { deleteHotel, deactivateHotel, activateHotel } from "../redux/hotelsSlice";
+import { deleteHotel } from "../redux/hotelsSlice";
 import Rating from "../components/ReviewList";
 
 const DetailedVerified_Hotels = () => {
@@ -64,21 +64,6 @@ const DetailedVerified_Hotels = () => {
     }
   };
 
-  const handleToggleStatus = async () => {
-    const action = hotel.status === 'Active' ? deactivateHotel : activateHotel;
-    try {
-      await dispatch(action({ id: hotel.id })).unwrap();
-      setHotel(prev => ({
-        ...prev,
-        status: prev.status === 'Active' ? 'Inactive' : 'Active'
-      }));
-      toast.success(`Hotel ${hotel.status === 'Active' ? 'deactivated' : 'activated'} successfully`);
-    } catch (error) {
-      console.error("Error updating hotel status:", error);
-      toast.error(error.message || "Failed to update hotel status");
-    }
-  };
-
   if (loading) {
     return (
       <div className="p-8 text-center text-gray-600">
@@ -123,23 +108,12 @@ const DetailedVerified_Hotels = () => {
           coverImage={hotel.coverImage || 'https://source.unsplash.com/random/800x400/?hotel'}
           profileImage={hotel.coverImage || 'https://source.unsplash.com/random/300x300/?hotel'}
           title={hotel.name}
-          status={hotel.status}
         />
 
         <div className="p-4 md:p-6 space-y-8">
           <InfoGrid items={infoItems} />
           
           <div className="flex justify-end space-x-4">
-            <button
-              onClick={handleToggleStatus}
-              className={`px-5 py-2 rounded-full transition-colors ${
-                hotel.status === 'Active' 
-                  ? 'bg-yellow-600 hover:bg-yellow-700 text-white'
-                  : 'bg-green-600 hover:bg-green-700 text-white'
-              }`}
-            >
-              {hotel.status === 'Active' ? 'Deactivate' : 'Activate'}
-            </button>
             <button
               onClick={handleEdit}
               className="px-5 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
