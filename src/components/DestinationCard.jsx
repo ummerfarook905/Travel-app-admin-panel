@@ -1,14 +1,18 @@
- const DestinationCard = ({ name,image}) => {
+import React from "react";
 
-    return (
-         
-        <div className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-        <img src={image} alt={name} className="w-full h-40 object-cover" />
-        <div className="p-2 text-center bg-white">
-          <h3 className="text-md font-semibold">{name}</h3>
-        </div>
+const DestinationCard = ({ name, image }) => {
+  return (
+    <div className="bg-green-100 rounded-xl shadow hover:shadow-lg transition duration-300">
+      <img
+        src={image}
+        alt={name}
+        className="w-full h-40 object-cover rounded-t-xl"
+      />
+      <div className="p-3 text-center text-lg font-medium text-gray-700">
+        {name}
       </div>
-    )
- }
+    </div>
+  );
+};
 
- export default DestinationCard;
+export default DestinationCard;
