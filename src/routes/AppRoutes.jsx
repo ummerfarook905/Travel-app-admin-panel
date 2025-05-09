@@ -26,6 +26,7 @@ import HotelBookings from "../pages/HotelBookings";
 import DetailedHotelBookings from "../pages/DetailedHotelBooking";
 import EditHotel from "../pages/EditHotel";
 
+import DestinationDetail from "../pages/Detailed_Destination";
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -65,6 +66,7 @@ const AppRoutes = () => {
 
         {/* Destinations */}
         <Route path="/destination" element={<Destination/>} />
+        <Route path="/destination/:id" element={<DestinationDetail/>} />
         
         {/* Hotels */}
         <Route path="/pending-hotels" element={<Pending_Hotels/>} />
