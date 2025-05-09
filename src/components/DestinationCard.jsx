@@ -1,8 +1,11 @@
 import React from "react";
 
-const DestinationCard = ({ name, image }) => {
+const DestinationCard = ({ name, image,onClick }) => {
   return (
-    <div className="bg-green-100 rounded-xl shadow hover:shadow-lg transition duration-300">
+    <div 
+    className="bg-green-100 rounded-xl shadow hover:shadow-lg transition duration-300 cursor-pointer"
+
+    onClick={onClick}>
       <img
         src={image}
         alt={name}

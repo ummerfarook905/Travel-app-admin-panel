@@ -24,6 +24,7 @@ import Varified_Adventures from "../pages/Varified_Adventures";
 import DetailedVarified_Adventures from "../pages/DetailedVarified_Adventures";
 import AdventuresBooking from "../pages/AdventuresBooking";
 import EditAdventure from "../pages/EditAdventure";
+import DestinationDetail from "../pages/Detailed_Destination";
 
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
@@ -64,6 +65,7 @@ const AppRoutes = () => {
 
         {/* Destinations */}
         <Route path="/destination" element={<Destination/>} />
+        <Route path="/destination/:id" element={<DestinationDetail/>} />
         
         {/* Hotels */}
         {/* <Route path="/pending-hotels" element={<PendingHotels />} /> */}

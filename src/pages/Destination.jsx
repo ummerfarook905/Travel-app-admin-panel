@@ -2,11 +2,13 @@ import { useReducer } from "react"
 import { destinationReducer,initialDestinations } from "../redux/destinationReducer"
 import { FaPlus } from "react-icons/fa";
 import DestinationCard from "../components/DestinationCard";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Destionation =()=>{
   const [destinations]= useReducer(destinationReducer,initialDestinations);
+  const navigate = useNavigate();
 
   return(
     <div className ="p-6 bg-[#f6f8fc] min-h-screen">
@@ -20,7 +22,12 @@ const Destionation =()=>{
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {destinations.map((dest,index)=>(
-          <DestinationCard key={index} name={dest.name} image={dest.image}/>
+          <DestinationCard 
+          key={index} 
+          name={dest.name}
+          image={dest.image}
+          onClick={()=>navigate(`/destination/${dest.id}`)}
+          />
         ))}
 
       </div>
