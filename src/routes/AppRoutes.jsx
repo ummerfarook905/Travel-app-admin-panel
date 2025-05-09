@@ -29,6 +29,8 @@ import EditHotel from "../pages/EditHotel";
 import DestinationDetail from "../pages/Detailed_Destination";
 import DestinationForm from "../components/DestinationForm";
 import EditDestination from "../pages/EditDestination"
+import DestinationDetail from "../pages/Detailed_Destination";
+
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
 
@@ -71,6 +73,7 @@ const AppRoutes = () => {
         <Route path="/destination/:id" element={<DestinationDetail/>} />
         <Route path="/destination/new" element={<DestinationForm/> } />
         <Route path="/destination/edit/:id" element={<EditDestination/>} />
+        <Route path="/destination/:id" element={<DestinationDetail/>} />
         
         {/* Hotels */}
         <Route path="/pending-hotels" element={<Pending_Hotels/>} />
