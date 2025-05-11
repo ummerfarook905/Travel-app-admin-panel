@@ -19,8 +19,9 @@ const pageTitles = {
   "/adventure-bookings": " Adventures Bookings",
   "/adventure-bookings/:id": "Adventures Bookings",
 
-
-
+"/destination": "Destinations",
+"/destination/:id": " View Destination ",
+"/destination/new": " Add New Destination",
 };
 
 const Header = ({ toggleSidebar }) => {
@@ -29,7 +30,10 @@ const Header = ({ toggleSidebar }) => {
   const getTitle = (path) => {
     if (path.startsWith("/pending-adventures/")) return "Pending Adventures";
     if (path.startsWith("/verified-adventures/")) return "Varified Adventures";
-    if (path.startsWith("/adventure-bookings/")) return "Adventures Bookings";
+    if (path.startsWith("/advanture-bookings/")) return "Adventures Bookings";
+    if (path.startsWith("/destination/")) return "Destination";
+
+
     return pageTitles[path] || "Admin Panel";
   };
   
