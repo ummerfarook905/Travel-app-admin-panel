@@ -24,9 +24,11 @@ import DetailedVarified_Adventures from "../pages/DetailedVarified_Adventures";
 import AdventuresBooking from "../pages/AdventuresBooking";
 import EditAdventure from "../pages/EditAdventure";
 import DestinationDetail from "../pages/Detailed_Destination";
-
+import DestinationForm from "../components/DestinationForm";
+import EditDestination from "../pages/EditDestination"
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
+
   <ProtectedRoute>
     <RoleBasedRoute allowedRoles={["admin"]}>
       <DashboardLayout>
@@ -64,6 +66,8 @@ const AppRoutes = () => {
         {/* Destinations */}
         <Route path="/destination" element={<Destination/>} />
         <Route path="/destination/:id" element={<DestinationDetail/>} />
+        <Route path="/destination/new" element={<DestinationForm/> } />
+        <Route path="/destination/edit/:id" element={<EditDestination/>} />
         
         {/* Hotels */}
         {/* <Route path="/pending-hotels" element={<PendingHotels />} /> */}
