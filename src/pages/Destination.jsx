@@ -14,7 +14,9 @@ const Destionation =()=>{
     <div className ="p-6 bg-[#f6f8fc] min-h-screen">
       <div className ="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Destinations</h1>
-        <button className="bg-[#004d40] text-white px-5 py-2 rounded-full hover:bg-[#00332c] transition">
+        <button 
+        onClick={()=>navigate('/destination/new')}
+        className="bg-[#004d40] text-white px-5 py-2 rounded-full hover:bg-[#00332c] transition">
         <FaPlus className="inline mr-2" /> New Destination
 
         </button>

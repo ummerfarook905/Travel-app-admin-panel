@@ -26,8 +26,9 @@ const pageTitles = {
   "/adventure-bookings": " Adventures Bookings",
   "/adventure-bookings/:id": "Adventures Bookings",
 
-
-
+"/destination": "Destinations",
+"/destination/:id": " View Destination ",
+"/destination/new": " Add New Destination",
 };
 
 const Header = ({ toggleSidebar }) => {
@@ -40,6 +41,10 @@ const Header = ({ toggleSidebar }) => {
     if (path.startsWith("/verified-hotels/")) return "Verified Hotels";
 
     if (path.startsWith("/hotel-bookings/")) return "Hotel Bookings";
+
+    if (path.startsWith("/advanture-bookings/")) return "Adventures Bookings";
+    if (path.startsWith("/destination/")) return "Destination";
+
 
     return pageTitles[path] || "Admin Panel";
   };
