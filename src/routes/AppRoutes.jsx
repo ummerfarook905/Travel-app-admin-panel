@@ -30,7 +30,8 @@ import DestinationDetail from "../pages/Detailed_Destination";
 import DestinationForm from "../components/DestinationForm";
 import EditDestination from "../pages/EditDestination"
 import DestinationDetail from "../pages/Detailed_Destination";
-
+import DestinationForm from "../components/DestinationForm";
+import EditDestination from "../pages/EditDestination"
 // Protected Layout Wrapper
 const ProtectedLayout = () => (
 
