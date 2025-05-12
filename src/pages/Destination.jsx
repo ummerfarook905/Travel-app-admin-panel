@@ -1,24 +1,38 @@
-import DestinationGrid from "../components/DestinationGrid"
-import { DestinationsProvider } from "../context/DestinationsContext";
-const Destination =()=>{
-    return(
-        <div className="flex flex-col w-full">
-      <div className="flex items-center justify-between p-4">
-        <h1 className="text-2xl font-bold">Destinations</h1>
-        <input
-          type="text"
-          placeholder="Search here..."
-          className="border p-2 rounded-md w-60"
-        />
-        <button className="bg-green-700 text-white px-4 py-2 rounded-md">
-          + New Destination
+import { useReducer } from "react"
+import { destinationReducer,initialDestinations } from "../redux/destinationReducer"
+import { FaPlus } from "react-icons/fa";
+import DestinationCard from "../components/DestinationCard";
+import { useNavigate } from "react-router-dom";
+
+
+
+const Destionation =()=>{
+  const [destinations]= useReducer(destinationReducer,initialDestinations);
+  const navigate = useNavigate();
+
+  return(
+    <div className ="p-6 bg-[#f6f8fc] min-h-screen">
+      <div className ="flex justify-end items-center mb-6">
+        <button 
+        onClick={()=>navigate('/destination/new')}
+        className="bg-[#004d40] text-white px-5 py-2 rounded-full hover:bg-[#00332c] transition ">
+        <FaPlus className="inline mr-2" /> New Destination
+
         </button>
       </div>
-      <DestinationsProvider>
-      <DestinationGrid />
-      </DestinationsProvider>
-   
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        {destinations.map((dest,index)=>(
+          <DestinationCard 
+          key={index} 
+          name={dest.name}
+          image={dest.image}
+          onClick={()=>navigate(`/destination/${dest.id}`)}
+          />
+        ))}
+
+      </div>
     </div>
-    )
+  )
 }
-export default Destination;
+export default  Destionation;
