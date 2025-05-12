@@ -27,7 +27,7 @@ const DestinationForm = () => {
   };
 
   const handleCancel = () => {
-    navigate('/destination');
+    navigate("/destination");
   };
 
   return (
