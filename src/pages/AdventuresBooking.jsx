@@ -110,7 +110,6 @@ const AdventuresBooking = () => {
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6">Adventure Bookings</h1>
       
       {location.state?.message && (
         <div className={`mb-4 p-4 rounded ${
