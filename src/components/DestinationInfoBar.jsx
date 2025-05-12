@@ -1,60 +1,96 @@
+import React from "react";
+import { useParams } from "react-router-dom";
+import { initialDestinations } from "../redux/destinationReducer";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import EditForm from "../components/EditForm";
-
-const EditDestination = () => {
-  const { state } = useLocation();
-  const navigate = useNavigate();
+import ConfirmationDialog from "./ConfirmationDialog";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+const DestinationInfoBar = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [showConfirm, setShowConfirm] = useState(false);
+  const destination = initialDestinations.find((dest) => dest.id === id);
 
-  const [formData, setFormData] = useState(state?.adventure || {});
-
-  const destinationFields = [
-    { name: 'name', label: 'Destination Name', type: 'text', placeholder: 'Enter name', required: true, column: 'left' },
-    { name: 'location', label: 'Location', type: 'text', placeholder: 'Enter location', required: true, column: 'left' },
-    { name: 'description', label: 'Description', type: 'textarea', placeholder: 'Describe the destination', required: true, column: 'left' },
-    { name: 'mapLink', label: 'Map Link', type: 'text', placeholder: 'Enter map URL', column: 'right' },
-    { name: 'contact', label: 'Contact Number', type: 'text', placeholder: 'Enter contact', column: 'right' },
-    { name: 'price', label: 'Price', type: 'number', placeholder: 'Enter price', column: 'right' },
-    { name: 'maxPersons', label: 'Max Persons', type: 'number', placeholder: 'Enter max persons', column: 'right' },
-    { name: 'extraHead', label: 'Extra per Head', type: 'number', placeholder: 'Enter extra cost', column: 'right' },
-    { name: 'startTime', label: 'Start Time', type: 'time', defaultValue: '09:00', column: 'left' },
-    { name: 'endTime', label: 'End Time', type: 'time', defaultValue: '13:00', column: 'right' },
-  ];
-
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === 'file' ? files[0] : value,
-    }));
+  if (!destination) {
+    return <div className="p-6 text-center text-xl text-gray-500">Destination not found.</div>;
+  }
+   const handleDeleteClick = () => {
+    setShowConfirm(true);
   };
+    const handleConfirmDelete = () => {
+    setShowConfirm(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Updated destination data", formData);
-    navigate(`/destination/edit/${formData.id}`, {
-      state: { message: "Destination updated successfully" },
+  
+    toast.success("Destination deleted successfully.");
+  };
+   const handleCancelDelete = () => {
+    setShowConfirm(false);
+    toast.success("Destination deletion cancelled.");
+  };
+  const handleEditClick = () => {
+    navigate("/destination/edit/:id", {
+      state: { adventure: destination }, // Pass the destination data to the edit page
     });
   };
 
-  const handleCancel = () => {
-    navigate(`/destinations/${formData.id}`);
-  };
 
   return (
-    <div className="p-8 max-w-5xl mx-auto">
-      <EditForm
-        formData={formData}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        onCancel={handleCancel}
-        formTitle="Edit Destination"
-        fields={destinationFields}
-        mediaOptions={{ photos: true, videos: false }}
-      />
+    // <div className="bg-[#F9FAFB] min-h-screen py-6 px-4">
+      <div className="max-w-6xl mx-auto bg-white rounded-t-3xl overflow-hidden ">
+        {/* Header image */}
+        <div className="relative h-[300px] mt-6 mx-6" >
+
+        <img
+          src={destination.image}
+          alt={destination.name}
+          className="  w-full h-[300px] object-cover rounded-t-3xl"
+        />
+
+        </div>
+       
+
+        {/* Header Info */}
+        <div className="bg-[#004D40] px-6 py-5 flex flex-col md:flex-row justify-between items-start md:items-center rounded-b-3xl mx-6">
+  <div className="flex items-center space-x-4">
+    <div className="bg-orange-500 p-2 rounded-full">
+      <FaMapMarkerAlt className="text-white text-xl" />
     </div>
+    <div>
+      <h1 className="text-2xl md:text-3xl font-bold text-white">{destination.name}</h1>
+      <p className="text-white text-sm">{destination.location}</p>
+    </div>
+  </div>
+
+  <div className="flex space-x-2 mt-4 md:mt-0">
+    <button className="bg-white text-[#004D40] px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-200"
+     onClick={handleDeleteClick}
+     >
+      Delete
+    </button>
+    <button 
+    className="bg-white text-[#004D40] px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-200"
+    onClick={handleEditClick}>
+      Edit
+    </button>
+  </div>
+</div>
+       
+
+          
+          
+   {/* Confirmation Dialog */}
+      {showConfirm && (
+        <ConfirmationDialog
+          message="Do you really want to delete this destination?"
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
+        
+        
+     </div>
   );
 };
 
-export default EditDestination;
+export default DestinationInfoBar;

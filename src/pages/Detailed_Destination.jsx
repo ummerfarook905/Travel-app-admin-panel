@@ -7,6 +7,7 @@ import DestinationInfoBar from "../components/DestinationInfoBar";
 import DestinationAbout from "../components/DestinationAbout";
 import DestinationImages from "../components/DestinationImages";
 import DestinationReviews from "../components/DestinationReviews";
+import ReviewList from "../components/ReviewList";
 
 const Detailed_Destination = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const Detailed_Destination = () => {
           <DestinationImages images={destination.images} />
         </div>
 
-        <DestinationReviews rating={destination.rating} reviews={destination.reviews} />
+        <ReviewList rating={destination.rating} reviews={destination.reviews} />
       </div>
     </div>
   );
