@@ -33,13 +33,13 @@ const EditDestination = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Updated destination data", formData);
-    navigate(`/destination/edit/${formData.id}`, {
+    navigate(`/destination/${formData.id}`, {
       state: { message: "Destination updated successfully" },
     });
   };
 
   const handleCancel = () => {
-    navigate(`/destinations/${formData.id}`);
+    navigate(`/destination/${formData.id}`);
   };
 
   return (
