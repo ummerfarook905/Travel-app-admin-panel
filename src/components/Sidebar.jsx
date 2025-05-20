@@ -68,7 +68,7 @@ export default function Sidebar() {
           <FiX size={24} />
         </button>
 
-        <h1 className="text-2xl font-bold mb-8 mt-2">A Travel App</h1>
+        <h1 className="text-2xl font-bold mb-8 mt-2 text-center">A Travel App</h1>
         <ul>
           {navItems.map((item, index) => (
             <li key={index} className="mb-2">
