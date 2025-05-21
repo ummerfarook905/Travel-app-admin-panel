@@ -9,9 +9,7 @@ import {
 } from '../redux/adventuresSlice';
 
 const AdventuresBooking = () => {
-  
   const bookings = useSelector(state => state.adventures.bookings);
- 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,40 +24,52 @@ const AdventuresBooking = () => {
     }
   }, [location, navigate]);
 
+  const formatDate = (dateString) => {
+    const options = { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      weekday: 'short'
+    };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
+
+  const formatSimpleDate = (dateString) => {
+    const options = { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
+
   const headers = [
     { key: 'adventureName', label: 'Adventure Name' },
     { key: 'userName', label: 'User Name' },
     {
       key: 'checkIn',
       label: 'Check In',
-      render: (date) => new Date(date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      })
+      render: (date) => formatDate(date)
     },
     {
       key: 'checkOut',
       label: 'Check Out',
-      render: (date) => new Date(date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      })
+      render: (date) => formatDate(date)
     },
     {
-      key: 'status',
-      label: 'Status',
-      render: (status) => (
-        <span className={`px-2 py-1 rounded-full text-xs ${
-          status === 'confirmed' ? 'bg-green-100 text-green-800' :
-          status === 'cancelled' ? 'bg-red-100 text-red-800' :
-          'bg-yellow-100 text-yellow-800'
-        }`}>
-          {status.charAt(0).toUpperCase() + status.slice(1)}
-        </span>
-      )
-    }
+      key: 'bookingDate',
+      label: 'Date',
+      render: (date) => formatSimpleDate(date)
+    },
+    {
+      key: 'price',
+      label: 'Price',
+      render: (price) => `$${Number(price).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`
+    },
+
   ];
 
   const handleViewDetails = (booking) => {
@@ -110,7 +120,6 @@ const AdventuresBooking = () => {
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-      
       {location.state?.message && (
         <div className={`mb-4 p-4 rounded ${
           location.state.type === 'error' 
@@ -130,7 +139,6 @@ const AdventuresBooking = () => {
           onNameClick={handleViewDetails}
         />
       </div>
-     
     </div>
   );
 };
