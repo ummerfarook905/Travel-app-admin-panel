@@ -105,29 +105,31 @@ const DetailedVerified_Adventures = () => {
           <div className="flex justify-end space-x-4">
             {/* buttons*/}
             <button
-              onClick={handleEdit}
-              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
-            >
-              Edit 
-            </button>
-            <button
               onClick={handleDelete}
               className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
             >
               Delete 
             </button>
+
+            <button
+              onClick={handleEdit}
+              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
+            >
+              Edit 
+            </button>
           </div>
+          {/* About and Price section */}
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-            <div className="flex-1 min-w-0">
-              <SectionTitle>About This Adventure</SectionTitle>
-              <p className="text-gray-700 text-sm md:text-base mt-2 leading-relaxed text-justify">
+            <div className="flex-1 max-w-full md:max-w-[70%] min-w-0">
+              <SectionTitle>About:</SectionTitle>
+              <p className="text-sm md:text-base mt-2 leading-relaxed text-justify text-[#303972]">
                 {adventure.description}
               </p>
             </div>
             <div className="shrink-0 md:ml-6 mt-2 md:mt-7">
-              <div className="bg-[#00493E] text-white rounded-lg px-6 py-3 flex items-center shadow">
+              <div className="bg-[#00493E] text-white rounded-lg px-6 py-3 flex flex-col items-center shadow">
                 <span className="text-lg font-bold">${adventure.price}</span>
-                <span className="ml-2 text-sm opacity-90">/ person</span>
+                <span className="text-sm opacity-90">/Night</span>
               </div>
             </div>
           </div>
