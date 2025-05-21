@@ -3,7 +3,7 @@ const InfoItem = ({ icon, text }) => (
       <div className="mr-2 p-2 bg-orange-500 text-white rounded-full text-lg flex items-center justify-center">
         {icon}
       </div>
-      <span className="text-sm md:text-base truncate">{text}</span>
+      <span className="text-sm md:text-base truncate text-[#303972]">{text}</span>
     </div>
   );
   
