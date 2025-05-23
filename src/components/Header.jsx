@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { FiMenu, FiSettings } from "react-icons/fi";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
+import { FiSearch } from "react-icons/fi";
+
 import NotificationIcon from "./NotificationIcon";
 import NotificationDropdown from "./NotificationDropdown";
 import ProfileIcon from "./ProfileIcon";
@@ -102,7 +104,7 @@ const Header = ({ toggleSidebar }) => {
             placeholder="Search..."
             className="pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full md:w-64"
           />
-        </div> */}
+        </div> 
         
         {/* Profile Section */}
         <div className="flex items-center space-x-2 md:space-x-4">
