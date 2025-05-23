@@ -3,14 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../components/Table";
 import { useEffect } from "react";
-<<<<<<< HEAD
 import { deleteAdventure } from "../redux/adventuresSlice";
-=======
-import { 
-
-  deleteAdventure 
-} from "../redux/adventuresSlice";
->>>>>>> a8b3b2ceaa5cd472a2d74b1acb25e2b64efb3344
 
 const Verified_Adventures = () => {
   // Get verified adventures from Redux store
