@@ -3,10 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../components/Table";
 import { useEffect } from "react";
-import { 
-
-  deleteAdventure 
-} from "../redux/adventuresSlice";
+import { deleteAdventure } from "../redux/adventuresSlice";
 
 const Verified_Adventures = () => {
   // Get verified adventures from Redux store
@@ -37,44 +34,46 @@ const Verified_Adventures = () => {
     navigate(`/verified-adventures/${urlId}`, { 
       state: { adventure } 
     });
+    return null; // No toast for view action
   };
-
-  
 
   const handleDelete = (adventure) => {
-    if (window.confirm(`Are you sure you want to delete ${adventure.name}?`)) {
-      dispatch(deleteAdventure({ id: adventure.id }));
-    }
+    dispatch(deleteAdventure({ id: adventure.id }));
+    return `Adventure ${adventure.name} deleted successfully!`;
   };
+
   const handleEdit = (adventure) => {
     const urlId = adventure.id.replace('#', '');
     navigate(`/edit-adventure/${urlId}`, {
       state: { adventure }
     });
+    return null; // No toast for edit action
   };
   
   const actions = [
     {
       label: 'View Details',
-      handler: handleViewDetails
-    },
-  
-    {
-      label: 'Delete',
-      variant: 'danger',
-      handler: handleDelete
+      handler: handleViewDetails,
+      requireConfirmation: false
     },
     {
       label: 'Edit',
       variant: 'primary',
-      handler: handleEdit
+      handler: handleEdit,
+      requireConfirmation: false
     },
-    
+    {
+      label: 'Delete',
+      variant: 'danger',
+      requireConfirmation: true,
+      confirmationMessage: `Are you sure you want to delete this adventure? This action cannot be undone.`,
+      confirmationVariant: 'danger',
+      handler: handleDelete
+    }
   ];
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      
       {location.state?.message && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
           {location.state.message}

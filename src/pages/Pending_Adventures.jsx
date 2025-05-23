@@ -18,19 +18,24 @@ const Pending_Adventures = () => {
     { key: 'location', label: 'Location' }
   ];
   
-  const handleApprove = (adventure) => {
-    dispatch(approveAdventure({ id: adventure.id }));
-    navigate('/verified-adventures', { 
-      state: { 
-        message: `Adventure ${adventure.id} approved successfully!`
-      } 
-    });
-  };
+  // const handleApprove = (adventure) => {
+  //   dispatch(approveAdventure({ id: adventure.id }));
+  //   navigate('/verified-adventures', { 
+  //     state: { 
+  //       message: `Adventure ${adventure.id} approved successfully!`
+  //     } 
+  //   });
+  // };
 
-  const handleReject = (adventure) => {
-    dispatch(rejectAdventure({ id: adventure.id }));
-    alert(`Adventure ${adventure.id} rejected!`);
-  };
+const handleApprove = (adventure) => {
+  dispatch(approveAdventure({ id: adventure.id }));
+  return `Adventure ${adventure.id} approved successfully!`;
+};
+
+ const handleReject = (adventure) => {
+  dispatch(rejectAdventure({ id: adventure.id }));
+  return `Adventure ${adventure.id} rejected!`; // This will be shown in Toast
+};
 
   const handleViewDetails = (adventure) => {
     const urlId = adventure.id.replace('#', '');
@@ -38,23 +43,31 @@ const Pending_Adventures = () => {
       state: { adventure } 
     });
   };
+const actions = [
+  {
+    label: 'Approve',
+    variant: 'success',
+    requireConfirmation: true,
+    confirmationMessage: 'Are you sure you want to approve this adventure?',
+    confirmationVariant: 'success', // This will make the dialog green
+    handler: handleApprove
+  },
+  {
+    label: 'Reject',
+    variant: 'danger',
+    requireConfirmation: true,
+    // No confirmationVariant needed - will default to red
+    confirmationMessage: 'Are you sure you want to reject this adventure?',
+    handler: handleReject
+  },
+  {
+    label: 'View Details',
+    handler: handleViewDetails
+  }
+];
 
-  const actions = [
-    {
-      label: 'Approve',
-      variant: 'success',
-      handler: handleApprove
-    },
-    {
-      label: 'Reject',
-      variant: 'danger',
-      handler: handleReject
-    },
-    {
-      label: 'View Details',
-      handler: handleViewDetails
-    }
-  ];
+
+
 
   return (
     <div className="p-8 max-w-7xl mx-auto">

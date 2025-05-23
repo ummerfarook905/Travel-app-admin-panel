@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { FiMenu, FiSettings } from "react-icons/fi";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
+import { FiSearch } from "react-icons/fi";
+
 import NotificationIcon from "./NotificationIcon";
 import NotificationDropdown from "./NotificationDropdown";
 import ProfileIcon from "./ProfileIcon";
@@ -105,8 +107,19 @@ const Header = ({ toggleSidebar }) => {
       
       {/* Right Section */}
       <div className="flex items-center space-x-2 md:space-x-6">
-      <SearchBar />
+        {/* Search Bar - Hidden on small screens */}
+        <div className="hidden md:block relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <FiSearch className="text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search..."
+            className="pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full md:w-64"
+          />
+        </div> 
         
+        {/* Profile Section */}
         <div className="flex items-center space-x-2 md:space-x-4">
           <button 
             onClick={() => window.location.href = "/settings"}
