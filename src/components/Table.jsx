@@ -5,7 +5,7 @@ const Table = ({
   headers,
   rows,
   actions = [],
-  idColor = "text-[#00493E] font-bold",
+  idColor = "text-[#00493E] font-semibold",
   nameAsLink = false,
   onNameClick
 }) => {
@@ -71,25 +71,27 @@ const Table = ({
         <table className="min-w-full divide-y divide-gray-200" ref={tableRef}>
           <thead>
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-bold text-[#00493E] uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-sm font-semibold text-[#00493E]  tracking-wider">
                 <input
                   type="checkbox"
                   checked={selectedRows.length === rows.length}
                   onChange={handleSelectAll}
                   style={greenCheckboxStyle}
+                  className="cursor-pointer"
+
                 />
               </th>
               {headers.map((header, index) => (
                 <th
                   key={index}
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-bold text-[#00493E] uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-sm font-semibold text-[#00493E]  tracking-wider"
                 >
                   {header.label || header}
                 </th>
               ))}
               {actions.length > 0 && (
-                <th className="px-6 py-3 text-right text-xs font-bold text-[#00493E] uppercase tracking-wider">
+                <th className="px-6 py-3 text-right text-sm font-semibold text-[#00493E]  tracking-wider">
                   Actions
                 </th>
               )}
@@ -118,7 +120,7 @@ const Table = ({
                     checked={selectedRows.includes(rowIndex)}
                     onChange={() => handleSelectRow(rowIndex)}
                     style={greenCheckboxStyle}
-                    className="[&:hover]:opacity-100"
+                    className="[&:hover]:opacity-100 cursor-pointer"
                   />
                 </td>
 
@@ -140,7 +142,7 @@ const Table = ({
                       (header.key === 'name' || header.key === 'adventureName') ? (
                         <button
                           onClick={(e) => handleNameClick(row, e)}
-                          className="flex items-center space-x-2 text-[#303972] hover:text-blue-800 "
+                          className="flex items-center space-x-2 text-[#303972]  "
                         >
                           {/* Profile picture circle */}
                           <div className="w-8 h-8 rounded-full bg-[#00493E] flex items-center justify-center overflow-hidden">
@@ -150,7 +152,7 @@ const Table = ({
                               className="w-6 h-6 rounded-full object-cover"
                             />
                           </div>
-                          <span>{cellContent}</span>
+                          <span className="font-semibold">{cellContent}</span>
                         </button>
                       ) : (
                         cellContent
@@ -174,31 +176,50 @@ const Table = ({
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
-                          <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                          <circle cx="5" cy="10" r="1.5" />
+                          <circle cx="10" cy="10" r="1.5" />
+                          <circle cx="15" cy="10" r="1.5" />
                         </svg>
+
                       </button>
 
-                      {activeMenu === rowIndex && (
-                        <div className="origin-top-right fixed right-8 mt-6 w-48 rounded-md shadow-lg bg-white ring-1 ring-opacity-5 z-50">
-                          <div className="py-1">
-                            {actions.map((action, index) => (
-                              <button
-                                key={index}
-                                onClick={(e) => handleActionClick(action, row, e)}
-                                className={`block px-4 py-2 text-sm w-full text-left hover:bg-gray-100 ${
-                                  action.variant === 'danger'
-                                    ? 'text-red-600'
-                                    : action.variant === 'success'
-                                    ? 'text-[#00493E]'
-                                    : 'text-gray-700'
-                                }`}
-                              >
-                                {action.label}
-                              </button>
-                            ))}
-                          </div>
+                     {activeMenu === rowIndex && (
+                        <div
+                          className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50
+                                    transition duration-200 ease-in-out transform scale-95 origin-top-right animate-scaleIn"
+                          role="menu"
+                          aria-orientation="vertical"
+                          aria-labelledby="menu-button"
+                          tabIndex="-1"
+                        >
+                        <div className="py-1">
+                          {actions.map((action, index) => (                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                            <button
+                              key={index}
+                              onClick={(e) => handleActionClick(action, row, e)}
+                              className={`flex items-center px-4 py-2 text-sm w-full text-left hover:bg-gray-100 focus:outline-none focus:bg-gray-100 ${
+                                action.variant === 'danger'
+                                  ? 'text-red-600'
+                                  : action.variant === 'success'
+                                  ? 'text-[#00493E]'
+                                  : 'text-gray-700'
+                              }`}
+                              role="menuitem"
+                              tabIndex="-1"
+                            >
+                              {/* Optional icon for better UX */}
+                              {action.icon && (
+                                <span className="mr-2 text-lg text-gray-400">
+                                  {action.icon}
+                                </span>
+                              )}
+                              {action.label}
+                            </button>
+                          ))}
                         </div>
-                      )}
+                      </div>
+                    )}
+
                     </div>
                   </td>
                 )}
