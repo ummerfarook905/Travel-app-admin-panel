@@ -1,12 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: [
-      "./index.html",
-      "./src/**/*.{js,ts,jsx,tsx}",
-    ],
+   content: ["./src/**/*.{js,jsx,ts,tsx,html}"],
+
     darkMode: 'class', // This enables dark mode with class strategy
     theme: {
       extend: {
+         fontFamily: {
+          sans: ['Poppins', 'sans-serif'], // Override default sans font family with Poppins
+        },
+        keyframes: {
+        scaleIn: {
+          '0%': { opacity: 0, transform: 'scale(0.95)' },
+          '100%': { opacity: 1, transform: 'scale(1)' },
+        },
+      },
+      animation: {
+        scaleIn: 'scaleIn 150ms ease-out forwards',
+      },
+    
         colors: {
           // Light mode colors
           light: {
