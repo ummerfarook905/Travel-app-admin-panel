@@ -14,17 +14,18 @@ const HotelBookings = () => {
     { key: "username", label: "User Name" },
     { key: "checkIn", label: "Check-in" },
     { key: "checkOut", label: "Check-out" },
-    { key: "status", label: "Status" }
+    { key: "price", label: "Price" }
   ];
 
   const handleConfirm = (booking) => {
     dispatch(confirmBooking({ id: booking.bookingId }));
-    alert(`Booking ${booking.bookingId} confirmed.`);
+    return `Booking ${booking.bookingId} confirmed.`;
+    
   };
 
   const handleCancel = (booking) => {
     dispatch(cancelBooking({ id: booking.bookingId }));
-    alert(`Booking ${booking.bookingId} cancelled.`);
+    return `Booking ${booking.bookingId} cancelled.`;
   };
 
   const handleViewDetails = (booking) => {
@@ -36,11 +37,19 @@ const HotelBookings = () => {
     {
       label: "Confirm",
       variant: "success",
+       requireConfirmation: true,
+    confirmationMessage: 'Are you sure you want to Confirm this hotel booking?',
+    confirmationVariant: 'success', // This will make the dialog green
+ 
       handler: handleConfirm
     },
     {
       label: "Cancel",
       variant: "danger",
+      requireConfirmation: true,
+    // No confirmationVariant needed - will default to red
+    confirmationMessage: 'Are you sure you want to cancel this hotel booking?',
+ 
       handler: handleCancel
     },
     {
