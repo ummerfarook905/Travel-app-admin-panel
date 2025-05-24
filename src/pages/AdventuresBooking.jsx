@@ -5,7 +5,6 @@ import Table from '../components/Table';
 import { 
   cancelBooking,
   confirmBooking,
-  deleteBooking 
 } from '../redux/adventuresSlice';
 
 const AdventuresBooking = () => {
@@ -23,51 +22,22 @@ const AdventuresBooking = () => {
       return () => clearTimeout(timer);
     }
   }, [location, navigate]);
-
-  const formatDate = (dateString) => {
-    const options = { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric',
-      weekday: 'short'
-    };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-  };
-
-  const formatSimpleDate = (dateString) => {
-    const options = { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
-    };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-  };
-
   const headers = [
     { key: 'adventureName', label: 'Adventure Name' },
     { key: 'userName', label: 'User Name' },
     {
       key: 'checkIn',
       label: 'Check In',
-      render: (date) => formatDate(date)
     },
     {
       key: 'checkOut',
       label: 'Check Out',
-      render: (date) => formatDate(date)
     },
-    {
-      key: 'bookingDate',
-      label: 'Date',
-      render: (date) => formatSimpleDate(date)
-    },
+    
     {
       key: 'price',
       label: 'Price',
-      render: (price) => `$${Number(price).toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}`
+     
     },
 
   ];
@@ -79,43 +49,41 @@ const AdventuresBooking = () => {
   };
 
   const handleCancel = (booking) => {
-    if (window.confirm(`Cancel ${booking.userName}'s booking for ${booking.adventureName}?`)) {
-      dispatch(cancelBooking({ id: booking.id }));
-    }
+    
+    dispatch(cancelBooking({ id: booking.id }));
+            return `Booking ${booking.id}  cancelled.`;
+
   };
 
   const handleConfirm = (booking) => {
     dispatch(confirmBooking({ id: booking.id }));
+        return `Booking ${booking.id} confirmed.`;
+
   };
 
-  const handleDelete = (booking) => {
-    if (window.confirm(`Permanently delete this booking record?`)) {
-      dispatch(deleteBooking({ id: booking.id }));
-    }
-  };
-
+  
   const actions = [
-    {
-      label: 'View Details',
-      handler: handleViewDetails
-    },
+ 
     {
       label: 'Confirm',
       variant: 'success',
       handler: handleConfirm,
-      showCondition: (booking) => booking.status !== 'confirmed'
-    },
+      requireConfirmation: true,
+      confirmationMessage: 'Are you sure you want to Confirm this hotel booking?',
+      confirmationVariant: 'success', // This will make the dialog green
+     },
     {
       label: 'Cancel',
       variant: 'warning',
       handler: handleCancel,
-      showCondition: (booking) => booking.status !== 'cancelled'
-    },
-    {
-      label: 'Delete',
-      variant: 'danger',
-      handler: handleDelete
-    }
+      variant: "danger",
+      requireConfirmation: true,
+      confirmationMessage: 'Are you sure you want to cancel this Adventure booking?',
+     },
+      {
+        label: 'View Details',
+        handler: handleViewDetails
+      },
   ];
 
   return (
