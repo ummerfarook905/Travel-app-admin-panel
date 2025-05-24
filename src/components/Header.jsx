@@ -3,10 +3,6 @@ import { useLocation } from "react-router-dom";
 import { FiMenu, FiSettings } from "react-icons/fi";
 // import SearchBar from "./SearchBar";
 import { FiSearch } from "react-icons/fi";
-
-// import SearchBar from "./SearchBar";
-import { FiSearch } from "react-icons/fi";
-
 import NotificationIcon from "./NotificationIcon";
 import NotificationDropdown from "./NotificationDropdown";
 import ProfileIcon from "./ProfileIcon";
@@ -34,9 +30,7 @@ const pageTitles = {
 "/destination": "Destinations",
 "/destination/:id": " View Destination ",
 "/destination/new": " Add New Destination",
-"/destination": "Destinations",
-"/destination/:id": " View Destination ",
-"/destination/new": " Add New Destination",
+
 };
 
 const Header = ({ toggleSidebar }) => {

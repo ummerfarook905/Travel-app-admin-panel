@@ -47,7 +47,5 @@ const Destionation =()=>{
       </div>
     </div>
   )
-  )
 }
-export default  Destionation;
 export default  Destionation;
