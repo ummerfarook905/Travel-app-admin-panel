@@ -33,7 +33,21 @@ const Destionation =()=>{
         ))}
 
       </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        {destinations.map((dest,index)=>(
+          <DestinationCard 
+          key={index} 
+          name={dest.name}
+          image={dest.image}
+          onClick={()=>navigate(`/destination/${dest.id}`)}
+          />
+        ))}
+
+      </div>
     </div>
   )
+  )
 }
+export default  Destionation;
 export default  Destionation;

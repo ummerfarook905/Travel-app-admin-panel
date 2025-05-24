@@ -36,6 +36,7 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 
 // Protected layout wrapper
 const ProtectedLayout = () => (
+
   <ProtectedRoute>
     <RoleBasedRoute allowedRoles={["admin"]}>
       <DashboardLayout>
