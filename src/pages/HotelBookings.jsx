@@ -5,7 +5,9 @@ import Table from "../components/Table";
 import { confirmBooking, cancelBooking } from "../redux/bookingsSlice";
 
 const HotelBookings = () => {
-  const bookings = useSelector((state) => state.booking.bookings);
+const bookings = useSelector((state) =>
+  state.booking.bookings.filter((b) => b.type === "hotel")
+);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ const HotelBookings = () => {
 
   const handleViewDetails = (booking) => {
     const id = booking.bookingId.replace("#", "");
-    navigate(`/hotel-bookings/${id}`, { state: { booking } });
+    navigate(`/hotel-bookings/hotel/${id}`, { state: { booking } });
   };
 
   const actions = [

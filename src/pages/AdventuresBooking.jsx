@@ -1,114 +1,82 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Table from '../components/Table';
-import { 
-  cancelBooking,
-  confirmBooking,
-} from '../redux/adventuresSlice';
+// src/pages/Hotel_Bookings.jsx
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Table from "../components/Table";
+import { confirmBooking, cancelBooking } from "../redux/bookingsSlice";
 
-const AdventuresBooking = () => {
-  const bookings = useSelector(state => state.adventures.bookings);
+const AdventuresBookings = () => {
+const bookings = useSelector((state) =>
+  state.booking.bookings.filter((b) => b.type === "adventure")
+);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  useEffect(() => {
-    console.log(bookings)
-    if (location.state?.message) {
-      const timer = setTimeout(() => {
-        navigate(location.pathname, { replace: true, state: {} });
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [location, navigate]);
   const headers = [
-    { key: 'adventureName', label: 'Adventure Name' },
-    { key: 'userName', label: 'User Name' },
-    {
-      key: 'checkIn',
-      label: 'Check In',
-    },
-    {
-      key: 'checkOut',
-      label: 'Check Out',
-    },
-    
-    {
-      key: 'price',
-      label: 'Price',
-     
-    },
-
+    { key: "name", label: "Hotel Name" },
+    { key: "username", label: "User Name" },
+    { key: "checkIn", label: "Check-in" },
+    { key: "checkOut", label: "Check-out" },
+    { key: "price", label: "Price" }
   ];
 
-  const handleViewDetails = (booking) => {
-    navigate(`/adventure-bookings/${booking.id.replace('#', '')}`, {
-      state: { booking }
-    });
+  const handleConfirm = (booking) => {
+    dispatch(confirmBooking({ id: booking.bookingId }));
+    return `Booking ${booking.bookingId} confirmed.`;
+    
   };
 
   const handleCancel = (booking) => {
-    
-    dispatch(cancelBooking({ id: booking.id }));
-            return `Booking ${booking.id}  cancelled.`;
-
+    dispatch(cancelBooking({ id: booking.bookingId }));
+    return `Booking ${booking.bookingId} cancelled.`;
   };
 
-  const handleConfirm = (booking) => {
-    dispatch(confirmBooking({ id: booking.id }));
-        return `Booking ${booking.id} confirmed.`;
-
+  const handleViewDetails = (booking) => {
+    const id = booking.bookingId.replace("#", "");
+    navigate(`/adventure-bookings/adventure/${id}`, { state: { booking } });
   };
 
-  
   const actions = [
+    {
+      label: "Confirm",
+      variant: "success",
+       requireConfirmation: true,
+    confirmationMessage: 'Are you sure you want to Confirm this adventure booking?',
+    confirmationVariant: 'success', // This will make the dialog green
  
+      handler: handleConfirm
+    },
     {
-      label: 'Confirm',
-      variant: 'success',
-      handler: handleConfirm,
-      requireConfirmation: true,
-      confirmationMessage: 'Are you sure you want to Confirm this hotel booking?',
-      confirmationVariant: 'success', // This will make the dialog green
-     },
-    {
-      label: 'Cancel',
-      variant: 'warning',
-      handler: handleCancel,
+      label: "Cancel",
       variant: "danger",
       requireConfirmation: true,
-      confirmationMessage: 'Are you sure you want to cancel this Adventure booking?',
-     },
-      {
-        label: 'View Details',
-        handler: handleViewDetails
-      },
+    // No confirmationVariant needed - will default to red
+    confirmationMessage: 'Are you sure you want to cancel this adventure booking?',
+ 
+      handler: handleCancel
+    },
+    {
+      label: "View Details",
+      handler: handleViewDetails
+    }
   ];
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-      {location.state?.message && (
-        <div className={`mb-4 p-4 rounded ${
-          location.state.type === 'error' 
-            ? 'bg-red-100 border border-red-400 text-red-700' 
-            : 'bg-green-100 border border-green-400 text-green-700'
-        }`}>
-          {location.state.message}
+    <div className="p-8 max-w-7xl mx-auto">
+      {bookings.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-gray-500">No bookings found.</p>
         </div>
-      )}
-      
-      <div className="overflow-x-auto">
-        <Table 
+      ) : (
+        <Table
           headers={headers}
           rows={bookings}
           actions={actions}
           nameAsLink={true}
           onNameClick={handleViewDetails}
         />
-      </div>
+      )}
     </div>
   );
 };
 
-export default AdventuresBooking;
+export default AdventuresBookings;

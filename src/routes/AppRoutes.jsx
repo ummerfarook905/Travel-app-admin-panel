@@ -68,7 +68,7 @@ const AppRoutes = () => {
         <Route path="/verified-adventures/:id" element={<DetailedVarified_Adventures />} />
         <Route path="/edit-adventure/:id" element={<EditAdventure />} />
         <Route path="/adventure-bookings" element={<AdventuresBooking />} />
-        <Route path="/adventure-bookings/:id" element={<Detailed_advantures />} />
+        <Route path="/adventure-bookings/:type/:id" element={<Detailed_advantures />} />
 
         {/* Destinations */}
         <Route path="/destination" element={<Destination />} />
@@ -83,7 +83,7 @@ const AppRoutes = () => {
         <Route path="/verified-hotels/:id" element={<DetailedVarified_Hotels />} />
         <Route path="/edit-hotel/:id" element={<EditHotel />} />
         <Route path="/hotel-bookings" element={<HotelBookings />} />
-        <Route path="/hotel-bookings/:id" element={<DetailedHotelBookings />} />
+        <Route path="/hotel-bookings/:type/:id" element={<DetailedHotelBookings />} />
 
         {/* Profile & Settings */}
         <Route path="/settings" element={<Settings />} />

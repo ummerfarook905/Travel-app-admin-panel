@@ -20,12 +20,12 @@ const pageTitles = {
   "/verified-hotels":"Varified Hotels",
   "/verified-hotels/:id":"Varified Hotels",
   "/hotel-bookings":"Hotel Booking",
-  "/hotel-bookings/:id":"Hotel Booking",
+  "/hotel-bookings/hotel/:id":"Hotel Booking",
 
   "/profile": "My Profile",
   "/settings": "Settings",
   "/adventure-bookings": " Adventures Bookings",
-  "/adventure-bookings/:id": "Adventures Bookings",
+  "/adventure-bookings/adventure/:id": "Adventures Bookings",
 
 "/destination": "Destinations",
 "/destination/:id": " View Destination ",

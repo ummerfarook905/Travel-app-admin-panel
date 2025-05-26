@@ -1,6 +1,6 @@
 import { FaClock } from "react-icons/fa";
 
-const TimingInfo = ({ roomNo }) => {
+const TimingInfo = ({ roomNo, type }) => {
   return (
     <div className="flex text-sm text-gray-700 mt-6 gap-30 justify-center">
       <div className="flex flex-col items-center">
@@ -13,11 +13,13 @@ const TimingInfo = ({ roomNo }) => {
         <span>Check-In Time</span>
         <strong>12:00pm</strong>
       </div>
-      <div className="flex flex-col items-center">
-        <FaClock className="text-purple-500 mb-1" />
-        <span>Room No.</span>
-        <strong>{roomNo}</strong>
-      </div>
+      {type !== "adventure" && (
+        <div className="flex flex-col items-center">
+          <FaClock className="text-purple-500 mb-1" />
+          <span>Room No.</span>
+          <strong>{roomNo}</strong>
+        </div>
+      )}
     </div>
   );
 };
