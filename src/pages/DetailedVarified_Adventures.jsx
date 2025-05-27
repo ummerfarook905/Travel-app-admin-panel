@@ -22,6 +22,7 @@ const DetailedVerified_Adventures = () => {
   const [adventure, setAdventure] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
     if (state?.adventure) {
       setAdventure(state.adventure);
@@ -99,25 +100,25 @@ const DetailedVerified_Adventures = () => {
           profileImage={adventure.coverImage || 'https://source.unsplash.com/random/300x300/?profile'}
           title={adventure.name}
         />
+          <div className="flex justify-end space-x-4 px-6"
+           style={{ marginTop: "-30px",  }}>
+              {/* buttons*/}
+              <button
+                onClick={handleDelete}
+                className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
+              >
+                Delete 
+              </button>
 
+              <button
+                onClick={handleEdit}
+                className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
+              >
+                Edit 
+              </button>
+          </div> 
         <div className="p-4 md:p-6 space-y-8">
           <InfoGrid items={infoItems} />
-          <div className="flex justify-end space-x-4">
-            {/* buttons*/}
-            <button
-              onClick={handleDelete}
-              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
-            >
-              Delete 
-            </button>
-
-            <button
-              onClick={handleEdit}
-              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
-            >
-              Edit 
-            </button>
-          </div>
           {/* About and Price section */}
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
             <div className="flex-1 max-w-full md:max-w-[70%] min-w-0">

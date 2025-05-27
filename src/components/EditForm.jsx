@@ -37,7 +37,6 @@ const EditForm = ({
     if (videos.length > 1) setVideos(videos.filter((_, i) => i !== index));
   };
 
-  // Group fields into left and right columns
   const leftFields = fields.filter(field => field.column === 'left');
   const rightFields = fields.filter(field => field.column === 'right');
 
@@ -46,48 +45,29 @@ const EditForm = ({
       name: field.name,
       value: formData[field.name] || field.defaultValue || "",
       onChange: onChange,
-      className: "w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00493E] focus:border-transparent",
+      className: "w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00493E] focus:border-[#00493E] text-gray-500",
       required: field.required,
       placeholder: field.placeholder
     };
 
+    const fieldWrapper = (type, input) => (
+      <div className="space-y-1.5" key={field.name}>
+        <label className="block text-sm font-medium text-[#303972]">
+          {field.label} {field.required && '*'}
+        </label>
+        {input}
+      </div>
+    );
+
     switch (field.type) {
       case 'text':
-        return (
-          <div className="space-y-1.5" key={field.name}>
-            <label className="block text-sm font-medium text-gray-700">
-              {field.label} {field.required && '*'}
-            </label>
-            <input type="text" {...commonProps} />
-          </div>
-        );
+        return fieldWrapper('text', <input type="text" {...commonProps} />);
       case 'number':
-        return (
-          <div className="space-y-1.5" key={field.name}>
-            <label className="block text-sm font-medium text-gray-700">
-              {field.label} {field.required && '*'}
-            </label>
-            <input type="number" {...commonProps} />
-          </div>
-        );
+        return fieldWrapper('number', <input type="number" {...commonProps} />);
       case 'textarea':
-        return (
-          <div className="space-y-1.5" key={field.name}>
-            <label className="block text-sm font-medium text-gray-700">
-              {field.label} {field.required && '*'}
-            </label>
-            <textarea rows="4" {...commonProps} />
-          </div>
-        );
+        return fieldWrapper('textarea', <textarea rows="4" {...commonProps} />);
       case 'time':
-        return (
-          <div className="space-y-1.5" key={field.name}>
-            <label className="block text-sm font-medium text-gray-700">
-              {field.label} {field.required && '*'}
-            </label>
-            <input type="time" {...commonProps} />
-          </div>
-        );
+        return fieldWrapper('time', <input type="time" {...commonProps} />);
       default:
         return null;
     }
@@ -97,7 +77,7 @@ const EditForm = ({
     <form onSubmit={onSubmit} className="bg-white rounded-xl shadow-md mx-auto max-w-7xl">
       {/* Header */}
       <div className="bg-[#00493E] px-5 py-4 md:px-6 md:py-4 rounded-t-xl">
-        <h2 className="text-lg md:text-xl font-semibold text-white ">
+        <h2 className="text-lg md:text-xl font-semibold text-white">
           {formTitle}
         </h2>
       </div>
@@ -111,19 +91,21 @@ const EditForm = ({
 
         {/* Right Column */}
         <div className="space-y-4 md:space-y-5 mt-4 md:mt-0">
-          {rightFields.map((field, index) => (
+          {rightFields.map((field) => (
             <React.Fragment key={field.name}>
               {renderField(field)}
-              {/* Insert media uploads after contact number field */}
+
+              {/* Media Upload Section */}
               {field.name === 'contact' && mediaOptions.photos && (
                 <div className="space-y-3 mt-12">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+
                     {/* Photos Section */}
                     <div className="col-span-1 space-y-3">
                       {photos.map((photo, idx) => (
                         <div key={`photo-${idx}`}>
                           <div className="border-dashed border border-gray-300 p-4 rounded-lg">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-[#303972] mb-2">
                               {photos.length > 1 ? `Photo ${idx + 1} *` : "Photo *"}
                             </label>
                             <label className="flex flex-col items-center justify-center w-full p-2 bg-gray-50 rounded border border-gray-200 cursor-pointer hover:bg-gray-100">
@@ -150,15 +132,13 @@ const EditForm = ({
                           </div>
                         </div>
                       ))}
-<button
-  type="button"
-  onClick={addPhotoField}
-  className="w-full py-2 text-sm font-medium text-[#00493E] border border-[#00493E] rounded-lg hover:bg-[#00493E] hover:text-white transition-colors mt-4"
->
-  + Add Photo
-</button>
-
-
+                      <button
+                        type="button"
+                        onClick={addPhotoField}
+                        className="w-full py-2 text-sm font-medium rounded-2xl bg-[#00493E] text-white transition-colors mt-4"
+                      >
+                        + Add Photo
+                      </button>
                     </div>
 
                     {/* Videos Section */}
@@ -167,7 +147,7 @@ const EditForm = ({
                         {videos.map((video, idx) => (
                           <div key={`video-${idx}`}>
                             <div className="border-dashed border border-gray-300 p-4 rounded-lg">
-                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                              <label className="block text-sm font-medium text-[#303972] mb-2">
                                 {videos.length > 1 ? `Video ${idx + 1} *` : "Video *"}
                               </label>
                               <label className="flex flex-col items-center justify-center w-full p-2 bg-gray-50 rounded border border-gray-200 cursor-pointer hover:bg-gray-100">
@@ -194,39 +174,30 @@ const EditForm = ({
                             </div>
                           </div>
                         ))}
-<button
-  type="button"
-  onClick={addVideoField}
-  className="w-full py-2 text-sm font-medium text-[#00493E] border border-[#00493E] rounded-lg hover:bg-[#00493E] hover:text-white transition-colors mt-4"
->
-  + Add Video
-</button>
-
+                        <button
+                          type="button"
+                          onClick={addVideoField}
+                          className="w-full py-2 text-sm font-medium rounded-2xl bg-[#00493E] text-white transition-colors mt-4"
+                        >
+                          + Add Video
+                        </button>
                       </div>
                     )}
                   </div>
                 </div>
-
-
-
-
-
-
-
-
               )}
             </React.Fragment>
           ))}
         </div>
       </div>
 
-      {/* Form Footer */}
-      <div className="px-5 py-4 md:px-6 md:py-5 border-t border-gray-200">
+      {/* Footer Buttons */}
+      <div className="px-5 py-4 md:px-6 md:py-5 ">
         <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
           <button
             type="button"
             onClick={onCancel}
-            className="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="px-5 py-2.5 text-sm font-medium text-[#303972] bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
           >
             Cancel
           </button>
@@ -234,7 +205,7 @@ const EditForm = ({
             type="submit"
             className="px-5 py-2.5 text-sm font-medium text-white bg-[#00493E] rounded-lg hover:bg-[#00382E] focus:outline-none focus:ring-2 focus:ring-[#00382E]"
           >
-            Save
+            Submit
           </button>
         </div>
       </div>
