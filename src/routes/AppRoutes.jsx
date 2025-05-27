@@ -69,7 +69,7 @@ const AppRoutes = () => {
         <Route path="/edit-adventure/:id" element={<EditAdventure />} />
         <Route path="/adventure-bookings" element={<AdventuresBooking />} />
         <Route path="/adventure-bookings/:type/:id" element={<Detailed_advantures />} />
-
+/adventure-bookings/adventure/:id
         {/* Destinations */}
         <Route path="/destination" element={<Destination />} />
         <Route path="/destination/new" element={<DestinationForm />} />

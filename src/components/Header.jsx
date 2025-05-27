@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { FiMenu, FiSettings } from "react-icons/fi";
-// import SearchBar from "./SearchBar";
-import { FiSearch } from "react-icons/fi";
+import { FiMenu, FiSettings, FiSearch } from "react-icons/fi";
 import NotificationIcon from "./NotificationIcon";
 import NotificationDropdown from "./NotificationDropdown";
 import ProfileIcon from "./ProfileIcon";
@@ -13,79 +11,70 @@ const pageTitles = {
   "/users": "User Management",
   "/pending-adventures": "Pending Adventures",
   "/pending-adventures/:id": "Pending Adventures",
-  "/verified-adventures":"Varified Adventures",
+  "/verified-adventures": "Varified Adventures",
   "/verified-adventures/:id": "Varified Adventures",
   "/pending-hotels": "Pending Hotels",
   "/pending-hotels/:id": "Pending Hotels",
-  "/verified-hotels":"Varified Hotels",
-  "/verified-hotels/:id":"Varified Hotels",
-  "/hotel-bookings":"Hotel Booking",
-  "/hotel-bookings/hotel/:id":"Hotel Booking",
-
+  "/verified-hotels": "Varified Hotels",
+  "/verified-hotels/:id": "Varified Hotels",
+  "/hotel-bookings": "Hotel Booking",
+  "/hotel-bookings/hotel/:id": "Hotel Booking",
   "/profile": "My Profile",
   "/settings": "Settings",
-  "/adventure-bookings": " Adventures Bookings",
-  "/adventure-bookings/adventure/:id": "Adventures Bookings",
-
-"/destination": "Destinations",
-"/destination/:id": " View Destination ",
-"/destination/new": " Add New Destination",
-
+  "/adventure-bookings": "Adventure Booking",
+  "/adventure-bookings/adventure/:id": "Adventure Bookings",
+  "/destination": "Destinations",
+  "/destination/:id": "View Destination",
+  "/destination/new": "Add New Destination",
 };
 
 const Header = ({ toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
+
   const getTitle = (path) => {
     if (path.startsWith("/pending-adventures/")) return "Pending Adventures";
     if (path.startsWith("/verified-adventures/")) return "Varified Adventures";
-    if (path.startsWith("/advanture-bookings/")) return "Adventures Bookings";
+    if (path.startsWith("/adventure-bookings/")) return "Adventure Bookings";
     if (path.startsWith("/verified-hotels/")) return "Verified Hotels";
-
     if (path.startsWith("/hotel-bookings/")) return "Hotel Bookings";
-
-    if (path.startsWith("/advanture-bookings/")) return "Adventures Bookings";
     if (path.startsWith("/destination/")) return "Destination";
-
-
     return pageTitles[path] || "Admin Panel";
   };
-  
-  
+
   const title = getTitle(currentPath);
-    
+
   const [notifications, setNotifications] = useState([
     { id: 1, message: "New booking received", time: "10 mins ago", read: false },
     { id: 2, message: "System update available", time: "1 hour ago", read: false },
   ]);
-  
+
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-  
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   const toggleNotifications = (e) => {
     e.stopPropagation();
     setShowNotifications(!showNotifications);
     setShowProfileDropdown(false);
   };
-  
+
   const toggleProfileDropdown = (e) => {
     e.stopPropagation();
     setShowProfileDropdown(!showProfileDropdown);
     setShowNotifications(false);
   };
-  
+
   const markAllAsRead = () => {
-    setNotifications(notifications.map(n => ({ ...n, read: true })));
+    setNotifications(notifications.map((n) => ({ ...n, read: true })));
     setShowNotifications(false);
   };
-  
+
   const closeAllDropdowns = () => {
     setShowNotifications(false);
     setShowProfileDropdown(false);
   };
-  
+
   useEffect(() => {
     const handleClickOutside = () => closeAllDropdowns();
     document.addEventListener("click", handleClickOutside);
@@ -93,10 +82,10 @@ const Header = ({ toggleSidebar }) => {
   }, []);
 
   return (
-<header className="bg-white shadow-sm p-4 flex items-center justify-between relative">
-{/* Left Section */}
+    <header className="bg-white shadow-sm p-4 flex items-center justify-between relative">
+      {/* Left Section */}
       <div className="flex items-center space-x-4">
-        <button 
+        <button
           onClick={toggleSidebar}
           className="md:hidden p-2 rounded-full hover:bg-gray-100"
         >
@@ -104,7 +93,7 @@ const Header = ({ toggleSidebar }) => {
         </button>
         <h1 className="text-xl md:text-2xl font-bold text-[#00493E]">{title}</h1>
       </div>
-      
+
       {/* Right Section */}
       <div className="flex items-center space-x-2 md:space-x-6">
         {/* Search Bar - Hidden on small screens */}
@@ -117,39 +106,31 @@ const Header = ({ toggleSidebar }) => {
             placeholder="Search..."
             className="pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full md:w-64"
           />
-        </div> 
-        
+        </div>
+
         {/* Profile Section */}
         <div className="flex items-center space-x-2 md:space-x-4">
-          <button 
-            onClick={() => window.location.href = "/settings"}
+          <button
+            onClick={() => (window.location.href = "/settings")}
             className="hidden md:block p-2 rounded-full hover:bg-gray-100"
           >
             <FiSettings className="text-gray-600 text-xl" />
           </button>
-          
+
           <div className="relative">
-            <NotificationIcon 
-              count={unreadCount} 
-              onClick={toggleNotifications} 
-            />
+            <NotificationIcon count={unreadCount} onClick={toggleNotifications} />
             {showNotifications && (
-              <NotificationDropdown 
-                notifications={notifications} 
+              <NotificationDropdown
+                notifications={notifications}
                 onClose={closeAllDropdowns}
                 onMarkAllAsRead={markAllAsRead}
               />
             )}
           </div>
-          
+
           <div className="relative">
-            <ProfileIcon 
-              onClick={toggleProfileDropdown} 
-              showName={true}
-            />
-            {showProfileDropdown && (
-              <ProfileDropdown onClose={closeAllDropdowns} />
-            )}
+            <ProfileIcon onClick={toggleProfileDropdown} showName={true} />
+            {showProfileDropdown && <ProfileDropdown onClose={closeAllDropdowns} />}
           </div>
         </div>
       </div>

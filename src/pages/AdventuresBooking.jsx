@@ -73,6 +73,7 @@ const bookings = useSelector((state) =>
           actions={actions}
           nameAsLink={true}
           onNameClick={handleViewDetails}
+          showProfilePicture={false}
         />
       )}
     </div>
