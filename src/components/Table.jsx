@@ -104,7 +104,7 @@ const Table = ({
                   <th
                     key={index}
                     scope="col"
-                    className="px-6 py-3 text-left text-sm font-semibold text-[#00493E] tracking-wider"
+                    className="px-6 py-3 text-left text-sm font-semibold text-[#00493E] tracking-wider "
                   >
                     {header.label || header}
                   </th>
@@ -140,7 +140,7 @@ const Table = ({
                     return (
                       <td
                         key={colIndex}
-                        className={`px-6 py-4 whitespace-nowrap text-sm ${
+                        className={`px-6 py-4 whitespace-nowrap text-sm  ${
                           header.key === 'id' ? idColor : 'text-gray-400'
                         }`}
                       >
@@ -158,7 +158,7 @@ const Table = ({
                                 />
                               </div>
                             )}
-                            <span className="font-semibold">{cellContent}</span>
+                            <span className="font-semibold cursor-pointer">{cellContent}</span>
                           </button>
                         ) : (
                           cellContent
@@ -169,10 +169,10 @@ const Table = ({
 
                   {actions.length > 0 && (
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <div className="relative flex justify-end">
+                      <div className="relative flex justify-end ">
                         <button
                           onClick={(e) => toggleMenu(rowIndex, e)}
-                          className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                          className="text-gray-400 hover:text-gray-600 focus:outline-none cursor-pointer"
                         >
                           <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                             <circle cx="5" cy="10" r="1.5" />
@@ -183,7 +183,7 @@ const Table = ({
 
                         {activeMenu === rowIndex && (
                           <div
-                            className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 z-50 animate-scaleIn"
+                            className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 z-50 animate-scaleIn "
                             role="menu"
                             aria-orientation="vertical"
                             aria-labelledby="menu-button"
@@ -193,7 +193,7 @@ const Table = ({
                                 <button
                                   key={index}
                                   onClick={(e) => handleActionClick(action, row, e)}
-                                  className={`flex items-center px-4 py-2 text-sm w-full text-left hover:bg-gray-100 focus:outline-none ${
+                                  className={`flex items-center px-4 py-2 text-sm w-full text-left hover:bg-gray-100 focus:outline-none cursor-pointer ${
                                     action.variant === 'danger'
                                       ? 'text-red-600'
                                       : action.variant === 'success'
@@ -203,7 +203,7 @@ const Table = ({
                                   role="menuitem"
                                 >
                                   {action.icon && (
-                                    <span className="mr-2 text-lg text-gray-400">{action.icon}</span>
+                                    <span className="mr-2 text-lg text-gray-400 ">{action.icon}</span>
                                   )}
                                   {action.label}
                                 </button>

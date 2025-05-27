@@ -109,24 +109,25 @@ const DetailedVerified_Hotels = () => {
           profileImage={hotel.coverImage || 'https://source.unsplash.com/random/300x300/?hotel'}
           title={hotel.name}
         />
-
-        <div className="p-4 md:p-6 space-y-8">
-          <InfoGrid items={infoItems} />
-          
-          <div className="flex justify-end space-x-4">
-            <button
-              onClick={handleEdit}
-              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
-            >
-              Edit 
-            </button>
+                   <div
+            className="flex justify-end space-x-4 px-6 cursor-pointer"
+            style={{ marginTop: "-30px" }}
+          >
+            {/* buttons */}
             <button
               onClick={handleDelete}
-              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
-            >
-              Delete 
+              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors cursor-pointer !important"            >
+              Delete
+            </button>
+
+            <button
+              onClick={handleEdit}
+              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors cursor-pointer !important"            >
+              Edit
             </button>
           </div>
+        <div className="p-4 md:p-6 space-y-8">
+          <InfoGrid items={infoItems} />
 
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
             <div className="flex-1 min-w-0">
@@ -135,17 +136,6 @@ const DetailedVerified_Hotels = () => {
                 {hotel.description}
               </p>
 
-              <div className="mt-6">
-                <SectionTitle>Amenities</SectionTitle>
-                <div className="flex flex-wrap gap-4 mt-3">
-                  {hotel.amenities?.map((amenity, index) => (
-                    <div key={index} className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg">
-                      {amenityIcons[amenity] || <FaWifi />}
-                      <span className="text-sm">{amenity}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
             <div className="shrink-0 md:ml-6 mt-2 md:mt-7">
               <div className="bg-[#00493E] text-white rounded-lg px-6 py-3 flex items-center shadow">

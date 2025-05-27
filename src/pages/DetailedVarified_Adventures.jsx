@@ -100,23 +100,24 @@ const DetailedVerified_Adventures = () => {
           profileImage={adventure.coverImage || 'https://source.unsplash.com/random/300x300/?profile'}
           title={adventure.name}
         />
-          <div className="flex justify-end space-x-4 px-6"
-           style={{ marginTop: "-30px",  }}>
-              {/* buttons*/}
-              <button
-                onClick={handleDelete}
-                className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
-              >
-                Delete 
-              </button>
+          <div
+            className="flex justify-end space-x-4 px-6 "
+            style={{ marginTop: "-30px" }}
+          >
+            {/* buttons */}
+            <button
+              onClick={handleDelete}
+              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors cursor-pointer !important"            >
+              Delete
+            </button>
 
-              <button
-                onClick={handleEdit}
-                className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors"
-              >
-                Edit 
-              </button>
-          </div> 
+            <button
+              onClick={handleEdit}
+              className="px-5 py-2 bg-emerald-800 text-white rounded-full hover:bg-emerald-900 transition-colors cursor-pointer !important"            >
+              Edit
+            </button>
+          </div>
+
         <div className="p-4 md:p-6 space-y-8">
           <InfoGrid items={infoItems} />
           {/* About and Price section */}
