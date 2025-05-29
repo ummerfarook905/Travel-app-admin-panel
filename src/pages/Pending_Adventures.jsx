@@ -2,14 +2,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
+import { useState, useMemo } from "react";
 import { approveAdventure, rejectAdventure } from "../redux/adventuresSlice";
-
+import SearchBar from "../components/SearchBar";
 const Pending_Adventures = () => {
-  // Get pending adventures from Redux store
   const pending = useSelector(state => state.adventures.pending);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
+  const [searchQuery, setSearchQuery] = useState('');
+
   const headers = [
     { key: 'name', label: 'Name' },
     { key: 'id', label: 'ID' },
@@ -17,16 +19,6 @@ const Pending_Adventures = () => {
     { key: 'updated', label: 'Updated On' },
     { key: 'location', label: 'Location' }
   ];
-  
-  // const handleApprove = (adventure) => {
-  //   dispatch(approveAdventure({ id: adventure.id }));
-  //   navigate('/verified-adventures', { 
-  //     state: { 
-  //       message: `Adventure ${adventure.id} approved successfully!`
-  //     } 
-  //   });
-  // };
-
 const handleApprove = (adventure) => {
   dispatch(approveAdventure({ id: adventure.id }));
   return `Adventure ${adventure.id} approved successfully!`;
@@ -65,15 +57,26 @@ const actions = [
     handler: handleViewDetails
   }
 ];
-
+  // 🔍 Filter pending adventures based on searchQuery
+  const filteredRows = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    return pending.filter(item =>
+      item.name.toLowerCase().includes(q) ||
+      item.id.toLowerCase().includes(q) ||
+      item.location.toLowerCase().includes(q)
+    );
+  }, [pending, searchQuery]);
 
 
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
+      <div className="mb-4 flex">
+        <SearchBar onSearch={setSearchQuery} />
+      </div>
       <Table 
         headers={headers}
-        rows={pending}
+        rows={filteredRows}
         actions={actions}
         nameAsLink={true}
         onNameClick={handleViewDetails}

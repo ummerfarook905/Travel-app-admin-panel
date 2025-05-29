@@ -57,7 +57,7 @@ export default function RightSidebar({ isOpen, onClose }) {
       {/* Close Button (Mobile Only) - Positioned top-left */}
       <button 
         onClick={onClose}
-        className="md:hidden absolute top-2 left-2 p-1 text-gray-600 hover:text-gray-800"
+        className="md:hidden absolute top-2 left-2 p-1 text-gray-600 hover:text-gray-800 cursor-pointer"
       >
         <FiX size={24} />
       </button>
@@ -73,7 +73,7 @@ export default function RightSidebar({ isOpen, onClose }) {
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Users</h2>
               <button className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
-                <FiPlus className="text-sm" />
+                <FiPlus className="text-sm  cursor-pointer" />
               </button>
             </div>
             <ul className="mb-2 space-y-1">
@@ -85,7 +85,7 @@ export default function RightSidebar({ isOpen, onClose }) {
               ))}
             </ul>
             <button onClick={handleViewMoreUsers}
-             className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200">
+             className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200 cursor-pointer">
               View More
             </button>
           </div>
@@ -94,7 +94,7 @@ export default function RightSidebar({ isOpen, onClose }) {
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Hotels</h2>
               <button className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
-                <FiPlus className="text-sm" />
+                <FiPlus className="text-sm  cursor-pointer" />
               </button>
             </div>
             <ul className="mb-2 space-y-1">
@@ -105,7 +105,7 @@ export default function RightSidebar({ isOpen, onClose }) {
                 </li>
               ))}
             </ul>
-            <button onClick={handleViewMoredefault} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200">
+            <button onClick={handleViewMoredefault} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200 cursor-pointer">
               View More
             </button>
           </div>
@@ -114,7 +114,7 @@ export default function RightSidebar({ isOpen, onClose }) {
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Adventures</h2>
               <button className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
-                <FiPlus className="text-sm" />
+                <FiPlus className="text-sm  cursor-pointer" />
               </button>
             </div>
             <ul className="mb-2 space-y-1">
@@ -125,7 +125,7 @@ export default function RightSidebar({ isOpen, onClose }) {
                 </li>
               ))}
             </ul>
-            <button onClick={handleViewMoredefault} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200">
+            <button onClick={handleViewMoredefault} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200 cursor-pointer">
               View More
             </button>
           </div>

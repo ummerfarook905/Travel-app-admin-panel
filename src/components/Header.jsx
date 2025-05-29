@@ -5,6 +5,7 @@ import NotificationIcon from "./NotificationIcon";
 import NotificationDropdown from "./NotificationDropdown";
 import ProfileIcon from "./ProfileIcon";
 import ProfileDropdown from "./ProfileDropdown";
+// import SearchBar from "./SearchBar";
 
 const pageTitles = {
   "/dashboard": "Dashboard Overview",
@@ -97,7 +98,7 @@ const Header = ({ toggleSidebar }) => {
       {/* Right Section */}
       <div className="flex items-center space-x-2 md:space-x-6">
         {/* Search Bar - Hidden on small screens */}
-        <div className="hidden md:block relative">
+        {/* <div className="hidden md:block relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <FiSearch className="text-gray-400" />
           </div>
@@ -106,7 +107,8 @@ const Header = ({ toggleSidebar }) => {
             placeholder="Search..."
             className="pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full md:w-64"
           />
-        </div>
+        </div> */}
+        {/* <SearchBar/> */}
 
         {/* Profile Section */}
         <div className="flex items-center space-x-2 md:space-x-4">
@@ -114,10 +116,10 @@ const Header = ({ toggleSidebar }) => {
             onClick={() => (window.location.href = "/settings")}
             className="hidden md:block p-2 rounded-full hover:bg-gray-100"
           >
-            <FiSettings className="text-gray-600 text-xl" />
+            <FiSettings className="text-gray-600 text-xl cursor-pointer" />
           </button>
 
-          <div className="relative">
+          <div className="relative cursor-pointer">
             <NotificationIcon count={unreadCount} onClick={toggleNotifications} />
             {showNotifications && (
               <NotificationDropdown

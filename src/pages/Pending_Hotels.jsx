@@ -3,13 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
 import { approveHotel, rejectHotel } from "../redux/hotelsSlice";
+import SearchBar from "../components/SearchBar";
+import { useState, useMemo } from "react";
 
 const Pending_Hotels = () => {
   // Get pending hotels from Redux store
   const pending = useSelector(state => state.hotels.pending);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const [searchQuery, setSearchQuery] = useState('');
+
   const headers = [
     { key: 'name', label: 'Hotel Name' },
     { key: 'id', label: 'ID' },
@@ -57,16 +60,28 @@ const Pending_Hotels = () => {
     }
   ];
 
+  const filtered = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    return pending.filter(hotel =>
+      hotel.name.toLowerCase().includes(q) ||
+      hotel.id.toLowerCase().includes(q) ||
+      (hotel.location && hotel.location.toLowerCase().includes(q))
+    );
+  }, [pending, searchQuery]);
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      {pending.length === 0 ? (
+      <div className="mb-4 flex">
+        <SearchBar onSearch={setSearchQuery} />
+      </div>
+      {filtered.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-500">No pending hotels awaiting approval</p>
         </div>
       ) : (
         <Table 
           headers={headers}
-          rows={pending}
+          rows={filtered}
           actions={actions}
           nameAsLink={true}
           onNameClick={handleViewDetails}

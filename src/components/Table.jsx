@@ -85,8 +85,10 @@ const Table = ({
   };
 
   return (
-    <>
-      <div className="overflow-x-auto rounded-lg shadow-sm">
+      <div className="relative pt-4">  
+          {/* Toast will appear floating above the table */}
+    {showToast && <Toast message={toastMessage} onclose={() => setShowToast(false)} />} 
+        <div className="overflow-x-auto rounded-lg shadow-sm">
         <div className="bg-white rounded-lg">
           <table className="min-w-full divide-y divide-gray-200" ref={tableRef}>
             <thead>
@@ -141,7 +143,7 @@ const Table = ({
                       <td
                         key={colIndex}
                         className={`px-6 py-4 whitespace-nowrap text-sm  ${
-                          header.key === 'id' ? idColor : 'text-gray-400'
+                          header.key === 'id' ? idColor : 'text-gray-700'
                         }`}
                       >
                         {nameAsLink && (header.key === 'name' || header.key === 'adventureName') ? (
@@ -183,10 +185,11 @@ const Table = ({
 
                         {activeMenu === rowIndex && (
                           <div
-                            className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 z-50 animate-scaleIn "
+                            className="absolute bottom right-5 transform -translate-y-1/2 mb-16 w-48 bg-white rounded-lg shadow-lg ring-1 z-50 animate-scaleIn"
                             role="menu"
                             aria-orientation="vertical"
                             aria-labelledby="menu-button"
+                            
                           >
                             <div className="py-1">
                               {actions.map((action, index) => (
@@ -221,7 +224,6 @@ const Table = ({
         </div>
       </div>
 
-      {showToast && <Toast message={toastMessage} onclose={() => setShowToast(false)} />}
 
       {showConfirmation && (
         <ConfirmationDialog
@@ -231,7 +233,7 @@ const Table = ({
           variant={currentAction?.confirmationVariant || 'danger'}
         />
       )}
-    </>
+    </div>
   );
 };
 

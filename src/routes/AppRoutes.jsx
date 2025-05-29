@@ -33,6 +33,7 @@ import Profile from "../pages/Profile";
 import ProtectedRoute from "../components/ProtectedRoute";
 import RoleBasedRoute from "../components/RoleBasedRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
+import Logout from "../pages/Logout";
 
 // Protected layout wrapper
 const ProtectedLayout = () => (
@@ -54,7 +55,7 @@ const AppRoutes = () => {
 
       {/* Public Routes */}
       <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/logout" element={<Logout/>} />
 
       {/* Protected Routes */}
       <Route element={<ProtectedLayout />}>

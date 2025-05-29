@@ -5,7 +5,7 @@ const NotificationIcon = ({ count, onClick }) => {
   return (
     <button 
       onClick={onClick}
-      className="p-2 rounded-full hover:bg-gray-100 relative"
+      className="p-2 rounded-full hover:bg-gray-100 relative cursor-pointer"
     >
       <FiBell className="text-gray-600 text-xl" />
       {count > 0 && (

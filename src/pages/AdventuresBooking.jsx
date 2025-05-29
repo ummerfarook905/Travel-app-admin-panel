@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
 import { confirmBooking, cancelBooking } from "../redux/bookingsSlice";
+import SearchBar from "../components/SearchBar";
+import { useState, useMemo } from "react";
 
 const AdventuresBookings = () => {
 const bookings = useSelector((state) =>
@@ -10,6 +12,7 @@ const bookings = useSelector((state) =>
 );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const headers = [
     { key: "name", label: "Hotel Name" },
@@ -60,8 +63,20 @@ const bookings = useSelector((state) =>
     }
   ];
 
+  const filtered = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    return bookings.filter((b) =>
+      b.name.toLowerCase().includes(q) ||
+      b.username.toLowerCase().includes(q) ||
+      (b.bookingId && b.bookingId.toLowerCase().includes(q))
+    );
+  }, [bookings, searchQuery]);
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
+      <div className="mb-4 flex ">
+        <SearchBar onSearch={setSearchQuery} />
+      </div>
       {bookings.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-500">No bookings found.</p>
@@ -69,7 +84,7 @@ const bookings = useSelector((state) =>
       ) : (
         <Table
           headers={headers}
-          rows={bookings}
+          rows={filtered}
           actions={actions}
           nameAsLink={true}
           onNameClick={handleViewDetails}

@@ -2,8 +2,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../components/Table";
-import { useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { deleteAdventure } from "../redux/adventuresSlice";
+import SearchBar from "../components/SearchBar";
 
 const Verified_Adventures = () => {
   // Get verified adventures from Redux store
@@ -11,6 +12,7 @@ const Verified_Adventures = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     if (location.state?.message) {
@@ -71,6 +73,14 @@ const Verified_Adventures = () => {
       handler: handleDelete
     }
   ];
+  const filtered = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    return verified.filter(adventure =>
+      adventure.name.toLowerCase().includes(q) ||
+      adventure.id.toLowerCase().includes(q) ||
+      (adventure.location && adventure.location.toLowerCase().includes(q))
+    );
+  }, [verified, searchQuery]);
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
@@ -79,10 +89,12 @@ const Verified_Adventures = () => {
           {location.state.message}
         </div>
       )}
-      
+       <div className="mb-4 flex">
+        <SearchBar onSearch={setSearchQuery} />
+      </div>
       <Table 
         headers={headers}
-        rows={verified}
+        rows={filtered}
         actions={actions}
         nameAsLink={true}
         onNameClick={handleViewDetails}

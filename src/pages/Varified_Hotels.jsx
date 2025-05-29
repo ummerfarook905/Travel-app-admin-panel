@@ -4,12 +4,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../components/Table";
 import { useEffect } from "react";
 import { deleteHotel } from "../redux/hotelsSlice";
+import SearchBar from "../components/SearchBar";
+import { useState, useMemo } from "react";
 
 const Verified_Hotels = () => {
   const verified = useSelector(state => state.hotels.verified);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     if (location.state?.message) {
@@ -66,9 +69,21 @@ const Verified_Hotels = () => {
     }
   ];
 
+  const filtered = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    return verified.filter(hotel =>
+      hotel.name.toLowerCase().includes(q) ||
+      hotel.id.toLowerCase().includes(q) ||
+      (hotel.location && hotel.location.toLowerCase().includes(q))
+    );
+  }, [verified, searchQuery]);
+
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      
+       <div className="mb-4 flex">
+        <SearchBar onSearch={setSearchQuery} />
+      </div>
       {location.state?.message && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
           {location.state.message}
@@ -77,7 +92,7 @@ const Verified_Hotels = () => {
       
       <Table 
         headers={headers}
-        rows={verified}
+        rows={filtered }
         actions={actions}
         nameAsLink={true}
         onNameClick={handleViewDetails}
