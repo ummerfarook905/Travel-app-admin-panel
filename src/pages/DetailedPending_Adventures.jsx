@@ -1,5 +1,5 @@
 // React Router & Redux hooks
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation,  useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DetailedPendingLayout from "../Layouts/DetailedPendingLayout";
 
@@ -14,7 +14,6 @@ import { approveAdventure, rejectAdventure } from "../redux/adventuresSlice";
 
 const DetailedPending_Adventures = () => {
   const { state } = useLocation();
-  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

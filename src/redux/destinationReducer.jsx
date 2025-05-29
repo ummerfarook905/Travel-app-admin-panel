@@ -13,11 +13,12 @@ export const initialDestinations = [
         image: munnar,
         location: "Idukki, Kerala",
         description: "Munnar is a hill station famous for its tea gardens and picturesque landscapes.",
-        mapImage: "/assets/Images/Destination/map.jpg",
+        coverImage: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Varkala,Kerala&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CVarkala,Kerala&key=YOUR_API_KEY",
         images: [
-        //   "/assets/Images/Destination/munnar1.jpg",
-        //   "/assets/Images/Destination/munnar2.jpg",
-        //   "/assets/Images/Destination/munnar3.jpg",
+          "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+          "https://images.unsplash.com/photo-1505228395891-9a51e5e8bf86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+          "https://images.unsplash.com/photo-1504609773096-104ff2c73ca4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
         ],
         reviews: [
           {
@@ -33,11 +34,12 @@ export const initialDestinations = [
         image: beach ,
         location: "Cherai, Kochi, Kerala",
         description: "Cherai Beach is known for its beautiful golden sand and serene waters.",
-        mapImage: "/assets/Images/Destination/map.jpg",
+        coverImage: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Varkala,Kerala&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CVarkala,Kerala&key=YOUR_API_KEY",
         images: [
-          "/assets/Images/Destination/cherai1.jpg",
-          "/assets/Images/Destination/cherai2.jpg",
-          "/assets/Images/Destination/cherai3.jpg",
+          "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+          "https://images.unsplash.com/photo-1505228395891-9a51e5e8bf86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+          "https://images.unsplash.com/photo-1504609773096-104ff2c73ca4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
         ],
         reviews: [
           {
