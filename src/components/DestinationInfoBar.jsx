@@ -63,13 +63,13 @@ const DestinationInfoBar = () => {
   </div>
 
   <div className="flex space-x-2 mt-4 md:mt-0">
-    <button className="bg-white text-[#004D40] px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-200"
+    <button className="bg-white text-[#004D40] px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 cursor-pointer"
      onClick={handleDeleteClick}
      >
       Delete
     </button>
     <button 
-    className="bg-white text-[#004D40] px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-200"
+    className="bg-white text-[#004D40] px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 cursor-pointer"
     onClick={handleEditClick}>
       Edit
     </button>
