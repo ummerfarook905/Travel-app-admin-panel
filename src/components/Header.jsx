@@ -12,12 +12,12 @@ const pageTitles = {
   "/users": "User Management",
   "/pending-adventures": "Pending Adventures",
   "/pending-adventures/:id": "Pending Adventures",
-  "/verified-adventures": "Varified Adventures",
-  "/verified-adventures/:id": "Varified Adventures",
+  "/verified-adventures": "Verified Adventures",
+  "/verified-adventures/:id": "Verified Adventures",
   "/pending-hotels": "Pending Hotels",
   "/pending-hotels/:id": "Pending Hotels",
-  "/verified-hotels": "Varified Hotels",
-  "/verified-hotels/:id": "Varified Hotels",
+  "/verified-hotels": "Verified Hotels",
+  "/verified-hotels/:id": "Verified Hotels",
   "/hotel-bookings": "Hotel Booking",
   "/hotel-bookings/hotel/:id": "Hotel Booking",
   "/profile": "My Profile",
@@ -35,7 +35,7 @@ const Header = ({ toggleSidebar }) => {
 
   const getTitle = (path) => {
     if (path.startsWith("/pending-adventures/")) return "Pending Adventures";
-    if (path.startsWith("/verified-adventures/")) return "Varified Adventures";
+    if (path.startsWith("/verified-adventures/")) return "Verified Adventures";
     if (path.startsWith("/adventure-bookings/")) return "Adventure Bookings";
     if (path.startsWith("/verified-hotels/")) return "Verified Hotels";
     if (path.startsWith("/hotel-bookings/")) return "Hotel Bookings";
