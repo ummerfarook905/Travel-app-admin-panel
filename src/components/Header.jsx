@@ -40,6 +40,8 @@ const Header = ({ toggleSidebar }) => {
     if (path.startsWith("/verified-hotels/")) return "Verified Hotels";
     if (path.startsWith("/hotel-bookings/")) return "Hotel Bookings";
     if (path.startsWith("/destination/")) return "Destination";
+    if (path.startsWith("/users/")) return "User Management";
+
     return pageTitles[path] || "Admin Panel";
   };
 

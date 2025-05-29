@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Button from '../components/Button';
-import SearchInput from '../components/SearchInput';
+import SearchBar from '../components/SearchBar';
 import UserTable from '../components/UserTable';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import Toast from '../components/Toast';
@@ -46,18 +46,18 @@ export default function Users() {
     debouncedSearch(searchQuery);
     return () => debouncedSearch.cancel();
   }, [searchQuery, debouncedSearch]);
-
+  const handleSearch = (val) => {
+    setSearchQuery(val);
+  };
   return (
     <div className="p-4 md:p-6 bg-gray-100 min-h-screen">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-start md:items-center mb-6">
           <div className="w-full md:flex-1 md:max-w-xl">
-            <SearchInput
+           <SearchBar
               placeholder="Search users..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-gray-300 rounded-lg"
+              onSearch={handleSearch}
             />
           </div>
           <Button 

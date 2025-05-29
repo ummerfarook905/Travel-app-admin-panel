@@ -52,7 +52,7 @@ const UserTable = ({
           </thead>
 
           {/* Table Body */}
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="bg-white divide-y divide-gray-200">
             {filteredUsers.map((user) => {
               const isSelected = selectedUsers.has(user.id);
               return (

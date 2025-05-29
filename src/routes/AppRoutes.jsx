@@ -28,6 +28,7 @@ import HotelBookings from "../pages/HotelBookings";
 import DetailedHotelBookings from "../pages/DetailedHotelBooking";
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
+import UserForm from "../components/UserForm";
 
 // Layout and Route Guards
 import ProtectedRoute from "../components/ProtectedRoute";
@@ -61,6 +62,9 @@ const AppRoutes = () => {
       <Route element={<ProtectedLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/users/new" element={<UserForm/> }/>
+        <Route path="/users/edit/:id" element={<UserForm />} />
+
 
         {/* Adventures */}
         <Route path="/pending-adventures" element={<Pending_Adventures />} />
