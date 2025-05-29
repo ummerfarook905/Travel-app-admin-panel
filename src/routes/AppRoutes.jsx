@@ -10,8 +10,8 @@ import Dashboard from "../pages/DashBoard";
 import Users from "../pages/Users";
 import Pending_Adventures from "../pages/Pending_Adventures";
 import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
-import Varified_Adventures from "../pages/Varified_Adventures";
-import DetailedVarified_Adventures from "../pages/DetailedVarified_Adventures";
+import Verified_Adventures from "../pages/Verified_Adventures";
+import DetailedVerified_Adventures from "../pages/DetailedVerified_Adventures";
 import EditAdventure from "../pages/EditAdventure";
 import AdventuresBooking from "../pages/AdventuresBooking";
 import Detailed_advantures from "../pages/Detailed_Advantures_Booking";
@@ -21,8 +21,8 @@ import DestinationForm from "../components/DestinationForm";
 import EditDestination from "../pages/EditDestination";
 import Pending_Hotels from "../pages/Pending_Hotels";
 import DetailedPending_Hotels from "../pages/DetailedPending_Hotels";
-import Varified_Hotels from "../pages/Varified_Hotels";
-import DetailedVarified_Hotels from "../pages/DetailedVarified_Hotels";
+import Verified_Hotels from "../pages/Verified_Hotels";
+import DetailedVerified_Hotels from "../pages/Detailedverified_Hotels";
 import EditHotel from "../pages/EditHotel";
 import HotelBookings from "../pages/HotelBookings";
 import DetailedHotelBookings from "../pages/DetailedHotelBooking";
@@ -65,8 +65,8 @@ const AppRoutes = () => {
         {/* Adventures */}
         <Route path="/pending-adventures" element={<Pending_Adventures />} />
         <Route path="/pending-adventures/:id" element={<DetailedPending_Adventures />} />
-        <Route path="/verified-adventures" element={<Varified_Adventures />} />
-        <Route path="/verified-adventures/:id" element={<DetailedVarified_Adventures />} />
+        <Route path="/verified-adventures" element={<Verified_Adventures />} />
+        <Route path="/verified-adventures/:id" element={<DetailedVerified_Adventures />} />
         <Route path="/edit-adventure/:id" element={<EditAdventure />} />
         <Route path="/adventure-bookings" element={<AdventuresBooking />} />
         <Route path="/adventure-bookings/:type/:id" element={<Detailed_advantures />} />
@@ -80,8 +80,8 @@ const AppRoutes = () => {
         {/* Hotels */}
         <Route path="/pending-hotels" element={<Pending_Hotels />} />
         <Route path="/pending-hotels/:id" element={<DetailedPending_Hotels />} />
-        <Route path="/verified-hotels" element={<Varified_Hotels />} />
-        <Route path="/verified-hotels/:id" element={<DetailedVarified_Hotels />} />
+        <Route path="/verified-hotels" element={<Verified_Hotels />} />
+        <Route path="/verified-hotels/:id" element={<DetailedVerified_Hotels />} />
         <Route path="/edit-hotel/:id" element={<EditHotel />} />
         <Route path="/hotel-bookings" element={<HotelBookings />} />
         <Route path="/hotel-bookings/:type/:id" element={<DetailedHotelBookings />} />
