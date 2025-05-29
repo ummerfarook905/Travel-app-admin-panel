@@ -24,7 +24,7 @@ const Verified_Hotels = () => {
   }, [location, navigate]);
 
   const headers = [
-    { key: 'name', label: 'Hotel Name' },
+    { key: 'name', label: ' Name' },
     { key: 'id', label: 'ID' },
     { key: 'joined', label: 'Joined on' },
     { key: 'updated', label: 'Updated On' },

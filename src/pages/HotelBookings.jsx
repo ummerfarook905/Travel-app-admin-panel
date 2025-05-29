@@ -15,7 +15,7 @@ const bookings = useSelector((state) =>
   const [searchQuery, setSearchQuery] = useState('');
 
   const headers = [
-    { key: "name", label: "Hotel Name" },
+    { key: "name", label: " Name" },
     { key: "username", label: "User Name" },
     { key: "checkIn", label: "Check-in" },
     { key: "checkOut", label: "Check-out" },

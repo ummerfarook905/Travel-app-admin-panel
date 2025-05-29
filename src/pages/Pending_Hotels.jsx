@@ -14,7 +14,7 @@ const Pending_Hotels = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const headers = [
-    { key: 'name', label: 'Hotel Name' },
+    { key: 'name', label: 'Name' },
     { key: 'id', label: 'ID' },
     { key: 'joined', label: 'Joined on' },
     { key: 'updated', label: 'Updated On' },
