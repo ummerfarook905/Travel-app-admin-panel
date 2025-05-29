@@ -74,14 +74,14 @@ const DestinationForm = () => {
           <div className="flex justify-center gap-4">
             <button
               type="submit"
-              className="px-6 py-2.5 bg-[#00493E] text-white rounded-full hover:bg-[#00382C]"
+              className="px-6 py-2.5 bg-[#00493E] text-white rounded-full hover:bg-[#00382C] cursor-pointer"
             >
               Submit
             </button>
             <button
               type="button"
               onClick={handleCancel}
-              className="px-6 py-2.5 border border-[#00493E] text-[#00493E] rounded-full hover:bg-gray-100"
+              className="px-6 py-2.5 border border-[#00493E] text-[#00493E] rounded-full hover:bg-gray-100 cursor-pointer"
             >
               Cancel
             </button>

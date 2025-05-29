@@ -72,7 +72,7 @@ export default function RightSidebar({ isOpen, onClose }) {
           <div className="mb-4 mt-6 md:mt-0">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Users</h2>
-              <button className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
+              <button  onClick={() => navigate('/users')}  className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm ">
                 <FiPlus className="text-sm  cursor-pointer" />
               </button>
             </div>
@@ -93,7 +93,7 @@ export default function RightSidebar({ isOpen, onClose }) {
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Hotels</h2>
-              <button className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
+              <button onClick={() => navigate('/verified-hotels')} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
                 <FiPlus className="text-sm  cursor-pointer" />
               </button>
             </div>
@@ -113,7 +113,7 @@ export default function RightSidebar({ isOpen, onClose }) {
           <div className="mb-4 pb-5"> {/* Added pb-5 (20px padding bottom) here */}
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Adventures</h2>
-              <button className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
+              <button onClick={() => navigate('/verified-adventures')} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
                 <FiPlus className="text-sm  cursor-pointer" />
               </button>
             </div>

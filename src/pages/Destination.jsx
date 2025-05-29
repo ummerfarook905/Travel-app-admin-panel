@@ -24,7 +24,7 @@ const Destionation =()=>{
         <SearchBar onSearch={setSearchQuery} />
         <button 
           onClick={() => navigate('/destination/new')}
-          className="bg-[#004d40] text-white px-5 py-2 rounded-full hover:bg-[#00332c] transition"
+          className="bg-[#004d40] text-white px-5 py-2 rounded-full hover:bg-[#00332c] transition   cursor-pointer"
         >
           <FaPlus className="inline mr-2" /> New Destination
         </button>
