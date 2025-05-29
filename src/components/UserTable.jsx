@@ -198,35 +198,35 @@ const UserTable = ({
                 </div>
 
                 {/* Action Menu */}
-                <div className="pt-4 border-t border-gray-100 mt-4">
-                  <button 
-                    className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleActionClick(user.id);
-                    }}
-                  >
-                    <FiMoreVertical className="w-5 h-5" />
-                  </button>
-                  
-                  {activeActionMenu === user.id && (
-                    <div className="absolute right-4 z-10 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200">
-                      <div className="py-1">
-                        <button
-                          onClick={() => handleUpdate(user.id)}
-                          className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                        >
-                          <FiEdit className="mr-2" /> Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(user.id)}
-                          className="w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center"
-                        >
-                          <FiTrash2 className="mr-2" /> Delete
-                        </button>
-                      </div>
+                <div className="pt-4 border-t border-gray-100 mt-4 relative">
+                <button 
+                  className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleActionClick(user.id);
+                  }}
+                >
+                  <FiMoreVertical className="w-5 h-5" />
+                </button>
+                
+                {activeActionMenu === user.id && (
+                  <div className="absolute right-0 z-50 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-200 ">
+                    <div className="py-1">
+                      <button
+                        onClick={() => handleUpdate(user.id)}
+                        className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                      >
+                        <FiEdit className="mr-2" /> Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(user.id)}
+                        className="w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center"
+                      >
+                        <FiTrash2 className="mr-2" /> Delete
+                      </button>
                     </div>
-                  )}
+                  </div>
+                )}
                 </div>
               </div>
             </div>
