@@ -37,7 +37,7 @@ const DestinationInfoBar = () => {
 
   return (
     // <div className="bg-[#F9FAFB] min-h-screen py-6 px-4">
-      <div className="max-w-6xl mx-auto bg-white rounded-t-3xl overflow-hidden ">
+      <div className="max-w-6xl mx-auto bg-white rounded-t-3xl overflow-hidden cursor-pointer">
         {/* Header image */}
         <div className="relative h-[300px] mt-6 mx-6" >
 

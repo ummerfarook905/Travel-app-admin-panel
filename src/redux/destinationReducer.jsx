@@ -12,6 +12,7 @@ export const initialDestinations = [
         name: "Munnar",
         image: munnar,
         location: "Idukki, Kerala",
+        coordinates: [10.0889, 77.0595],
         description: "Munnar is a hill station famous for its tea gardens and picturesque landscapes.",
         coverImage: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Varkala,Kerala&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CVarkala,Kerala&key=YOUR_API_KEY",
@@ -33,6 +34,7 @@ export const initialDestinations = [
         name: "Cherai Beach",
         image: beach ,
         location: "Cherai, Kochi, Kerala",
+          coordinates: [10.1592, 76.1801],
         description: "Cherai Beach is known for its beautiful golden sand and serene waters.",
         coverImage: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Varkala,Kerala&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CVarkala,Kerala&key=YOUR_API_KEY",
@@ -54,6 +56,7 @@ export const initialDestinations = [
         name: "Goa",
         image: goa,
         location: "Goa, India",
+           coordinates: [15.2993, 74.1240],
         description: "Goa is famous for its vibrant beaches, Portuguese culture, and amazing nightlife.",
         mapImage: "/assets/Images/Destination/map.jpg",
         images: [
@@ -74,6 +77,7 @@ export const initialDestinations = [
         name: "Madayipara",
         image: madayipara,
         location: "Idukki, Kerala",
+         coordinates: [12.0805, 75.2775],
         description: "Madayipara is a hilltop offering breathtaking views of the surrounding valleys and lakes.",
         mapImage: "/assets/Images/Destination/map.jpg",
         images: [

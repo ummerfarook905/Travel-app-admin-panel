@@ -24,7 +24,7 @@ function App() {
           pauseOnHover
           theme="colored"
         />
-        </UserProvider>
+        </UserProvider> 
       </AuthProvider>
     </Router>
   );
