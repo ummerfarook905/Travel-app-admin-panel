@@ -95,7 +95,7 @@ const UserForm = () => {
       <div className="bg-white rounded-xl w-full max-w-4xl shadow-lg border">
         {/* Header */}
         <div className="bg-[#00493E] rounded-t-xl p-4">
-          <h2 className="text-white font-semibold text-lg">New User Details</h2>
+          <h2 className="text-white font-semibold text-lg"> User Details</h2>
         </div>
 
         {/* Form */}
@@ -160,14 +160,14 @@ const UserForm = () => {
           <div className="md:col-span-2 flex justify-center gap-4 mt-4">
   <button
     type="submit"
-    className="px-6 py-2.5 bg-[#00493E] text-white rounded-full hover:bg-[#00382C] transition"
+    className="px-6 py-2.5 bg-[#00493E] text-white rounded-full hover:bg-[#00382C] transition cursor-pointer"
   >
     Submit
   </button>
   <button
     type="button"
     onClick={handleClose}
-    className="px-6 py-2.5 border border-[#00493E] text-[#00493E] rounded-full hover:bg-gray-100 transition"
+    className="px-6 py-2.5 border border-[#00493E] text-[#00493E] rounded-full hover:bg-gray-100 transition cursor-pointer"
   >
     Cancel
   </button>

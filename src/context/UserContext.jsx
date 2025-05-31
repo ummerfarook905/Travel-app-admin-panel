@@ -96,7 +96,7 @@ export function UserProvider({ children }) {
     setAllUsers(updatedUsers);
     setFilteredUsers(updatedUsers);
     setShowConfirmDialog(false);
-    setToastMessage('User deleted successfully');
+    // setToastMessage('User deleted successfully');
     setTimeout(() => setToastMessage(null), 3000);
   };
 

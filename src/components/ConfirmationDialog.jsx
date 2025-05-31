@@ -56,13 +56,13 @@ const ConfirmationDialog = ({ message, onCancel, onConfirm, variant = "danger" }
           <div className="flex justify-center space-x-4 pt-2">
             <button
               onClick={onCancel}
-              className="px-5 py-2.5 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 dark:text-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
+              className="px-5 py-2.5 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 dark:text-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={onConfirm}
-              className={`px-5 py-2.5 text-sm font-medium rounded-lg text-white shadow-sm ${confirmButtonClass}`}
+              className={`px-5 py-2.5 text-sm font-medium rounded-lg text-white shadow-sm cursor-pointer ${confirmButtonClass}`}
             >
               Confirm
             </button>

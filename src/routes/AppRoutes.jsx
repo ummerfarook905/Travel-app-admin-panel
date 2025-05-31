@@ -22,7 +22,7 @@ import EditDestination from "../pages/EditDestination";
 import Pending_Hotels from "../pages/Pending_Hotels";
 import DetailedPending_Hotels from "../pages/DetailedPending_Hotels";
 import Verified_Hotels from "../pages/Verified_Hotels";
-import DetailedVerified_Hotels from "../pages/Detailedverified_Hotels";
+import DetailedVerified_Hotels from "../pages/DetailedVerified_Hotels";
 import EditHotel from "../pages/EditHotel";
 import HotelBookings from "../pages/HotelBookings";
 import DetailedHotelBookings from "../pages/DetailedHotelBooking";
@@ -38,7 +38,6 @@ import Logout from "../pages/Logout";
 
 // Protected layout wrapper
 const ProtectedLayout = () => (
-
   <ProtectedRoute>
     <RoleBasedRoute allowedRoles={["admin"]}>
       <DashboardLayout>
@@ -56,40 +55,54 @@ const AppRoutes = () => {
 
       {/* Public Routes */}
       <Route path="/login" element={<Login />} />
-      <Route path="/logout" element={<Logout/>} />
+      <Route path="/logout" element={<Logout />} />
 
       {/* Protected Routes */}
       <Route element={<ProtectedLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
-        <Route path="/users/new" element={<UserForm/> }/>
+        <Route path="/users/new" element={<UserForm />} />
         <Route path="/users/edit/:id" element={<UserForm />} />
-
-
         {/* Adventures */}
         <Route path="/pending-adventures" element={<Pending_Adventures />} />
-        <Route path="/pending-adventures/:id" element={<DetailedPending_Adventures />} />
+        <Route
+          path="/pending-adventures/:id"
+          element={<DetailedPending_Adventures />}
+        />
         <Route path="/verified-adventures" element={<Verified_Adventures />} />
-        <Route path="/verified-adventures/:id" element={<DetailedVerified_Adventures />} />
+        <Route
+          path="/verified-adventures/:id"
+          element={<DetailedVerified_Adventures />}
+        />
         <Route path="/edit-adventure/:id" element={<EditAdventure />} />
         <Route path="/adventure-bookings" element={<AdventuresBooking />} />
-        <Route path="/adventure-bookings/:type/:id" element={<Detailed_advantures />} />
-/adventure-bookings/adventure/:id
+        <Route
+          path="/adventure-bookings/:type/:id"
+          element={<Detailed_advantures />}
+        />
+        /adventure-bookings/adventure/:id
         {/* Destinations */}
         <Route path="/destination" element={<Destination />} />
         <Route path="/destination/new" element={<DestinationForm />} />
         <Route path="/destination/edit/:id" element={<EditDestination />} />
         <Route path="/destination/:id" element={<DestinationDetail />} />
-
         {/* Hotels */}
         <Route path="/pending-hotels" element={<Pending_Hotels />} />
-        <Route path="/pending-hotels/:id" element={<DetailedPending_Hotels />} />
+        <Route
+          path="/pending-hotels/:id"
+          element={<DetailedPending_Hotels />}
+        />
         <Route path="/verified-hotels" element={<Verified_Hotels />} />
-        <Route path="/verified-hotels/:id" element={<DetailedVerified_Hotels />} />
+        <Route
+          path="/verified-hotels/:id"
+          element={<DetailedVerified_Hotels />}
+        />
         <Route path="/edit-hotel/:id" element={<EditHotel />} />
         <Route path="/hotel-bookings" element={<HotelBookings />} />
-        <Route path="/hotel-bookings/:type/:id" element={<DetailedHotelBookings />} />
-
+        <Route
+          path="/hotel-bookings/:type/:id"
+          element={<DetailedHotelBookings />}
+        />
         {/* Profile & Settings */}
         <Route path="/settings" element={<Settings />} />
         <Route path="/profile" element={<Profile />} />
