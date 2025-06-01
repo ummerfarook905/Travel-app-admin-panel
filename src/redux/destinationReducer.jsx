@@ -15,11 +15,13 @@ export const initialDestinations = [
         coordinates: [10.0889, 77.0595],
         description: "Munnar is a hill station famous for its tea gardens and picturesque landscapes.",
         coverImage: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Varkala,Kerala&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CVarkala,Kerala&key=YOUR_API_KEY",
+        // mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Varkala,Kerala&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CVarkala,Kerala&key=YOUR_API_KEY",
         images: [
-          "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-          "https://images.unsplash.com/photo-1505228395891-9a51e5e8bf86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-          "https://images.unsplash.com/photo-1504609773096-104ff2c73ca4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
+          // "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+          // "https://images.unsplash.com/photo-1505228395891-9a51e5e8bf86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+          // "https://images.unsplash.com/photo-1504609773096-104ff2c73ca4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
+          munnar,munnar,munnar,munnar,munnar,
+
         ],
         reviews: [
           {
@@ -39,9 +41,11 @@ export const initialDestinations = [
         coverImage: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Varkala,Kerala&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CVarkala,Kerala&key=YOUR_API_KEY",
         images: [
-          "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-          "https://images.unsplash.com/photo-1505228395891-9a51e5e8bf86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-          "https://images.unsplash.com/photo-1504609773096-104ff2c73ca4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
+          // "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+          // "https://images.unsplash.com/photo-1505228395891-9a51e5e8bf86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+          // "https://images.unsplash.com/photo-1504609773096-104ff2c73ca4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
+
+          beach,beach,beach,beach,beach,
         ],
         reviews: [
           {
@@ -58,11 +62,10 @@ export const initialDestinations = [
         location: "Goa, India",
            coordinates: [15.2993, 74.1240],
         description: "Goa is famous for its vibrant beaches, Portuguese culture, and amazing nightlife.",
-        mapImage: "/assets/Images/Destination/map.jpg",
+        // mapImage: "/assets/Images/Destination/map.jpg",
         images: [
-          "/assets/Images/Destination/goa1.jpg",
-          "/assets/Images/Destination/goa2.jpg",
-          "/assets/Images/Destination/goa3.jpg",
+         
+          goa,goa,goa,goa,goa,
         ],
         reviews: [
           {
@@ -81,8 +84,10 @@ export const initialDestinations = [
         description: "Madayipara is a hilltop offering breathtaking views of the surrounding valleys and lakes.",
         mapImage: "/assets/Images/Destination/map.jpg",
         images: [
-          "/assets/Images/Destination/madayipara1.jpg",
-          "/assets/Images/Destination/madayipara2.jpg",
+          madayipara,
+          madayipara,  
+          madayipara,
+          madayipara,
         ],
         reviews: [
           {
@@ -100,8 +105,10 @@ export const initialDestinations = [
         description: "Vypin Beach is a quiet and lesser-known beach with clean sand and beautiful sunsets.",
         mapImage: "/assets/Images/Destination/map.jpg",
         images: [
-          "/assets/Images/Destination/vypin1.jpg",
-          "/assets/Images/Destination/vypin2.jpg",
+          vypin,
+          vypin,
+          vypin,
+          vypin,
         ],
         reviews: [
           {
