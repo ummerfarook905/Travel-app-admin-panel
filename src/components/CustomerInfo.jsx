@@ -1,7 +1,7 @@
 const CustomerInfo = ({ customer, bookingDetails, type }) => {
   return (
-    <div className="bg-[#003f2f] text-white p-5 rounded-xl w-full max-w-[280px] lg:w-[30%] h-fit"
-    style={{ marginTop: "-15px" }}>
+    <div className="bg-[#003f2f] text-white p-5 rounded-xl w-full h-fit"
+    style={{ marginTop: window.innerWidth >= 1024 ? "-25px" : "10px" }}>
       {/* Customer Profile Section */}
       <div className="flex items-center space-x-3 mb-4">
         <img

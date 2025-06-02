@@ -40,11 +40,9 @@ const Verified_Hotels = () => {
   };
 
   const handleDelete = (hotel) => {
-    if (window.confirm(`Are you sure you want to delete ${hotel.name}?`)) {
-      dispatch(deleteHotel({ id: hotel.id }));
-    }
+    dispatch(deleteHotel({ id: hotel.id }));
+    return `Hotel ${hotel.name} deleted successfully!`;
   };
-
   const handleEdit = (hotel) => {
     const urlId = hotel.id.replace('#', '');
     navigate(`/edit-hotel/${urlId}`, {
@@ -55,17 +53,24 @@ const Verified_Hotels = () => {
   const actions = [
     {
       label: 'View Details',
-      handler: handleViewDetails
+      handler: handleViewDetails,
+      requireConfirmation: false
+
     },
     {
       label: 'Delete',
       variant: 'danger',
-      handler: handleDelete
+      handler: handleDelete,
+      requireConfirmation: true,
+      confirmationMessage: `Are you sure you want to delete this hotel? This action cannot be undone.`,
+      confirmationVariant: 'danger',
     },
     {
       label: 'Edit',
       variant: 'primary',
-      handler: handleEdit
+      handler: handleEdit,
+      requireConfirmation: false
+
     }
   ];
 

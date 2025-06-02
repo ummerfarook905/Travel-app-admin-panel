@@ -34,7 +34,6 @@ import UserForm from "../components/UserForm";
 import ProtectedRoute from "../components/ProtectedRoute";
 import RoleBasedRoute from "../components/RoleBasedRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
-import Logout from "../pages/Logout";
 
 // Protected layout wrapper
 const ProtectedLayout = () => (
@@ -55,8 +54,6 @@ const AppRoutes = () => {
 
       {/* Public Routes */}
       <Route path="/login" element={<Login />} />
-      <Route path="/logout" element={<Logout />} />
-
       {/* Protected Routes */}
       <Route element={<ProtectedLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />

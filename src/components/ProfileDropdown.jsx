@@ -1,8 +1,47 @@
+import { useRef, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 import PropTypes from 'prop-types';
 
 const ProfileDropdown = ({ onClose }) => {
+  const [showConfirm, setShowConfirm] = useState(false);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+  const dropdownRef = useRef();
+
+  const handleSignOutClick = (e) => {
+    e.stopPropagation(); // prevent closing dropdown
+    console.log("signoutClick...");
+    setShowConfirm(true);
+  };
+
+  const handleConfirm = () => {
+    console.log("Logging out...");
+    setShowConfirm(false);
+    logout();
+    navigate("/login", { replace: true });
+  };
+
+  const handleCancel = () => {
+    setShowConfirm(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowConfirm(false); // optionally close confirmation too
+        onClose();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
-    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200">
+    <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200">
       <div className="py-1">
         <a 
           href="/profile" 
@@ -18,14 +57,20 @@ const ProfileDropdown = ({ onClose }) => {
         >
           Settings
         </a>
-        <a 
-          href="/logout" 
-          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          onClick={onClose}
+        <button
+          className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+          onClick={handleSignOutClick}
         >
-          Sign out
-        </a>
+          Sign Out
+        </button>
       </div>
+      {showConfirm && (
+        <ConfirmationDialog
+          message="Are you sure you want to sign out?"
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
     </div>
   );
 };

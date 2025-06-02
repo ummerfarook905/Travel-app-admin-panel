@@ -43,7 +43,7 @@ export default function Sidebar() {
         onClick={toggleSidebar}
         className="md:hidden fixed top-4 left-4 z-50 bg-[#00493E] text-white p-2 rounded-md"
       >
-        <FiMenu size={24} />
+        <FiMenu size={20} />
       </button>
 
       {/* Overlay for mobile */}
@@ -63,9 +63,9 @@ export default function Sidebar() {
         {/* Close button inside sidebar */}
         <button
           onClick={closeSidebar}
-          className="md:hidden absolute top-4 right-4 text-white hover:text-gray-200"
+          className="md:hidden absolute top-2 right-2 text-white hover:text-gray-200 border-2 border-white rounded-full p-1"
         >
-          <FiX size={24} />
+          <FiX size={20} />
         </button>
 
         <h1 className="text-2xl font-bold mb-8 mt-2 text-center">A Travel App</h1>
