@@ -197,13 +197,13 @@ const EditForm = ({
           <button
             type="button"
             onClick={onCancel}
-            className="px-5 py-2.5 text-sm font-medium text-[#303972] bg-white border border-gray-300 rounded-2xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="px-5 py-2.5 text-sm font-medium text-[#303972] bg-white border border-gray-300 rounded-2xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 cursor-pointer"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-5 py-2.5 text-sm font-medium text-white bg-[#00493E] rounded-2xl hover:bg-[#00382E] focus:outline-none focus:ring-2 focus:ring-[#00382E]"
+            className="px-5 py-2.5 text-sm font-medium text-white bg-[#00493E] rounded-2xl hover:bg-[#00382E] focus:outline-none focus:ring-2 focus:ring-[#00382E] cursor-pointer"
           >
             Submit
           </button>

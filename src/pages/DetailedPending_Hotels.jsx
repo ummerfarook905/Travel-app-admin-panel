@@ -1,102 +1,78 @@
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import DetailedPendingLayout from "../Layouts/DetailedPendingLayout";
+
+// Icons
 import { GrLocation } from "react-icons/gr";
 import { IoCallOutline } from "react-icons/io5";
 import { MdMailOutline } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { deleteAdventure } from "../redux/adventuresSlice";
-import DetailedVerifiedLayout from "../Layouts/DetailedVerifiedLayout";
 
-const DetailedVerified_Adventures = () => {
+// Redux actions
+import { approveHotel, rejectHotel } from "../redux/hotelsSlice";
+
+const DetailedPending_Hotels = () => {
   const { state } = useLocation();
-  const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [adventure, setAdventure] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (state?.adventure) {
-      setAdventure(state.adventure);
-      setLoading(false);
-    } else {
-      fetchAdventure();
-    }
-  }, [id, state]);
+  // Handle missing data
+  if (!state?.hotel) {
+    return (
+      <div className="p-8 text-center text-gray-600">
+        Could not load hotel details.
+      </div>
+    );
+  }
 
-  const fetchAdventure = async () => {
-    try {
-      const response = await fetch(`/api/adventures/${id.replace("#", "")}`);
-      const data = await response.json();
-      setAdventure(data);
-    } catch (error) {
-      console.error("Error fetching adventure:", error);
-      toast.error("Failed to load adventure details");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const hotel = state.hotel;
 
-  const handleEdit = () => {
-    navigate(`/edit-adventure/${id.replace("#", "")}`, {
-      state: { adventure },
+  // Approve handler
+  const handleApprove = () => {
+    dispatch(approveHotel({ id: hotel.id }));
+    navigate("/verified-hotels", {
+      state: { message: `Hotel ${hotel.name} approved successfully!` },
     });
   };
 
-  const handleDelete = async () => {
-    if (
-      window.confirm(
-        `Are you sure you want to permanently delete "${adventure.name}"?`
-      )
-    ) {
-      try {
-        await dispatch(deleteAdventure({ id })).unwrap();
-        toast.success("Adventure deleted successfully");
-        navigate("/verified-adventures");
-      } catch (error) {
-        console.error("Error deleting adventure:", error);
-        toast.error(error.message || "Failed to delete adventure");
-      }
-    }
+  // Reject handler
+  const handleReject = () => {
+    dispatch(rejectHotel({ id: hotel.id }));
+    navigate("/pending-hotels", {
+      state: { message: `Hotel ${hotel.name} rejected successfully.` },
+    });
   };
 
-  if (loading) {
-    return <div className="p-8 text-center text-gray-600">Loading adventure details...</div>;
-  }
-
-  if (!adventure) {
-    return <div className="p-8 text-center text-gray-600">Could not load adventure details.</div>;
-  }
-
+  // Info grid setup
   const infoItems = [
-    { icon: <GrLocation />, text: adventure.location },
-    { icon: <IoCallOutline />, text: adventure.phone },
-    { icon: <MdMailOutline />, text: adventure.email },
-    { icon: <FiUser />, text: adventure.username },
+    { icon: <GrLocation />, text: hotel.location },
+    { icon: <IoCallOutline />, text: hotel.phone },
+    { icon: <MdMailOutline />, text: hotel.email },
+    { icon: <FiUser />, text: hotel.username },
   ];
 
-  const galleryImages =
-    adventure.images?.map((img, index) => ({
-      url: img || `https://source.unsplash.com/random/300x300/?adventure,${index}`,
-      alt: `Adventure view ${index + 1}`,
-    })) || [];
+  // Image gallery
+  const galleryImages = hotel.images.map((img, index) => ({
+    url: img || `https://source.unsplash.com/random/300x300/?hotel,${index}`,
+    alt: `Hotel image ${index + 1}`,
+  }));
 
   return (
-    <DetailedVerifiedLayout
-      title={adventure.name}
-      description={adventure.description}
-      coverImage={adventure.coverImage || 'https://source.unsplash.com/random/800x400/?adventure'}
-      profileImage={adventure.coverImage || 'https://source.unsplash.com/random/300x300/?profile'}
-      price={adventure.price}
+    <DetailedPendingLayout
+      headerProps={{
+        coverImage: hotel.coverImage,
+        profileImage: hotel.coverImage,
+        title: hotel.name,
+      }}
       infoItems={infoItems}
+      description={hotel.description}
+      price={hotel.price}
+      mapImage={hotel.mapImage}
       galleryImages={galleryImages}
-      mapImage={adventure.mapImage || 'https://maps.googleapis.com/maps/api/staticmap?size=600x400&maptype=terrain&markers=color:red&key=YOUR_API_KEY'}
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
+      onApprove={handleApprove}
+      onReject={handleReject}
     />
   );
 };
 
-export default DetailedVerified_Adventures;
+export default DetailedPending_Hotels;

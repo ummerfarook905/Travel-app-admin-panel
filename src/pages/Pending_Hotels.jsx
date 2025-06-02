@@ -24,16 +24,12 @@ const Pending_Hotels = () => {
   
   const handleApprove = (hotel) => {
     dispatch(approveHotel({ id: hotel.id }));
-    navigate('/verified-hotels', { 
-      state: { 
-        message: `Hotel ${hotel.id} approved successfully!`
-      } 
-    });
+        return `Hotel ${hotel.id} approved successfully!`;
   };
 
   const handleReject = (hotel) => {
     dispatch(rejectHotel({ id: hotel.id }));
-    alert(`Hotel ${hotel.id} rejected!`);
+     return `Adventure ${hotel.id} rejected!`; 
   };
 
   const handleViewDetails = (hotel) => {
@@ -47,11 +43,17 @@ const Pending_Hotels = () => {
     {
       label: 'Approve',
       variant: 'success',
+      requireConfirmation: true,
+      confirmationMessage: 'Are you sure you want to approve this hotel?',
+      confirmationVariant: 'success', // This will make the dialog green
+
       handler: handleApprove
     },
     {
       label: 'Reject',
       variant: 'danger',
+      requireConfirmation: true,
+      confirmationMessage: 'Are you sure you want to reject this hotel?',
       handler: handleReject
     },
     {
