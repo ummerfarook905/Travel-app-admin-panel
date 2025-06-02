@@ -1,5 +1,3 @@
-// components/DetailedPendingLayout.jsx
-// Custom UI components
 import AdventureHeader from "../components/AdventureHeader";
 import InfoGrid from "../components/InfoGrid";
 import ImageGallery from "../components/ImageGallery";
