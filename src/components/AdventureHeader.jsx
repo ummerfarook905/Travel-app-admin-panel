@@ -1,7 +1,7 @@
 const AdventureHeader = ({ coverImage, profileImage, title }) => (
   <div className="w-full max-w-[1380px] mx-auto">
     {/* Background Cover Image */}
-    <div className="relative w-full h-[60px] sm:h-[80px] md:h-[100px] bg-gradient-to-r from-[#00493E] to-[#028476] rounded-md overflow-hidden">
+<div className="relative w-full h-[60px] sm:h-[80px] md:h-[100px] bg-[#00493E] rounded-md overflow-hidden">
       {/* {coverImage && (
         <img
           src={coverImage}
