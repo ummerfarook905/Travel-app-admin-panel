@@ -1,30 +1,46 @@
-const ImageGallery = ({ images }) => {
-  const getImageUrl = (img) => (typeof img === 'string' ? img : img?.url);
+import React from "react";
+
+const ImageGallery = ({ images = [] }) => {
+  const getImageUrl = (img) => (typeof img === "string" ? img : img?.url);
   const getImageAlt = (img, fallback) =>
-    typeof img === 'string' ? fallback : img?.alt || fallback;
+    typeof img === "string" ? fallback : img?.alt || fallback;
+
+  const mainImage = images[0];
+  const gridImages = [images[1], images[2], images[3], images[4]];
 
   return (
-    <div className="flex w-full max-w-[600px] h-[200px] gap-4 mx-auto">
-      {/* Main featured image (left) */}
-      <div className="flex-1 h-full rounded-lg overflow-hidden shadow-md">
+    <div className="flex flex-col md:flex-row w-full max-w-4xl gap-4 mx-auto">
+      {/* Main featured image (left on md+) */}
+      <div className="w-full md:w-1/2 h-64 rounded-lg overflow-hidden shadow-md">
         <img
-          src={getImageUrl(images[0])}
-          alt={getImageAlt(images[0], 'Featured image')}
+          src={getImageUrl(mainImage)}
+          alt={getImageAlt(mainImage, "Featured image")}
+          loading="lazy"
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
         />
       </div>
 
-      {/* Gallery grid (right) */}
-      <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-3 h-full">
-        {[1, 3, 2, 4].map((idx, i) => (
-          <div key={i} className="rounded-lg overflow-hidden shadow-md">
-            <img
-              src={getImageUrl(images[idx])}
-              alt={getImageAlt(images[idx], `Gallery image ${i + 1}`)}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
-            />
-          </div>
-        ))}
+      {/* Gallery grid (right on md+) */}
+      <div className="w-full md:w-1/2 grid grid-cols-2 grid-rows-2 gap-3 h-64">
+        {gridImages.map((img, i) =>
+          img ? (
+            <div key={i} className="rounded-lg overflow-hidden shadow-md">
+              <img
+                src={getImageUrl(img)}
+                alt={getImageAlt(img, `Gallery image ${i + 1}`)}
+                loading="lazy"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+              />
+            </div>
+          ) : (
+            <div
+              key={i}
+              className="rounded-lg bg-gray-200 flex items-center justify-center text-gray-500 text-sm"
+            >
+              No Image
+            </div>
+          )
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 // Updated hotelsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
+import { HOTEL_IMAGES } from '../Constants/images';
 
 const initialState = {
   pending: [
@@ -22,9 +23,9 @@ const initialState = {
       coverImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Maldives&zoom=10&size=600x400&maptype=terrain&markers=color:red%7CMaldives&key=YOUR_API_KEY",
       images: [
-        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
+        HOTEL_IMAGES.hotel,
+        HOTEL_IMAGES.hotel2,
+      
       ]
     },
     {
@@ -43,12 +44,12 @@ const initialState = {
       rating: 4.6,
       amenities: ['Ski Access', 'Spa', 'Restaurant', 'Free WiFi', 'Fireplace'],
       rooms: 45,
-      coverImage: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      coverImage: HOTEL_IMAGES.hotel,
       mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Swiss+Alps&zoom=8&size=600x400&maptype=terrain&markers=color:red%7CSwiss+Alps&key=YOUR_API_KEY",
       images: [
-        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
+       
+        HOTEL_IMAGES.hotel,
+        HOTEL_IMAGES.hotel2,
       ]
     }
   ],
@@ -69,12 +70,11 @@ const initialState = {
       rating: 4.7,
       amenities: ['Rooftop Pool', 'Fitness Center', 'Restaurant', 'Bar', 'Free WiFi'],
       rooms: 200,
-      coverImage: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=New+York,NY&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CNew+York&key=YOUR_API_KEY",
+      coverImage: HOTEL_IMAGES.hotel2,
+      // mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=New+York,NY&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CNew+York&key=YOUR_API_KEY",
       images: [
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
+        HOTEL_IMAGES.hotel,
+        HOTEL_IMAGES.hotel2,
       ]
     }
   ],
