@@ -4,8 +4,8 @@ import InfoGrid from "../components/InfoGrid";
 import ImageGallery from "../components/ImageGallery";
 import SectionTitle from "../components/SectionTitle";
 import Rating from "../components/ReviewList";
-
-
+import LocationMap from "../components/LocationMap";
+import useGeocode from "../hooks/useGeoCode";
 const DetailedVerifiedLayout = ({
   title,
   description,
@@ -15,9 +15,12 @@ const DetailedVerifiedLayout = ({
   infoItems,
   galleryImages,
   mapImage,
+  // coordinates,
+  location,
   handleEdit,
   handleDelete,
 }) => {
+   const coordinates = useGeocode(location); 
   return (
     <div className="p-4 md:p-8 max-w-6xl mx-auto">
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
@@ -67,13 +70,7 @@ const DetailedVerifiedLayout = ({
             <SectionTitle>Location & Gallery</SectionTitle>
             <div className="flex flex-col md:flex-row gap-6 mt-4">
               <div className="md:w-1/3">
-                <div className="rounded-lg overflow-hidden h-48 md:h-64 shadow-md">
-                  <img
-                    src={mapImage}
-                    alt="Location Map"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+<LocationMap coordinates={coordinates} location={location} />
               </div>
               <div className="md:w-2/3">
                 <ImageGallery images={galleryImages} />

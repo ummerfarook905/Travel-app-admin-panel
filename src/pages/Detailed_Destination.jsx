@@ -47,13 +47,10 @@ const Detailed_Destination = () => {
           {/* Map and gallery */}
           <div className="flex flex-col md:flex-row gap-6 mt-4">
             <div className="md:w-1/3">
-              <div className="rounded-lg overflow-hidden h-38 md:h-54 shadow-md">
-                <img
-                  src={destination.mapImage}
-                  alt="Location Map"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+               <DestinationAbout
+      location={destination.location}
+      description={destination.description}
+    />
             </div>
             <div className="pl-6">
               <SectionTitle>
