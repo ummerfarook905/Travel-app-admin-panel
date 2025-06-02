@@ -94,7 +94,7 @@ const Header = ({ toggleSidebar }) => {
         >
           <FiMenu className="text-gray-600 text-xl" />
         </button>
-        <h1 className="text-xl md:text-2xl font-bold text-[#00493E]">{title}</h1>
+        <h1 className="text-xl md:text-2xl pl-3 font-bold text-[#00493E]">{title}</h1>
       </div>
 
       {/* Right Section */}

@@ -8,21 +8,19 @@ import {
   FiStar,
   FiBookmark,
   FiX,
-  FiMenu
+  FiMenu,
+  FiChevronLeft,
+  FiChevronRight,
 } from "react-icons/fi";
 import { BiHomeAlt } from "react-icons/bi";
 import { FaHotel, FaUmbrellaBeach } from "react-icons/fa";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const closeSidebar = () => {
-    setIsOpen(false);
-  };
+   const [isCollapsed, setIsCollapsed] = useState(false);
+  const toggleSidebar = () =>  setIsOpen(!isOpen);
+  const closeSidebar = () =>  setIsOpen(false);
+  const toggleCollapse = () => setIsCollapsed(!isCollapsed);
 
   const navItems = [
     { to: "/dashboard", icon: <BiHomeAlt className="mr-3 text-lg" />, text: "Dashboard" },
@@ -56,10 +54,22 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <div
-        className={`bg-[#00493E] text-white w-64 min-h-screen p-4 fixed md:relative z-50 transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-        }`}
+        className={`bg-[#00493E] text-white h-screen p-4 fixed md:relative z-50 transition-all duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+          ${isCollapsed ? "w-20" : "w-75"}
+        `}
       >
+
+        {/* Collapse/Expand button */}
+        <div className="hidden md:block absolute top-4 -right-4 z-50">
+          <button
+            onClick={toggleCollapse}
+            className="bg-[#00493E] text-white p-1 border border-white rounded-full shadow"
+          >
+            {isCollapsed ? <FiChevronRight /> : <FiChevronLeft />}
+          </button>
+        </div>
+
         {/* Close button inside sidebar */}
         <button
           onClick={closeSidebar}
@@ -68,24 +78,32 @@ export default function Sidebar() {
           <FiX size={20} />
         </button>
 
-        <h1 className="text-2xl font-bold mb-8 mt-2 text-center">A Travel App</h1>
+        {!isCollapsed && (
+          <h1 className="text-2xl font-bold mb-8 mt-2 text-center">A Travel App</h1>
+        )}
+        
         <ul>
           {navItems.map((item, index) => (
-            <li key={index} className="mb-2">
+            <li key={index} className="mb-2 group relative">
               <NavLink
                 to={item.to}
                 className={({ isActive }) =>
                   `flex items-center p-2 rounded transition-colors duration-200 ${
                     isActive
-                      ? 'bg-white text-[#00493E] font-medium rounded-tl-2xl rounded-bl-2xl'
-                      : 'hover:bg-white hover:text-[#00493E] rounded-tl-2xl hover:rounded-bl-2xl'
-                  }`
+                      ? 'bg-white text-[#00493E] font-medium rounded-3xl '
+                      : 'hover:bg-white hover:text-[#00493E] rounded-3xl '
+                  }${isCollapsed ? "justify-center" : ""}`
                 }
                 onClick={closeSidebar}
               >
-                {item.icon}
-                {item.text}
+                 <span className="text-lg ml-2">{item.icon}</span>
+                 {!isCollapsed && <span className="ml-3">{item.text}</span>}
               </NavLink>
+                {isCollapsed && (
+                  <span className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">
+                    {item.text}
+                  </span>
+                )}
             </li>
           ))}
         </ul>
