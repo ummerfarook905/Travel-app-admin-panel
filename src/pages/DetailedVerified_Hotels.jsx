@@ -97,9 +97,10 @@ const DetailedVerified_Hotels = () => {
       price={hotel.price}
       infoItems={infoItems}
       galleryImages={galleryImages}
-      mapImage={hotel.mapImage || 'https://maps.googleapis.com/maps/api/staticmap?size=600x400&maptype=terrain&markers=color:red&key=YOUR_API_KEY'}
+    //  mapImage={hotel.mapImage || 'https://maps.googleapis.com/maps/api/staticmap?size=600x400&maptype=terrain&markers=color:red&key=YOUR_API_KEY'}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
+      location={hotel.location}
     />)
 };
 

@@ -92,9 +92,10 @@ const DetailedVerified_Adventures = () => {
       price={adventure.price}
       infoItems={infoItems}
       galleryImages={galleryImages}
-      mapImage={adventure.mapImage || 'https://maps.googleapis.com/maps/api/staticmap?size=600x400&maptype=terrain&markers=color:red&key=YOUR_API_KEY'}
+    //  mapImage={adventure.mapImage || 'https://maps.googleapis.com/maps/api/staticmap?size=600x400&maptype=terrain&markers=color:red&key=YOUR_API_KEY'}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
+        location= {adventure.location}
     />
   );
 };

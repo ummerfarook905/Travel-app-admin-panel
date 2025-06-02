@@ -129,6 +129,8 @@ const initialState = {
       images: [
         "https://images.unsplash.com/photo-1505483531331-82f6d93f0f1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
         "https://images.unsplash.com/photo-1601831954250-b93ac0c2b7ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+        "https://images.unsplash.com/photo-1505483531331-82f6d93f0f1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+        "https://images.unsplash.com/photo-1601831954250-b93ac0c2b7ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
         "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
       ]
     }

@@ -5,8 +5,7 @@ import ImageGallery from "../components/ImageGallery";
 import SectionTitle from "../components/SectionTitle";
 import Rating from "../components/ReviewList";
 import LocationMap from "../components/LocationMap";
-import useGeocode from "../hooks/useGeocode"; // Custom hook to get coordinates from location
-
+import useGeocode from "../hooks/useGeoCode";
 const DetailedVerifiedLayout = ({
   title,
   description,
