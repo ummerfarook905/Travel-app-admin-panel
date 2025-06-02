@@ -17,11 +17,13 @@ const initialState = {
         price: '45',
         coverImage: "https://images.unsplash.com/photo-1501785888041-af3e28568cce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         
-        mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Lake+Tahoe,CA&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CLake+Tahoe,CA&key=YOUR_API_KEY",
+        // mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Lake+Tahoe,CA&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CLake+Tahoe,CA&key=YOUR_API_KEY",
         images: [
-          "https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-          "https://images.unsplash.com/photo-1470114716159-e389f8712fda?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-          "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
+           "https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+           "https://images.unsplash.com/photo-1470114716159-e389f8712fda?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+         "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+         "https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
+           "https://images.unsplash.com/photo-1470114716159-e389f8712fda?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
         ]
       },
       {

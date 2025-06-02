@@ -14,18 +14,19 @@ console.log("Coordinates:", coordinates);
               locationName
             )}`,
 
-            {
-                headers: {
-          'User-Agent': 'TravelApp/1.0 (vinishavijayakumar15@gmail.com)',
-        },
-            }
+        //     {
+        //         headers: {
+        //   'User-Agent': 'TravelApp/1.0 (vinishavijayakumar15@gmail.com)',
+        // },
+        //     }
           );
           const data = await response.json();
+          console.log("Geocode API response:", data);
           if (data.length > 0) {
-            setCoordinates([
-              parseFloat(data[0].lat),
-              parseFloat(data[0].lon),
-            ]);
+            setCoordinates({
+          lat: parseFloat(data[0].lat),
+            lng: parseFloat(data[0].lon),
+          });
           }
         } catch (error) {
           console.error("Error fetching coordinates:", error);

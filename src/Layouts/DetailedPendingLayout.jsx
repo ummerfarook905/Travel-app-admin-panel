@@ -5,17 +5,21 @@ import InfoGrid from "../components/InfoGrid";
 import ImageGallery from "../components/ImageGallery";
 import ActionButtons from "../components/ActionButtons";
 import SectionTitle from "../components/SectionTitle";
-
+import useGeocode from "../hooks/useGeoCode";
+import LocationMap from "../components/LocationMap";
 const DetailedPendingLayout = ({
   headerProps,
   infoItems,
   description,
   price,
   mapImage,
+  location="New York, USA",
   galleryImages,
   onApprove,
   onReject,
 }) => {
+  const coordinates =useGeocode(location);
+  console.log("Coordinates in DetailedPendingLayout:", coordinates);
   return (
     <div className="p-4 md:p-8 max-w-6xl mx-auto">
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
@@ -45,13 +49,8 @@ const DetailedPendingLayout = ({
           {/* Map and gallery */}
           <div className="flex flex-col md:flex-row gap-6 mt-4">
             <div className="md:w-1/3">
-              <div className="rounded-lg overflow-hidden h-38 md:h-54 shadow-md">
-                <img
-                  src={mapImage}
-                  alt="Location Map"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+             <LocationMap coordinates={coordinates} location={location} />
+
             </div>
             <div className="md:w-2/3">
               <SectionTitle>Images</SectionTitle>

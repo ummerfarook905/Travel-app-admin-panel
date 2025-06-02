@@ -6,6 +6,8 @@ import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 
 const LocationMap = ({ coordinates, location, zoom = 13, height = 'h-48' }) => {
+  console.log("Coordinates in LocationMap:", coordinates);
+
   if (!coordinates) {
     return <p className="text-sm text-gray-500">Loading map...</p>;
   }

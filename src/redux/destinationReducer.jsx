@@ -109,6 +109,7 @@ export const initialDestinations = [
           vypin,
           vypin,
           vypin,
+          vypin
         ],
         reviews: [
           {
