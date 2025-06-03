@@ -4,7 +4,6 @@ import Toast from './Toast';
 import ConfirmationDialog from './ConfirmationDialog';
 import useConfirmDialog from '../hooks/useConfirmDialog';
 
-
 const Table = ({
   headers,
   rows,
@@ -19,14 +18,10 @@ const Table = ({
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('success');
-  // const [showConfirmation, setShowConfirmation] = useState(false);
-  // const [confirmationMessage, setConfirmationMessage] = useState('');
-  // const [currentAction, setCurrentAction] = useState(null);
-  // const [currentRow, setCurrentRow] = useState(null);
   const navigate = useNavigate();
   const tableRef = useRef(null);
 
-   const {
+  const {
     isOpen: isConfirmOpen,
     openDialog,
     confirm,
@@ -53,40 +48,52 @@ const Table = ({
     e.preventDefault();
     onNameClick ? onNameClick(row) : navigate(`/adventures/${row.id}`);
   };
-   const showSuccessToast = (message) => {
+
+  const showSuccessToast = (message) => {
     setToastMessage(message);
-    setToastType('success');
+    setToastType('success'); // 🔁 UPDATED
     setShowToast(true);
   };
 
   const showErrorToast = (message) => {
     setToastMessage(message);
-    setToastType('error');
+    setToastType('error'); // 🔁 UPDATED
     setShowToast(true);
   };
 
   const handleActionClick = (action, row, e) => {
     e.stopPropagation();
+    setActiveMenu(null);
+
     if (action.requireConfirmation) {
-       openDialog(() => {
+      openDialog(() => {
         action.handler?.(row);
-        showSuccessToast(`${action.label} action completed`);
+        // Toast now shown in confirm, not here
       }, {
         row,
         action,
         confirmationMessage: action.confirmationMessage || `Are you sure you want to ${action.label.toLowerCase()}?`
       });
-      
     } else {
       action.handler?.(row);
       showSuccessToast(`${action.label} action completed`);
     }
-    setActiveMenu(null);
   };
 
-  
- 
-  
+  // 🔁 UPDATED: show toast after confirmed action
+  useEffect(() => {
+    if (isConfirmOpen || !payload?.action || !payload?.row) return;
+    const handleConfirmed = async () => {
+      try {
+        await payload.action.handler?.(payload.row);
+        showSuccessToast(`${payload.action.label} action completed`);
+      } catch (error) {
+        showErrorToast(`${payload.action.label} failed`);
+      }
+    };
+    confirm(handleConfirmed);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConfirmOpen]);
 
   const handleSelectRow = (index) => {
     setSelectedRows((prev) =>
@@ -103,18 +110,17 @@ const Table = ({
   };
 
   return (
-      <div className="relative pt-4">  
-          {/* Toast will appear floating above the table */}
-   {showToast && (
-  <Toast
-    message={toastMessage}
-    onclose={() => setShowToast(false)}
-    type="success" // or "error"
-  />
-)}
+    <div className="relative pt-4">
+      {/* 🔁 UPDATED: Toast type is dynamic now */}
+      {showToast && (
+        <Toast
+          message={toastMessage}
+          onclose={() => setShowToast(false)}
+          type={toastType}
+        />
+      )}
 
-   
-        <div className="overflow-x-auto rounded-lg shadow-sm">
+      <div className="hidden md:block overflow-x-auto rounded-lg shadow-sm">
         <div className="bg-white rounded-lg">
           <table className="min-w-full divide-y divide-gray-200" ref={tableRef}>
             <thead>
@@ -215,7 +221,6 @@ const Table = ({
                             role="menu"
                             aria-orientation="vertical"
                             aria-labelledby="menu-button"
-                            
                           >
                             <div className="py-1">
                               {actions.map((action, index) => (
@@ -232,7 +237,7 @@ const Table = ({
                                   role="menuitem"
                                 >
                                   {action.icon && (
-                                    <span className="mr-2 text-lg text-gray-400 ">{action.icon}</span>
+                                    <span className="mr-2 text-lg text-gray-400">{action.icon}</span>
                                   )}
                                   {action.label}
                                 </button>
@@ -247,15 +252,64 @@ const Table = ({
               ))}
             </tbody>
           </table>
+
+    
         </div>
+
       </div>
-
-
-      {isConfirmOpen&& (
+      {/* Mobile card layout */}
+          <div className="block md:hidden  grid grid-cols-1 gap-4 mt-4">
+  {rows.map((row, rowIndex) => (
+    <div key={rowIndex} className="bg-white rounded-lg shadow-md p-4">
+      {headers.map((header, colIndex) => {
+        const cellData = row[header.key || colIndex];
+        const cellContent = header.render ? header.render(cellData, row) : cellData;
+        return (
+          <div key={colIndex} className="mb-2">
+            <span className="block text-sm font-medium text-gray-500">{header.label || header}</span>
+            <span className={`block text-sm ${header.key === 'id' ? idColor : 'text-gray-800'}`}>
+              {nameAsLink && (header.key === 'name' || header.key === 'adventureName') ? (
+                <button
+                  onClick={(e) => handleNameClick(row, e)}
+                  className="text-[#303972] font-semibold"
+                >
+                  {cellContent}
+                </button>
+              ) : (
+                cellContent
+              )}
+            </span>
+          </div>
+        );
+      })}
+      {actions.length > 0 && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {actions.map((action, index) => (
+            <button
+              key={index}
+              onClick={(e) => handleActionClick(action, row, e)}
+              className={`px-3 py-1 rounded text-sm font-medium focus:outline-none ${
+                action.variant === 'danger'
+                  ? 'bg-red-100 text-red-600 hover:bg-red-200'
+                  : action.variant === 'success'
+                  ? 'bg-green-100 text-green-600 hover:bg-green-200'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {action.label}
+            </button>
+          ))}
+        </div>
+      )}
+              </div>
+            ))}
+          </div>
+      {/* 🔁 UPDATED */}
+      {isConfirmOpen && (
         <ConfirmationDialog
           message={payload?.confirmationMessage}
           onCancel={closeDialog}
-          onConfirm={confirm}
+          onConfirm={() => confirm()} // we handle toast in effect
           variant={payload?.action?.confirmationVariant || 'danger'}
         />
       )}
