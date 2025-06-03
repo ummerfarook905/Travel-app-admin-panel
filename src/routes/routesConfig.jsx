@@ -1,31 +1,37 @@
-import Login from "../pages/login";
-import Signup from "../pages/Signup";
-import NotFound from "../pages/NotFound";
+import { lazy } from "react";
+
+// Public Pages
+const Login = lazy(() => import("../pages/Login"));
+const Signup = lazy(() => import("../pages/Signup"));
 
 // Protected Pages
-import Dashboard from "../pages/DashBoard";
-import Users from "../pages/Users";
-import Pending_Adventures from "../pages/Pending_Adventures";
-import DetailedPending_Adventures from "../pages/DetailedPending_Adventures";
-import Verified_Adventures from "../pages/Verified_Adventures";
-import DetailedVerified_Adventures from "../pages/DetailedVerified_Adventures";
-import EditAdventure from "../pages/EditAdventure";
-import AdventuresBooking from "../pages/AdventuresBooking";
-import Detailed_advantures from "../pages/Detailed_Advantures_Booking";
-import Destination from "../pages/Destination";
-import DestinationDetail from "../pages/Detailed_Destination";
-import DestinationForm from "../components/DestinationForm";
-import EditDestination from "../pages/EditDestination";
-import Pending_Hotels from "../pages/Pending_Hotels";
-import DetailedPending_Hotels from "../pages/DetailedPending_Hotels";
-import Verified_Hotels from "../pages/Verified_Hotels";
-import DetailedVerified_Hotels from "../pages/DetailedVerified_Hotels";
-import EditHotel from "../pages/EditHotel";
-import HotelBookings from "../pages/HotelBookings";
-import DetailedHotelBookings from "../pages/DetailedHotelBooking";
-import Settings from "../pages/Settings";
-import Profile from "../pages/Profile";
-import UserForm from "../components/UserForm";
+const Dashboard = lazy(() => import("../pages/DashBoard"));
+const Users = lazy(() => import("../pages/Users"));
+const UserForm = lazy(() => import("../components/UserForm"));
+
+const Pending_Adventures = lazy(() => import("../pages/Pending_Adventures"));
+const DetailedPending_Adventures = lazy(() => import("../pages/DetailedPending_Adventures"));
+const Verified_Adventures = lazy(() => import("../pages/Verified_Adventures"));
+const DetailedVerified_Adventures = lazy(() => import("../pages/DetailedVerified_Adventures"));
+const EditAdventure = lazy(() => import("../pages/EditAdventure"));
+const AdventuresBooking = lazy(() => import("../pages/AdventuresBooking"));
+const Detailed_advantures = lazy(() => import("../pages/Detailed_Advantures_Booking"));
+
+const Destination = lazy(() => import("../pages/Destination"));
+const DestinationForm = lazy(() => import("../components/DestinationForm"));
+const EditDestination = lazy(() => import("../pages/EditDestination"));
+const DestinationDetail = lazy(() => import("../pages/Detailed_Destination"));
+
+const Pending_Hotels = lazy(() => import("../pages/Pending_Hotels"));
+const DetailedPending_Hotels = lazy(() => import("../pages/DetailedPending_Hotels"));
+const Verified_Hotels = lazy(() => import("../pages/Verified_Hotels"));
+const DetailedVerified_Hotels = lazy(() => import("../pages/DetailedVerified_Hotels"));
+const EditHotel = lazy(() => import("../pages/EditHotel"));
+const HotelBookings = lazy(() => import("../pages/HotelBookings"));
+const DetailedHotelBookings = lazy(() => import("../pages/DetailedHotelBooking"));
+
+const Settings = lazy(() => import("../pages/Settings"));
+const Profile = lazy(() => import("../pages/Profile"));
 
 export const publicRoutes = [
   { path: "/login", element: <Login /> },
