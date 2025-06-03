@@ -6,23 +6,27 @@ import { useState } from "react";
 import ConfirmationDialog from "./ConfirmationDialog";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import useConfirmDialog from "../hooks/useConfirmDialog";
 const DestinationInfoBar = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [showConfirm, setShowConfirm] = useState(false);
+  const{
+    isOpen,
+    openDialog,
+    closeDialog,
+    confirm,
+    payload,
+  } = useConfirmDialog();
   const destination = initialDestinations.find((dest) => dest.id === id);
 
   if (!destination) {
     return <div className="p-6 text-center text-xl text-gray-500">Destination not found.</div>;
   }
    const handleDeleteClick = () => {
-    setShowConfirm(true);
+   openDialog(handleConfirmDelete, destination);
   };
-    const handleConfirmDelete = () => {
-    setShowConfirm(false);
-
-  
-    toast.success("Destination deleted successfully.");
+   const handleConfirmDelete = (data) => {
+    toast.error(`Destination "${data.name}" deleted successfully.`);
   };
    const handleCancelDelete = () => {
     setShowConfirm(false);
@@ -64,7 +68,8 @@ const DestinationInfoBar = () => {
 
   <div className="flex space-x-2 mt-4 md:mt-0">
     <button className="bg-white text-[#004D40] px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 cursor-pointer"
-     onClick={handleDeleteClick}
+     
+      onClick={handleDeleteClick}
      >
       Delete
     </button>
@@ -80,16 +85,14 @@ const DestinationInfoBar = () => {
           
           
    {/* Confirmation Dialog */}
-      {showConfirm && (
+     {isOpen && (
         <ConfirmationDialog
-          message="Do you really want to delete this destination?"
-          onCancel={handleCancelDelete}
-          onConfirm={handleConfirmDelete}
+          message={`Do you really want to delete "${payload?.name}"?`}
+          onCancel={closeDialog}
+          onConfirm={confirm}
         />
       )}
-        
-        
-     </div>
+    </div>
   );
 };
 

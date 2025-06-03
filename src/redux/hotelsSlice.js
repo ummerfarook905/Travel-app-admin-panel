@@ -1,7 +1,28 @@
 // Updated hotelsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { HOTEL_IMAGES } from '../Constants/images';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
+
+// ✅ ADDED: Async thunk for deleting a hotel
+export const deleteHotelAsync = createAsyncThunk(
+  'hotels/deleteHotelAsync',
+  async ({ id }, thunkAPI) => {
+    try {
+      const response = await fetch(`/api/hotels/${id.replace('#', '')}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete hotel');
+      }
+
+      return { id }; // ✅ Used in extraReducers to update Redux state
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 const initialState = {
   pending: [
     {
@@ -118,6 +139,13 @@ const hotelsSlice = createSlice({
     }
   }
 });
+ // ✅ ADDED: Handle async thunk result
+  extraReducers: (builder) => {
+    builder.addCase(deleteHotelAsync.fulfilled, (state, action) => {
+      state.verified = state.verified.filter(h => h.id !== action.payload.id);
+    });
+  }
+
 
 export const {
   approveHotel,

@@ -9,7 +9,10 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { deleteHotel } from "../redux/hotelsSlice";
 import DetailedVerifiedLayout from "../Layouts/DetailedVerifiedLayout";
-
+import useConfirmDialog from "../hooks/useConfirmDialog";
+import ConfirmationDialog from "../components/ConfirmationDialog";
+import { deleteHotelAsync } from "../redux/hotelsSlice";
+import { useDispatch } from "react-redux";
 const DetailedVerified_Hotels = () => {
   const { state } = useLocation();
   const { id } = useParams();
@@ -17,6 +20,14 @@ const DetailedVerified_Hotels = () => {
   const dispatch = useDispatch();
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const {
+    isOpen,
+    openDialog,
+    closeDialog,
+    confirm,
+    payload
+  } = useConfirmDialog();
 
   useEffect(() => {
     if (state?.hotel) {
@@ -46,16 +57,21 @@ const DetailedVerified_Hotels = () => {
     });
   };
 
-  const handleDelete = async () => {
-    if (window.confirm(`Are you sure you want to permanently delete "${hotel.name}"?`)) {
-      try {
-        await dispatch(deleteHotel({ id })).unwrap();
-        toast.success("Hotel deleted successfully");
-        navigate('/verified-hotels');
-      } catch (error) {
-        console.error("Error deleting hotel:", error);
-        toast.error(error.message || "Failed to delete hotel");
-      }
+  const handleDelete = async (id) => {
+  const confirmed = window.confirm("Are you sure you want to delete?");
+  if (confirmed) {
+    dispatch(deleteHotelAsync({ id }));
+  }
+};
+
+   const handleConfirmDelete = async (hotelToDelete) => {
+    try {
+      await dispatch(deleteHotel({ id })).unwrap();
+      toast.success(`Hotel "${hotelToDelete.name}" deleted successfully`);
+      navigate('/verified-hotels');
+    } catch (error) {
+      console.error("Error deleting hotel:", error);
+      toast.error(error.message || "Failed to delete hotel");
     }
   };
 
@@ -89,6 +105,7 @@ const DetailedVerified_Hotels = () => {
   })) || [];
 
   return (
+    <div>
         <DetailedVerifiedLayout
       title={hotel.name}
       description={hotel.description}
@@ -101,7 +118,21 @@ const DetailedVerified_Hotels = () => {
       handleEdit={handleEdit}
       handleDelete={handleDelete}
       location={hotel.location}
-    />)
+    />
+  
+
+
+ /*  Confirmation dialog using hook */
+      {isOpen && (
+        <ConfirmationDialog
+          message={`Do you really want to delete "${payload?.name}"?`}
+          onCancel={closeDialog}
+          onConfirm={confirm}
+        />
+      )}
+        </div>
+  )
+
 };
 
 export default DetailedVerified_Hotels;
