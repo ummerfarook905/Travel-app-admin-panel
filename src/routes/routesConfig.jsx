@@ -25,7 +25,9 @@ const DestinationDetail = lazy(() => import("../pages/Detailed_Destination"));
 const Pending_Hotels = lazy(() => import("../pages/Pending_Hotels"));
 const DetailedPending_Hotels = lazy(() => import("../pages/DetailedPending_Hotels"));
 const Verified_Hotels = lazy(() => import("../pages/Verified_Hotels"));
-const DetailedVerified_Hotels = lazy(() => import("../pages/DetailedVerified_Hotels"));
+const DetailedVerified_Hotels = lazy(() =>
+  import("../pages/DetailedVerified_Hotels")
+);
 const EditHotel = lazy(() => import("../pages/EditHotel"));
 const HotelBookings = lazy(() => import("../pages/HotelBookings"));
 const DetailedHotelBookings = lazy(() => import("../pages/DetailedHotelBooking"));

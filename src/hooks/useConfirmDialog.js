@@ -6,11 +6,16 @@ const useConfirmDialog = () => {
   const [onConfirmAction, setOnConfirmAction] = useState(() => () => {});
   const [payload, setPayload] = useState(null);
 
-  const openDialog = (action, data = null) => {
-    setOnConfirmAction(() => () => action(data));
-    setPayload(data);
-    setIsOpen(true);
-  };
+ const openDialog = (action, data = null) => {
+  if (typeof action !== "function") {
+    console.error("openDialog expects a function as first argument");
+    return;
+  }
+  setOnConfirmAction(() => () => action(data));
+  setPayload(data);
+  setIsOpen(true);
+};
+
 
   const confirm = () => {
     onConfirmAction();

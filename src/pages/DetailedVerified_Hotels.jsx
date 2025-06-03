@@ -12,7 +12,7 @@ import DetailedVerifiedLayout from "../Layouts/DetailedVerifiedLayout";
 import useConfirmDialog from "../hooks/useConfirmDialog";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import { deleteHotelAsync } from "../redux/hotelsSlice";
-import { useDispatch } from "react-redux";
+
 const DetailedVerified_Hotels = () => {
   const { state } = useLocation();
   const { id } = useParams();
@@ -57,21 +57,22 @@ const DetailedVerified_Hotels = () => {
     });
   };
 
-  const handleDelete = async (id) => {
-  const confirmed = window.confirm("Are you sure you want to delete?");
-  if (confirmed) {
-    dispatch(deleteHotelAsync({ id }));
-  }
-};
+  
+  const handleDelete = () => {
+    openDialog(handleConfirmDelete,hotel); // Pass current hotel info as payload for confirmation message
+  };
 
-   const handleConfirmDelete = async (hotelToDelete) => {
+
+const handleConfirmDelete = async () => {
     try {
-      await dispatch(deleteHotel({ id })).unwrap();
-      toast.success(`Hotel "${hotelToDelete.name}" deleted successfully`);
+      await dispatch(deleteHotelAsync({ id })).unwrap();
+      toast.success(`Hotel "${hotel.name}" deleted successfully`);
       navigate('/verified-hotels');
     } catch (error) {
       console.error("Error deleting hotel:", error);
       toast.error(error.message || "Failed to delete hotel");
+    } finally {
+      closeDialog();
     }
   };
 
@@ -127,7 +128,7 @@ const DetailedVerified_Hotels = () => {
         <ConfirmationDialog
           message={`Do you really want to delete "${payload?.name}"?`}
           onCancel={closeDialog}
-          onConfirm={confirm}
+onConfirm={() => confirm(handleConfirmDelete)}
         />
       )}
         </div>
