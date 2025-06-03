@@ -18,10 +18,24 @@ export default {
           '20%, 60%': { transform: 'translateX(-6px)' },
           '40%, 80%': { transform: 'translateX(6px)' },
         },
+
+          slideFadeInOut: {
+          '0%': { opacity: 0, transform: 'translateX(50%)' },
+          '10%, 90%': { opacity: 1, transform: 'translateX(0)' },
+          '100%': { opacity: 0, transform: 'translateX(50%)' },
+        },
+        pop: {
+          '0%': { transform: 'scale(0.8)', opacity: 0 },
+          '60%': { transform: 'scale(1.1)', opacity: 1 },
+          '100%': { transform: 'scale(1)', opacity: 1 },
+        },
       },
       animation: {
         scaleIn: 'scaleIn 150ms ease-out forwards',
          shake: 'shake 0.5s ease-in-out',
+
+           'slide-fade-in-out': 'slideFadeInOut 3s ease forwards',
+        pop: 'pop 0.3s ease',
       },
     
         colors: {

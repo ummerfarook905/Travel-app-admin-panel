@@ -1,46 +1,33 @@
 import React, { useEffect } from "react";
+import { CheckCircle, XCircle } from "lucide-react"; // or use SVGs manually
 
-const Toast = ({ message, onclose, type="success" }) => {
+const Toast = ({ message, onclose, type = "success" }) => {
   useEffect(() => {
     const timer = setTimeout(onclose, 3000);
     return () => clearTimeout(timer);
   }, [onclose]);
 
   return (
-     <div className="fixed top-20 right-4 transform z-50 animate-fade-in">
+    <div className="fixed top-6 right-6 z-50 animate-slide-fade-in-out">
       <div
-        className={clsx(
-          "px-3 py-2 rounded-lg shadow-xl flex items-center gap-2 transition-all duration-300",
-          {
-            "bg-green-600 text-white": type === "success",
-            "bg-red-600 text-white animate-shake": type === "error",
-          }
-        )}
+        className={`flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg text-white 
+          ${type === "success" ? "bg-[#28a745]" : "bg-[#dc3545]"}`}
+        style={{
+          minWidth: "250px",
+          maxWidth: "350px",
+          fontWeight: 500,
+          fontSize: "15px",
+        }}
       >
-        <svg
-          className={clsx(
-            "w-5 h-5 flex-shrink-0",
-            {
-              "text-white animate-bounce": type === "success",
-              "text-white": type === "error",
-            }
-          )}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M5 13l4 4L19 7"
-          />
-        </svg>
-        <span className="text-sm">{message}</span>
+        {type === "success" ? (
+          <CheckCircle className="w-5 h-5 text-white animate-pop" />
+        ) : (
+          <XCircle className="w-5 h-5 text-white animate-shake" />
+        )}
+        <span>{message}</span>
       </div>
     </div>
   );
 };
-export default Toast;
 
- 
+export default Toast;

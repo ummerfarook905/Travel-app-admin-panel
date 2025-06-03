@@ -4,7 +4,7 @@ import { initialDestinations } from "../redux/destinationReducer";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { useState } from "react";
 import ConfirmationDialog from "./ConfirmationDialog";
-import { toast } from "react-toastify";
+import Toast from "./Toast";
 import { useNavigate } from "react-router-dom";
 import useConfirmDialog from "../hooks/useConfirmDialog";
 const DestinationInfoBar = () => {
@@ -19,6 +19,21 @@ const DestinationInfoBar = () => {
   } = useConfirmDialog();
   const destination = initialDestinations.find((dest) => dest.id === id);
 
+  const [showToast, setShowToast] = useState(false);
+  const [ toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
+
+  const showSuccessToast = (message) => {
+    setToastMessage(message);
+    setToastType("success");
+    setShowToast(true);
+  }
+  const showErrorToast = (message) => {
+    setToastMessage(message); 
+    setToastType("error");
+    setShowToast(true);
+  }
+
   if (!destination) {
     return <div className="p-6 text-center text-xl text-gray-500">Destination not found.</div>;
   }
@@ -26,11 +41,12 @@ const DestinationInfoBar = () => {
    openDialog(handleConfirmDelete, destination);
   };
    const handleConfirmDelete = (data) => {
-    toast.error(`Destination "${data.name}" deleted successfully.`);
+  showErrorToast(`Destination "${data.name}" deleted successfully.`);
   };
    const handleCancelDelete = () => {
-    setShowConfirm(false);
-    toast.success("Destination deletion cancelled.");
+ 
+    closeDialog();
+    showSuccessToast("Destination deletion cancelled.");
   };
   const handleEditClick = () => {
     navigate("/destination/edit/:id", {
@@ -42,6 +58,15 @@ const DestinationInfoBar = () => {
   return (
     // <div className="bg-[#F9FAFB] min-h-screen py-6 px-4">
       <div className="max-w-6xl mx-auto bg-white rounded-t-3xl overflow-hidden cursor-pointer">
+ {/* UPDATED: Render Toast */}
+      {showToast && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onclose={() => setShowToast(false)}
+        />
+      )}
+
         {/* Header image */}
         <div className="relative h-[300px] mt-6 mx-6" >
 
@@ -88,7 +113,7 @@ const DestinationInfoBar = () => {
      {isOpen && (
         <ConfirmationDialog
           message={`Do you really want to delete "${payload?.name}"?`}
-          onCancel={closeDialog}
+          onCancel={handleCancelDelete}
           onConfirm={confirm}
         />
       )}

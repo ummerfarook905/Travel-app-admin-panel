@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Toast from './Toast';
 import ConfirmationDialog from './ConfirmationDialog';
+import useConfirmDialog from '../hooks/useConfirmDialog';
+
 
 const Table = ({
   headers,
@@ -16,12 +18,21 @@ const Table = ({
   const [selectedRows, setSelectedRows] = useState([]);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [confirmationMessage, setConfirmationMessage] = useState('');
-  const [currentAction, setCurrentAction] = useState(null);
-  const [currentRow, setCurrentRow] = useState(null);
+  const [toastType, setToastType] = useState('success');
+  // const [showConfirmation, setShowConfirmation] = useState(false);
+  // const [confirmationMessage, setConfirmationMessage] = useState('');
+  // const [currentAction, setCurrentAction] = useState(null);
+  // const [currentRow, setCurrentRow] = useState(null);
   const navigate = useNavigate();
   const tableRef = useRef(null);
+
+   const {
+    isOpen: isConfirmOpen,
+    openDialog,
+    confirm,
+    closeDialog,
+    payload,
+  } = useConfirmDialog();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -42,14 +53,30 @@ const Table = ({
     e.preventDefault();
     onNameClick ? onNameClick(row) : navigate(`/adventures/${row.id}`);
   };
+   const showSuccessToast = (message) => {
+    setToastMessage(message);
+    setToastType('success');
+    setShowToast(true);
+  };
+
+  const showErrorToast = (message) => {
+    setToastMessage(message);
+    setToastType('error');
+    setShowToast(true);
+  };
 
   const handleActionClick = (action, row, e) => {
     e.stopPropagation();
     if (action.requireConfirmation) {
-      setCurrentAction(action);
-      setCurrentRow(row);
-      setConfirmationMessage(action.confirmationMessage || `Are you sure you want to ${action.label.toLowerCase()}?`);
-      setShowConfirmation(true);
+       openDialog(() => {
+        action.handler?.(row);
+        showSuccessToast(`${action.label} action completed`);
+      }, {
+        row,
+        action,
+        confirmationMessage: action.confirmationMessage || `Are you sure you want to ${action.label.toLowerCase()}?`
+      });
+      
     } else {
       action.handler?.(row);
       showSuccessToast(`${action.label} action completed`);
@@ -57,18 +84,9 @@ const Table = ({
     setActiveMenu(null);
   };
 
-  const handleConfirm = () => {
-    setShowConfirmation(false);
-    currentAction.handler?.(currentRow);
-    showSuccessToast(`${currentAction.label} action completed`);
-  };
-
-  const handleCancel = () => setShowConfirmation(false);
-
-  const showSuccessToast = (message) => {
-    setToastMessage(message);
-    setShowToast(true);
-  };
+  
+ 
+  
 
   const handleSelectRow = (index) => {
     setSelectedRows((prev) =>
@@ -87,7 +105,15 @@ const Table = ({
   return (
       <div className="relative pt-4">  
           {/* Toast will appear floating above the table */}
-    {showToast && <Toast message={toastMessage} onclose={() => setShowToast(false)} />} 
+   {showToast && (
+  <Toast
+    message={toastMessage}
+    onclose={() => setShowToast(false)}
+    type="success" // or "error"
+  />
+)}
+
+   
         <div className="overflow-x-auto rounded-lg shadow-sm">
         <div className="bg-white rounded-lg">
           <table className="min-w-full divide-y divide-gray-200" ref={tableRef}>
@@ -225,12 +251,12 @@ const Table = ({
       </div>
 
 
-      {showConfirmation && (
+      {isConfirmOpen&& (
         <ConfirmationDialog
-          message={confirmationMessage}
-          onCancel={handleCancel}
-          onConfirm={handleConfirm}
-          variant={currentAction?.confirmationVariant || 'danger'}
+          message={payload?.confirmationMessage}
+          onCancel={closeDialog}
+          onConfirm={confirm}
+          variant={payload?.action?.confirmationVariant || 'danger'}
         />
       )}
     </div>
