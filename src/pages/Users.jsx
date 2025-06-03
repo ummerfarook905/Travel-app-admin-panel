@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { HiOutlinePhone, HiOutlineMail } from 'react-icons/hi';
 import Table from "../components/Table";
 import { useUsers } from '../context/UserContext';
@@ -6,20 +6,42 @@ import Button from '../components/Button';
 import { FiPlus } from 'react-icons/fi';
 import SearchBar from '../components/SearchBar';
 import ConfirmationDialog from '../components/ConfirmationDialog';
+import SearchInput from '../components/SearchInput';
+import useDebounceSearch from '../hooks/useDebounceSearch';
+import useDebouncedFilter from '../hooks/useDebounceFilter';
+import useConfirmDialog from '../hooks/useConfirmDialog';
+import { deleteUser } from '../redux/userSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+const Users = ({ handleUpdate, openUserForm }) => {  
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users.users);
+console.log("users passed to component:",users);
+  const [searchQuery, setSearchQuery]= useState('');
+  // const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+ 
+  const [userToDelete, setUserToDelete] = useState(null);
+const {
+  isOpen:showConfirmDialog,
+  openDialog,
+  closeDialog,
+  onConfirm: confirmDelete,
 
-const Users = () => {
-  const {
-    filteredUsers,
-    handleDelete,
-    handleUpdate,
-    openUserForm,
-    setSearchQuery,
-    searchQuery,
-    showConfirmDialog,
-    debouncedSearch,
-    confirmDelete,
-    setShowConfirmDialog,
-  } = useUsers();
+}= useConfirmDialog();
+  const handleDelete = (id) => {
+    dispatch(deleteUser(id)); 
+    closeDialog();
+  };
+
+  const filterFn =(user,query)=>{
+    return user.name.toLowerCase().includes(query.toLowerCase()) ||
+            user.id.toLowerCase().includes(query.toLowerCase()) ||
+            user.joinedOn.toLowerCase().includes(query.toLowerCase()) ||
+            user.updatedOn.toLowerCase().includes(query.toLowerCase());
+  }
+
+const filteredUsers =useDebouncedFilter(users,searchQuery,filterFn);
+console.log("Filtered users:", filteredUsers);
 
   const headers = [
     { key: 'name', label: 'Name' },
@@ -29,7 +51,7 @@ const Users = () => {
     { key: 'contact', label: 'Contact' },
   ];
 
-  const modifiedUsers = filteredUsers.map(user => ({
+const modifiedUsers = (filteredUsers || []).map(user => ({
     ...user,
   contact: (
   <div className="flex items-center gap-3">
@@ -51,25 +73,19 @@ const Users = () => {
     {
       label: 'Delete',
       variant: 'danger',
-      handler: (user) => handleDelete(user.id)
+  handler: (user) => openDialog(() => handleDelete(user.id))  
     }
-  ];
-  useEffect(() => {
-    debouncedSearch(searchQuery);
-    return () => debouncedSearch.cancel();
-  }, [searchQuery, debouncedSearch]);
-  const handleSearch = (val) => {
-    setSearchQuery(val);
-  };
+];
+  
   return (
     <div className="p-8 max-w-7xl mx-auto">
              <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-start md:items-center mb-6">
           <div className="w-full md:flex-1 md:max-w-xl">
-           <SearchBar
+           {/* <SearchBar
               placeholder="Search users..."
               onSearch={handleSearch}
-            />
-          </div>
+            /> */}
+          <SearchInput onSearch={setSearchQuery} placeholder="Search users..." />          </div>
           <Button 
             variant="primary" 
             onClick={() => openUserForm(false)}
@@ -96,7 +112,7 @@ const Users = () => {
           <ConfirmationDialog
             message="Are you sure you want to delete this user?"
             onConfirm={confirmDelete}
-            onCancel={() => setShowConfirmDialog(false)}
+            onCancel={closeDialog}
           />
         )}
 

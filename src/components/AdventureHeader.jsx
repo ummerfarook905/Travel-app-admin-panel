@@ -1,3 +1,5 @@
+import { ADVENTURE_IMAGES } from "../Constants/images";
+
 const AdventureHeader = ({ coverImage, profileImage, title }) => (
   <div className="w-full max-w-[1380px] mx-auto">
     {/* Background Cover Image */}
@@ -14,7 +16,7 @@ const AdventureHeader = ({ coverImage, profileImage, title }) => (
     {/* Profile Image and Title - with increased overlap */}
     <div className="relative flex flex-col items-start -mt-8 sm:-mt-12 md:-mt-16 ml-2 sm:ml-4 md:ml-8">
       <img
-        src={profileImage}
+        src={ADVENTURE_IMAGES.hiking}
         alt={title}
         className="w-12 h-12 sm:w-16 sm:h-16 md:w-[180px] md:h-[120px] rounded-full object-cover shadow-md border-4 border-white"
       />
