@@ -92,10 +92,16 @@ const Verified_Adventures = () => {
   <SearchInput onSearch={setSearchQuery} placeholder="Search adventures..." />      </div>
       <Table 
         headers={headers}
-        rows={filtered}
+        renderedData={filtered}
         actions={actions}
         nameAsLink={true}
         onNameClick={handleViewDetails}
+        
+           pagination={{
+    enabled: true,
+    itemsPerPage: 2,
+    position: 'top', // or 'bottom'
+  }}
       />
     </div>
   );

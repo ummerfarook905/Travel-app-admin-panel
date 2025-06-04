@@ -3,23 +3,33 @@ import { useNavigate } from 'react-router-dom';
 import Toast from './Toast';
 import ConfirmationDialog from './ConfirmationDialog';
 import useConfirmDialog from '../hooks/useConfirmDialog';
+import Pagination from './Pagination';
 
 const Table = ({
   headers,
-  rows,
+  renderedData = [],
   actions = [],
   idColor = "text-[#00493E] font-semibold",
   nameAsLink = false,
   onNameClick,
   showProfilePicture = true,
+  pagination = { enabled: false },
 }) => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('success');
+  const [paginatedItems, setPaginatedItems] = useState(renderedData);
   const navigate = useNavigate();
   const tableRef = useRef(null);
+
+  // Add this useEffect to handle initial data
+  useEffect(() => {
+    if (!pagination?.enabled) {
+      setPaginatedItems(renderedData);
+    }
+  }, [renderedData, pagination?.enabled]);
 
   const {
     isOpen: isConfirmOpen,
@@ -28,6 +38,8 @@ const Table = ({
     closeDialog,
     payload,
   } = useConfirmDialog();
+  console.log("Rendered Data:", renderedData);
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -51,24 +63,22 @@ const Table = ({
 
   const showSuccessToast = (message) => {
     setToastMessage(message);
-    setToastType('success'); // 🔁 UPDATED
+    setToastType('success');
     setShowToast(true);
   };
 
   const showErrorToast = (message) => {
     setToastMessage(message);
-    setToastType('error'); // 🔁 UPDATED
+    setToastType('error');
     setShowToast(true);
   };
 
   const handleActionClick = (action, row, e) => {
     e.stopPropagation();
     setActiveMenu(null);
-
     if (action.requireConfirmation) {
       openDialog(() => {
         action.handler?.(row);
-        // Toast now shown in confirm, not here
       }, {
         row,
         action,
@@ -80,19 +90,19 @@ const Table = ({
     }
   };
 
-  // 🔁 UPDATED: show toast after confirmed action
   useEffect(() => {
-    if (isConfirmOpen || !payload?.action || !payload?.row) return;
-    const handleConfirmed = async () => {
-      try {
-        await payload.action.handler?.(payload.row);
-        showSuccessToast(`${payload.action.label} action completed`);
-      } catch (error) {
-        showErrorToast(`${payload.action.label} failed`);
-      }
-    };
-    confirm(handleConfirmed);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // ✅ FIXED: Confirm dialog trigger
+    if (!isConfirmOpen && payload?.action && payload?.row) {
+      const handleConfirmed = async () => {
+        try {
+          await payload.action.handler?.(payload.row);
+          showSuccessToast(`${payload.action.label} action completed`);
+        } catch (error) {
+          showErrorToast(`${payload.action.label} failed`);
+        }
+      };
+      confirm(handleConfirmed);
+    }
   }, [isConfirmOpen]);
 
   const handleSelectRow = (index) => {
@@ -101,26 +111,53 @@ const Table = ({
     );
   };
 
-  const handleSelectAll = () => {
-    setSelectedRows(selectedRows.length === rows.length ? [] : rows.map((_, index) => index));
+  const handleSelectAll = (visibleLength) => {
+    setSelectedRows((prev) =>
+      prev.length === visibleLength ? [] : Array.from({ length: visibleLength }, (_, i) => i)
+    );
   };
 
-  const greenCheckboxStyle = {
-    accentColor: '#00493E',
-  };
+  const greenCheckboxStyle = { accentColor: '#00493E' };
+  const currentData = pagination?.enabled ? paginatedItems : renderedData;
 
+  // ✅ FIXED: Single return block
   return (
     <div className="relative pt-4">
-      {/* 🔁 UPDATED: Toast type is dynamic now */}
       {showToast && (
-        <Toast
-          message={toastMessage}
-          onclose={() => setShowToast(false)}
-          type={toastType}
-        />
+        <Toast message={toastMessage} onclose={() => setShowToast(false)} type={toastType} />
       )}
 
-      <div className="hidden md:block overflow-x-auto rounded-lg shadow-sm">
+      {currentData && currentData.length > 0 ? (
+        <>
+          {renderTable(currentData)}
+          {pagination?.enabled && (
+            <Pagination
+              data={renderedData}
+              config={pagination}
+              onPageChange={setPaginatedItems}
+            />
+          )}
+        </>
+      ) : (
+        <div className="text-center text-gray-500 py-8">No data available</div>
+      )}
+
+      {isConfirmOpen && (
+        <ConfirmationDialog
+          message={payload?.confirmationMessage}
+          onCancel={closeDialog}
+          onConfirm={() => confirm()}
+          variant={payload?.action?.confirmationVariant || 'danger'}
+        />
+      )}
+    </div>
+  );
+
+  // ✅ FIXED: renderTable definition
+  function renderTable(data = []) {
+    return (
+      <>
+       <div className="hidden md:block overflow-x-auto rounded-lg shadow-sm">
         <div className="bg-white rounded-lg">
           <table className="min-w-full divide-y divide-gray-200" ref={tableRef}>
             <thead>
@@ -128,8 +165,8 @@ const Table = ({
                 <th className="px-4 py-3 text-left text-sm font-semibold text-[#00493E] tracking-wider">
                   <input
                     type="checkbox"
-                    checked={selectedRows.length === rows.length}
-                    onChange={handleSelectAll}
+                    checked={selectedRows.length === data.length}
+                    onChange={() => handleSelectAll(data.length)}
                     style={greenCheckboxStyle}
                     className="cursor-pointer"
                   />
@@ -137,8 +174,7 @@ const Table = ({
                 {headers.map((header, index) => (
                   <th
                     key={index}
-                    scope="col"
-                    className="px-6 py-3 text-left text-sm font-semibold text-[#00493E] tracking-wider "
+                    className="px-6 py-3 text-left text-sm font-semibold text-[#00493E] tracking-wider"
                   >
                     {header.label || header}
                   </th>
@@ -150,9 +186,8 @@ const Table = ({
                 )}
               </tr>
             </thead>
-
             <tbody className="bg-white divide-y divide-gray-200">
-              {rows.map((row, rowIndex) => (
+              {data.map((row, rowIndex) => (
                 <tr key={rowIndex} className="hover:bg-gray-50 relative">
                   <td className="relative px-4 py-4 whitespace-nowrap text-sm">
                     {selectedRows.includes(rowIndex) && (
@@ -166,15 +201,13 @@ const Table = ({
                       className="cursor-pointer"
                     />
                   </td>
-
                   {headers.map((header, colIndex) => {
                     const cellData = row[header.key || colIndex];
                     const cellContent = header.render ? header.render(cellData, row) : cellData;
-
                     return (
                       <td
                         key={colIndex}
-                        className={`px-6 py-4 whitespace-nowrap text-sm  ${
+                        className={`px-6 py-4 whitespace-nowrap text-sm ${
                           header.key === 'id' ? idColor : 'text-gray-700'
                         }`}
                       >
@@ -200,10 +233,9 @@ const Table = ({
                       </td>
                     );
                   })}
-
                   {actions.length > 0 && (
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <div className="relative flex justify-end ">
+                      <div className="relative flex justify-end">
                         <button
                           onClick={(e) => toggleMenu(rowIndex, e)}
                           className="text-gray-400 hover:text-gray-600 focus:outline-none cursor-pointer"
@@ -214,14 +246,8 @@ const Table = ({
                             <circle cx="15" cy="10" r="1.5" />
                           </svg>
                         </button>
-
                         {activeMenu === rowIndex && (
-                          <div
-                            className="absolute bottom right-5 transform -translate-y-1/2 mb-16 w-48 bg-white rounded-lg shadow-lg ring-1 z-50 animate-scaleIn"
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="menu-button"
-                          >
+                          <div className="absolute right-5 z-50 w-48 bg-white rounded-lg shadow-lg ring-1 animate-scaleIn">
                             <div className="py-1">
                               {actions.map((action, index) => (
                                 <button
@@ -234,7 +260,6 @@ const Table = ({
                                       ? 'text-green-600'
                                       : 'text-gray-700'
                                   }`}
-                                  role="menuitem"
                                 >
                                   {action.icon && (
                                     <span className="mr-2 text-lg text-gray-400">{action.icon}</span>
@@ -252,69 +277,59 @@ const Table = ({
               ))}
             </tbody>
           </table>
-
-    
         </div>
-
       </div>
-      {/* Mobile card layout */}
-          <div className="block md:hidden  grid grid-cols-1 gap-4 mt-4">
-  {rows.map((row, rowIndex) => (
-    <div key={rowIndex} className="bg-white rounded-lg shadow-md p-4">
-      {headers.map((header, colIndex) => {
-        const cellData = row[header.key || colIndex];
-        const cellContent = header.render ? header.render(cellData, row) : cellData;
-        return (
-          <div key={colIndex} className="mb-2">
-            <span className="block text-sm font-medium text-gray-500">{header.label || header}</span>
-            <span className={`block text-sm ${header.key === 'id' ? idColor : 'text-gray-800'}`}>
-              {nameAsLink && (header.key === 'name' || header.key === 'adventureName') ? (
-                <button
-                  onClick={(e) => handleNameClick(row, e)}
-                  className="text-[#303972] font-semibold"
-                >
-                  {cellContent}
-                </button>
-              ) : (
-                cellContent
-              )}
-            </span>
-          </div>
-        );
-      })}
-      {actions.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {actions.map((action, index) => (
-            <button
-              key={index}
-              onClick={(e) => handleActionClick(action, row, e)}
-              className={`px-3 py-1 rounded text-sm font-medium focus:outline-none ${
-                action.variant === 'danger'
-                  ? 'bg-red-100 text-red-600 hover:bg-red-200'
-                  : action.variant === 'success'
-                  ? 'bg-green-100 text-green-600 hover:bg-green-200'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              {action.label}
-            </button>
-          ))}
-        </div>
-      )}
+
+      {/* Mobile Layout */}
+      <div className="block md:hidden grid grid-cols-1 gap-4 mt-4">
+        {data.map((row, rowIndex) => (
+          <div key={rowIndex} className="bg-white rounded-lg shadow-md p-4">
+            {headers.map((header, colIndex) => {
+              const cellData = row[header.key || colIndex];
+              const cellContent = header.render ? header.render(cellData, row) : cellData;
+              return (
+                <div key={colIndex} className="mb-2">
+                  <span className="block text-sm font-medium text-gray-500">{header.label || header}</span>
+                  <span className={`block text-sm ${header.key === 'id' ? idColor : 'text-gray-800'}`}>
+                    {nameAsLink && (header.key === 'name' || header.key === 'adventureName') ? (
+                      <button
+                        onClick={(e) => handleNameClick(row, e)}
+                        className="text-[#303972] font-semibold"
+                      >
+                        {cellContent}
+                      </button>
+                    ) : (
+                      cellContent
+                    )}
+                  </span>
+                </div>
+              );
+            })}
+            {actions.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {actions.map((action, index) => (
+                  <button
+                    key={index}
+                    onClick={(e) => handleActionClick(action, row, e)}
+                    className={`px-3 py-1 rounded text-sm font-medium focus:outline-none ${
+                      action.variant === 'danger'
+                        ? 'bg-red-100 text-red-600 hover:bg-red-200'
+                        : action.variant === 'success'
+                        ? 'bg-green-100 text-green-600 hover:bg-green-200'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {action.label}
+                  </button>
+                ))}
               </div>
-            ))}
+            )}
           </div>
-      {/* 🔁 UPDATED */}
-      {isConfirmOpen && (
-        <ConfirmationDialog
-          message={payload?.confirmationMessage}
-          onCancel={closeDialog}
-          onConfirm={() => confirm()} // we handle toast in effect
-          variant={payload?.action?.confirmationVariant || 'danger'}
-        />
-      )}
-    </div>
-  );
+        ))}
+      </div>
+      </>
+    );
+  }
 };
 
 export default Table;

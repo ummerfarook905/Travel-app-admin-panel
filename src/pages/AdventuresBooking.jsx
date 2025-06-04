@@ -82,11 +82,18 @@ const bookings = useSelector((state) =>
       ) : (
         <Table
           headers={headers}
-          rows={filtered}
+          renderedData={filtered}
           actions={actions}
           nameAsLink={true}
           onNameClick={handleViewDetails}
           showProfilePicture={false}
+
+           pagination={{
+    enabled: true,
+    itemsPerPage: 2,
+    position: 'top', // or 'bottom'
+  }}
+          
         />
       )}
     </div>

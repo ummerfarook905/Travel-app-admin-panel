@@ -101,10 +101,16 @@ const modifiedUsers = (filteredUsers || []).map(user => ({
       ) : (
         <Table 
           headers={headers}
-          rows={modifiedUsers}
+          renderedData={modifiedUsers}
           actions={actions}
           nameAsLink={true}
           onNameClick={(user) => handleUpdate(user.id)}
+          
+           pagination={{
+    enabled: true,
+    itemsPerPage: 2,
+    position: 'top', // or 'bottom'
+  }}
         />
       )}
        {/* Confirmation Dialog */}
