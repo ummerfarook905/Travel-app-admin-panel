@@ -55,11 +55,23 @@ const modifiedUsers = (filteredUsers || []).map(user => ({
     ...user,
   contact: (
   <div className="flex items-center gap-3">
-    <div className="bg-green-100 rounded-full p-2">
+    <div className="relative group bg-green-100 rounded-full p-2 cursor-pointer">
   <HiOutlinePhone className=' text-[#00493E]'/>
+   <div  style={{background:'black'}}className="absolute top-full mt-1 left-1/2 -translate-x-1/2 
+                    bg-black text-white text-xs rounded px-2 py-1 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-200 
+                    whitespace-nowrap z-50 pointer-events-none">
+      {user.contact.phone || "No phone"}
     </div>
-    <div className="bg-green-100 rounded-full p-2">
+    </div>
+    <div className="relative group bg-green-100 rounded-full p-2 cursor-pointer">
   <HiOutlineMail className=' text-[#00493E]'/>
+   <div style={{background:'black'}}className="absolute top-full mt-1 left-1/2 -translate-x-1/2 
+                    bg-black text-white text-xs rounded px-2 py-1 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-200 
+                    whitespace-nowrap z-50 pointer-events-none">
+      {user.contact?.email || "No email"}
+    </div>
     </div>
   </div>
 )
