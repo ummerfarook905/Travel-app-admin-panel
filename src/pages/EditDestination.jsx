@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, } from "react-router-dom";
 import EditForm from "../components/EditForm";
 
 const EditDestination = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const [formData, setFormData] = useState(state?.adventure || {});
 

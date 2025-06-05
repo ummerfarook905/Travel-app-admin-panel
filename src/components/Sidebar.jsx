@@ -64,7 +64,7 @@ export default function Sidebar() {
         <div className="hidden md:block absolute top-4 -right-4 z-50">
           <button
             onClick={toggleCollapse}
-            className="bg-[#00493E] text-white p-1 border border-white rounded-full shadow"
+            className="bg-[#00493E] text-white p-1 border border-white rounded-full shadow cursor-pointer"
           >
             {isCollapsed ? <FiChevronRight /> : <FiChevronLeft />}
           </button>

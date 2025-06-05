@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
 const EditForm = ({
-  formData,
-  onChange,
-  onSubmit,
+  register,
+  errors,
+  setValue,
+  handleSubmit,
   onCancel,
   formTitle = "Form Details",
   fields = [],
@@ -16,37 +17,105 @@ const EditForm = ({
     const newPhotos = [...photos];
     newPhotos[index] = e.target.files[0];
     setPhotos(newPhotos);
-    onChange(e);
+    setValue(`photo-${index}`, e.target.files[0]);
   };
 
   const handleVideoChange = (index, e) => {
     const newVideos = [...videos];
     newVideos[index] = e.target.files[0];
     setVideos(newVideos);
-    onChange(e);
+    setValue(`video-${index}`, e.target.files[0]);
   };
 
   const addPhotoField = () => setPhotos([...photos, null]);
   const addVideoField = () => setVideos([...videos, null]);
 
   const removePhoto = (index) => {
-    if (photos.length > 1) setPhotos(photos.filter((_, i) => i !== index));
+    if (photos.length > 1) {
+      setPhotos(photos.filter((_, i) => i !== index));
+      setValue(`photo-${index}`, null);
+    }
   };
 
   const removeVideo = (index) => {
-    if (videos.length > 1) setVideos(videos.filter((_, i) => i !== index));
+    if (videos.length > 1) {
+      setVideos(videos.filter((_, i) => i !== index));
+      setValue(`video-${index}`, null);
+    }
+  };
+
+  // Common validation rules that can be reused
+const validationRules = {
+  name: {
+    required: 'Name is required',
+    minLength: { value: 3, message: 'Name must be at least 3 characters' },
+    maxLength: { value: 50, message: 'Name must be at most 50 characters' }
+  },
+  description: {
+    required: 'Description is required',
+    minLength: { value: 10, message: 'Description must be at least 10 characters' }
+  },
+  price: {
+    required: 'Price is required',
+    pattern: { value: /^\d*\.?\d+$/, message: 'Price must be a number' },
+    min: { value: 0, message: 'Price must be positive' },
+    max: { value: 99999, message: 'Price is too high' }
+  },
+  maxPersons: {
+    required: 'Max persons is required',
+    pattern: { value: /^\d+$/, message: 'Must be a whole number' },
+    min: { value: 1, message: 'Must be positive' },
+    max: { value: 100, message: 'Max persons must be 100 or less' }
+  },
+  contact: {
+    required: 'Contact number is required',
+    pattern: { value: /^\d{10}$/, message: 'Must be a valid 10-digit number' }
+  },
+  extraHead: {
+    pattern: { value: /^\d*\.?\d+$/, message: 'Extra per head must be a number' },
+    min: { value: 0, message: 'Extra per head can\'t be negative' }
+  },
+  time: {
+    required: 'Time is required'
+  },
+  location: {
+    required: 'Location is required'
+  },
+  // mapLink intentionally left without validation as per original requirements
+};
+  const getFieldValidation = (field) => {
+    const rules = { ...(field.validation || {}) };
+    
+    // Apply common validation if field type matches
+    if (validationRules[field.name]) {
+      return { ...validationRules[field.name], ...rules };
+    }
+    
+    // Apply type-based validation
+    switch (field.type) {
+      case 'text':
+        return { ...validationRules.name, ...rules };
+      case 'textarea':
+        return { ...validationRules.description, ...rules };
+      case 'number':
+        return { ...validationRules.price, ...rules };
+      case 'time':
+        return { ...validationRules.time, ...rules };
+      default:
+        return rules;
+    }
   };
 
   const leftFields = fields.filter(field => field.column === 'left');
   const rightFields = fields.filter(field => field.column === 'right');
 
   const renderField = (field) => {
+    const validation = getFieldValidation(field);
+    const error = errors[field.name];
+    
     const commonProps = {
-      name: field.name,
-      value: formData[field.name] || field.defaultValue || "",
-      onChange: onChange,
-      className: "w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00493E] focus:border-[#00493E] text-gray-500",
-      required: field.required,
+      ...register(field.name, validation),
+      className: `w-full px-3.5 py-2.5 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00493E] focus:border-[#00493E] text-gray-500`,
       placeholder: field.placeholder
     };
 
@@ -56,6 +125,9 @@ const EditForm = ({
           {field.label} {field.required && '*'}
         </label>
         {input}
+        {error && (
+          <p className="text-red-500 text-xs mt-1">{error.message}</p>
+        )}
       </div>
     );
 
@@ -74,7 +146,7 @@ const EditForm = ({
   };
 
   return (
-    <form onSubmit={onSubmit} className="bg-white rounded-xl shadow-md mx-auto max-w-7xl">
+    <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-md mx-auto max-w-7xl">
       {/* Header */}
       <div className="bg-[#00493E] px-5 py-4 md:px-6 md:py-4 rounded-t-xl">
         <h2 className="text-lg md:text-xl font-semibold text-white">
@@ -99,7 +171,6 @@ const EditForm = ({
               {field.name === 'contact' && mediaOptions.photos && (
                 <div className="space-y-3 mt-12">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
-
                     {/* Photos Section */}
                     <div className="col-span-1 space-y-3">
                       {photos.map((photo, idx) => (
@@ -114,7 +185,7 @@ const EditForm = ({
                               </span>
                               <input
                                 type="file"
-                                name={`photo-${idx}`}
+                                {...register(`photo-${idx}`)}
                                 accept="image/*"
                                 className="hidden"
                                 onChange={(e) => handlePhotoChange(idx, e)}
@@ -156,7 +227,7 @@ const EditForm = ({
                                 </span>
                                 <input
                                   type="file"
-                                  name={`video-${idx}`}
+                                  {...register(`video-${idx}`)}
                                   accept="video/*"
                                   className="hidden"
                                   onChange={(e) => handleVideoChange(idx, e)}

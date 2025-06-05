@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import EditForm from "../components/EditForm"; // Reusing the same EditForm component
+import { updateHotel } from '../redux/hotelsSlice';
+import { useDispatch } from 'react-redux';
 
 const EditHotel = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState(state?.hotel || {}); // hotel data
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors },
+    control,
+    setValue,
+    watch
+  } = useForm({
+    defaultValues: state?.hotel || {}
+  });
 
   const hotelFields = [
     // Left Column Fields
@@ -67,13 +79,20 @@ const EditHotel = () => {
       required: true, 
       column: 'right' 
     },
+
     { 
       name: 'contact', 
       label: 'Contact Number', 
       type: 'text', 
-      placeholder: 'Enter hotel contact number', 
-      required: true, 
-      column: 'right' 
+      placeholder: 'Enter contact number', 
+      required: true,
+      validation: {
+        pattern: {
+          value: /^\d{10}$/,
+          message: 'Must be a valid 10-digit number'
+        }
+      },
+      column: 'right'
     },
     { 
       name: 'extraBedPrice', 
@@ -92,21 +111,17 @@ const EditHotel = () => {
     }
   ];
 
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "file" ? files[0] : value
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Updated hotel data:", formData);
+  const onSubmit = (data) => {
+    dispatch(updateHotel({
+      id: data.id,
+      updatedData: data
+    }));
+    console.log("Updated adventure data:", data);
     navigate("/verified-hotels", {
       state: { message: "Hotel updated successfully!" }
     });
   };
+
 
   const handleCancel = () => {
     navigate("/verified-hotels");
@@ -115,9 +130,12 @@ const EditHotel = () => {
   return (
     <div className="p-8 max-w-5xl mx-auto">
       <EditForm
-        formData={formData}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
+       register={register}
+        control={control}
+        errors={errors}
+        setValue={setValue}
+        watch={watch}
+        handleSubmit={handleSubmit(onSubmit)}
         onCancel={handleCancel}
         formTitle="Hotel Details"
         fields={hotelFields}

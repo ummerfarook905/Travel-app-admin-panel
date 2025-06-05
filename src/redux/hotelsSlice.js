@@ -115,7 +115,26 @@ const hotelsSlice = createSlice({
           day: 'numeric'
         });
       }
-    }
+    },
+            updateHotel: (state, action) => {
+      const { id, updatedData } = action.payload;
+      // Update in pending adventures
+      const pendingIndex = state.pending.findIndex(a => a.id === id);
+      if (pendingIndex !== -1) {
+        state.pending[pendingIndex] = { 
+          ...state.pending[pendingIndex], 
+          ...updatedData 
+        };
+      }
+      // Update in verified adventures
+      const verifiedIndex = state.verified.findIndex(a => a.id === id);
+      if (verifiedIndex !== -1) {
+        state.verified[verifiedIndex] = { 
+          ...state.verified[verifiedIndex], 
+          ...updatedData 
+        };
+      }
+    },
   }
 });
 
@@ -127,6 +146,7 @@ export const {
   confirmBooking,
   deleteBooking,
   addRoom,
+  updateHotel,
   updateHotelInfo
 } = hotelsSlice.actions;
 
