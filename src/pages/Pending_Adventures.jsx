@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
 import { useState, useMemo } from "react";
 import { approveAdventure, rejectAdventure } from "../redux/adventuresSlice";
-import SearchBar from "../components/SearchBar";
+import SearchInput from "../components/SearchInput";
 const Pending_Adventures = () => {
   const pending = useSelector(state => state.adventures.pending);
   const dispatch = useDispatch();
@@ -72,14 +72,19 @@ const actions = [
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-4 flex">
-        <SearchBar onSearch={setSearchQuery} />
-      </div>
+  <SearchInput onSearch={setSearchQuery} placeholder="Search adventures..." />      </div>
       <Table 
         headers={headers}
-        rows={filteredRows}
+        renderedData={filteredRows}
         actions={actions}
         nameAsLink={true}
         onNameClick={handleViewDetails}
+        
+           pagination={{
+    enabled: true,
+    itemsPerPage: 2,
+    position: 'top', // or 'bottom'
+  }}
       />
     </div>
   );

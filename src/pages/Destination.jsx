@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 
 
-
+import SearchInput from "../components/SearchInput";
 const Destionation =()=>{
   const [destinations]= useReducer(destinationReducer,initialDestinations);
   const navigate = useNavigate();
@@ -21,8 +21,7 @@ const Destionation =()=>{
   return(
     <div className ="p-6 bg-[#f6f8fc] min-h-screen">
       <div className="flex justify-between items-center mb-6">
-        <SearchBar onSearch={setSearchQuery} />
-        <button 
+  <SearchInput onSearch={setSearchQuery} placeholder="Search adventures..." />        <button 
           onClick={() => navigate('/destination/new')}
           className="bg-[#004d40] text-white px-5 py-2 rounded-full hover:bg-[#00332c] transition   cursor-pointer"
         >

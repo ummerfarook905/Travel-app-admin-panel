@@ -31,7 +31,7 @@ const InputField = ({
           onClick={onTogglePassword}
           className="text-gray-500 hover:text-gray-600"
         >
-          {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+       <span  className='cursor-pointer'>{showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}</span> 
         </button>
       )}
     </div>

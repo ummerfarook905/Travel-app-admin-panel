@@ -4,8 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../components/Table";
 import { useState, useMemo, useEffect } from "react";
 import { deleteAdventure } from "../redux/adventuresSlice";
-import SearchBar from "../components/SearchBar";
-
+import SearchInput from "../components/SearchInput";
 const Verified_Adventures = () => {
   // Get verified adventures from Redux store
   const verified = useSelector(state => state.adventures.verified);
@@ -90,14 +89,19 @@ const Verified_Adventures = () => {
         </div>
       )}
        <div className="mb-4 flex">
-        <SearchBar onSearch={setSearchQuery} />
-      </div>
+  <SearchInput onSearch={setSearchQuery} placeholder="Search adventures..." />      </div>
       <Table 
         headers={headers}
-        rows={filtered}
+        renderedData={filtered}
         actions={actions}
         nameAsLink={true}
         onNameClick={handleViewDetails}
+        
+           pagination={{
+    enabled: true,
+    itemsPerPage: 2,
+    position: 'top', // or 'bottom'
+  }}
       />
     </div>
   );

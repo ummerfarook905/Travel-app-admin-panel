@@ -61,7 +61,8 @@ const Login = () => {
             name="email"
             register={register}
             error={errors.email}
-            icon={<FaUserAlt />}
+     icon={<span className="cursor-pointer"><FaUserAlt /></span>}
+
           />
 
           <InputField
@@ -70,10 +71,12 @@ const Login = () => {
             name="password"
             register={register}
             error={errors.password}
-            icon={<FaLock />}
+        icon={<span className="cursor-pointer"><FaLock /></span>}
             showPasswordToggle={true}
             onTogglePassword={() => setShowPassword((prev) => !prev)}
             showPassword={showPassword}
+          
+
           />
 
           <div className="mb-6 flex items-center">
@@ -81,7 +84,7 @@ const Login = () => {
               type="checkbox"
               id="rememberMe"
               {...register("rememberMe")}
-              className="w-4 h-4 text-[#00493E] rounded focus:ring-[#00493E]"
+              className="w-4 h-4 text-[#00493E] rounded focus:ring-[#00493E] cursor-pointer"
             />
             <label htmlFor="rememberMe" className="ml-2 text-gray-600 text-sm">
               Remember me
@@ -92,7 +95,7 @@ const Login = () => {
             type="submit"
             disabled={isSubmitting}
             className="w-full bg-[#00493E] text-white py-3 rounded-lg font-medium hover:bg-[#006B56] 
-                      disabled:opacity-70 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+                      disabled:opacity-70 disabled:cursor-not-allowed transition-colors flex items-center justify-center cursor-pointer"
           >
             {isSubmitting ? (
               <FaSpinner className="animate-spin mr-2" />

@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
 import { confirmBooking, cancelBooking } from "../redux/bookingsSlice";
-import SearchBar from "../components/SearchBar";
 import { useState, useMemo } from "react";
+import SearchInput from "../components/SearchInput";
 
 const HotelBookings = () => {
 const bookings = useSelector((state) =>
@@ -73,8 +73,7 @@ const bookings = useSelector((state) =>
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-4 flex ">
-        <SearchBar onSearch={setSearchQuery} />
-      </div>
+  <SearchInput onSearch={setSearchQuery} placeholder="Search adventures..." />      </div>
       {bookings.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-500">No bookings found.</p>
@@ -82,11 +81,17 @@ const bookings = useSelector((state) =>
       ) : (
         <Table
           headers={headers}
-          rows={filtered }
+          renderedData={filtered }
           actions={actions}
           nameAsLink={true}
           onNameClick={handleViewDetails}
           showProfilePicture={false}
+          
+           pagination={{
+    enabled: true,
+    itemsPerPage: 2,
+    position: 'top', // or 'bottom'
+  }}
         />
       )}
     </div>

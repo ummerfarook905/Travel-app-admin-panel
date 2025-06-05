@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
 import { approveHotel, rejectHotel } from "../redux/hotelsSlice";
-import SearchBar from "../components/SearchBar";
+import SearchInput from "../components/SearchInput";
 import { useState, useMemo } from "react";
 
 const Pending_Hotels = () => {
@@ -74,8 +74,7 @@ const Pending_Hotels = () => {
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-4 flex">
-        <SearchBar onSearch={setSearchQuery} />
-      </div>
+  <SearchInput onSearch={setSearchQuery} placeholder="Search adventures..." />      </div>
       {filtered.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-500">No pending hotels awaiting approval</p>
@@ -83,10 +82,16 @@ const Pending_Hotels = () => {
       ) : (
         <Table 
           headers={headers}
-          rows={filtered}
+          renderedData={filtered}
           actions={actions}
           nameAsLink={true}
           onNameClick={handleViewDetails}
+          
+           pagination={{
+    enabled: true,
+    itemsPerPage: 2,
+    position: 'top', // or 'bottom'
+  }}
         />
       )}
     </div>
