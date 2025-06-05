@@ -169,7 +169,7 @@ const validationRules = {
 
               {/* Media Upload Section */}
               {field.name === 'contact' && mediaOptions.photos && (
-                <div className="space-y-3 mt-12 mb-11">
+                <div className="space-y-3 mt-12 mb-[42px]">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
                     {/* Photos Section */}
                     <div className="col-span-1 space-y-3">
