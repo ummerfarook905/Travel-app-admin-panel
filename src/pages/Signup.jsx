@@ -112,7 +112,7 @@ export default function Signup() {
 
             {/* Password */}
             <div className="relative">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 cursor-pointer">
                 Password
               </label>
               <div className="relative">
@@ -128,7 +128,7 @@ export default function Signup() {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 cursor-pointer"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
@@ -179,7 +179,7 @@ export default function Signup() {
 
             {/* Confirm Password */}
             <div className="relative">
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 cursor-pointer">
                 Confirm Password
               </label>
               <div className="relative">
@@ -195,7 +195,7 @@ export default function Signup() {
                 <button
                   type="button"
                   onClick={toggleConfirmPasswordVisibility}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 cursor-pointer"
                   aria-label={showConfirmPassword ? "Hide password" : "Show password"}
                 >
                   {showConfirmPassword ? (
@@ -248,8 +248,9 @@ export default function Signup() {
             <div>
               <button
                 type="submit"
+                
                 disabled={!isValid || isSubmitting}
-                className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                className={`w-full flex justify-center items-center py-3 px-4  cursor-pointer border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
                   !isValid || isSubmitting
                     ? "bg-[#00E784]/70 cursor-not-allowed"
                     : "bg-[#00E784] hover:bg-[#00D17A]"
@@ -294,7 +295,7 @@ export default function Signup() {
             <div className="mt-6">
               <a
                 href="/login"
-                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-[#00493E] bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00E784]"
+                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-[#00493E] bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00E784] cursor-pointer"
               >
                 Login
               </a>
