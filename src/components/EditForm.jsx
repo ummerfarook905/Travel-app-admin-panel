@@ -162,20 +162,20 @@ const validationRules = {
         </div>
 
         {/* Right Column */}
-        <div className="space-y-4 md:space-y-5 mt-4 md:mt-0">
+        <div className="space-y-4 md:space-y-5 mt-4 md:mt-0 ">
           {rightFields.map((field) => (
             <React.Fragment key={field.name}>
               {renderField(field)}
 
               {/* Media Upload Section */}
               {field.name === 'contact' && mediaOptions.photos && (
-                <div className="space-y-3 mt-12">
+                <div className="space-y-3 mt-12 mb-11">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
                     {/* Photos Section */}
                     <div className="col-span-1 space-y-3">
                       {photos.map((photo, idx) => (
                         <div key={`photo-${idx}`}>
-                          <div className="border-dashed border border-gray-300 p-4 rounded-lg">
+                          <div className="border-dashed border border-gray-300 p-4 rounded-lg  min-h-[113px]">
                             <label className="block text-sm font-medium text-[#303972] mb-2">
                               {photos.length > 1 ? `Photo ${idx + 1} *` : "Photo *"}
                             </label>
@@ -206,7 +206,7 @@ const validationRules = {
                       <button
                         type="button"
                         onClick={addPhotoField}
-                        className="w-full py-2 text-sm font-medium rounded-2xl bg-[#00493E] text-white transition-colors mt-4"
+                        className="w-full py-2 text-sm font-medium rounded-3xl bg-[#00493E] text-white transition-colors mt-4 min-h-[50px]"
                       >
                         + Add Photo
                       </button>
@@ -217,7 +217,7 @@ const validationRules = {
                       <div className="col-span-1 space-y-3">
                         {videos.map((video, idx) => (
                           <div key={`video-${idx}`}>
-                            <div className="border-dashed border border-gray-300 p-4 rounded-lg">
+                            <div className="border-dashed border border-gray-300 p-4 rounded-lg min-h-[113px]">
                               <label className="block text-sm font-medium text-[#303972] mb-2">
                                 {videos.length > 1 ? `Video ${idx + 1} *` : "Video *"}
                               </label>
@@ -248,7 +248,7 @@ const validationRules = {
                         <button
                           type="button"
                           onClick={addVideoField}
-                          className="w-full py-2 text-sm font-medium rounded-2xl bg-[#00493E] text-white transition-colors mt-4"
+                          className="w-full py-2 text-sm font-medium rounded-3xl bg-[#00493E] text-white transition-colors mt-4 min-h-[50px]"
                         >
                           + Add Video
                         </button>
@@ -268,13 +268,13 @@ const validationRules = {
           <button
             type="button"
             onClick={onCancel}
-            className="px-5 py-2.5 text-sm font-medium text-[#303972] bg-white border border-gray-300 rounded-2xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 cursor-pointer"
+            className="px-5 py-2.5 text-sm font-medium text-[#303972] bg-white border border-gray-300 rounded-3xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 cursor-pointer"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-5 py-2.5 text-sm font-medium text-white bg-[#00493E] rounded-2xl hover:bg-[#00382E] focus:outline-none focus:ring-2 focus:ring-[#00382E] cursor-pointer"
+            className="px-5 py-2.5 text-sm font-medium text-white bg-[#00493E] rounded-3xl hover:bg-[#00382E] focus:outline-none focus:ring-2 focus:ring-[#00382E] cursor-pointer"
           >
             Submit
           </button>
