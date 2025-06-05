@@ -7,7 +7,6 @@ import { FiUser } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { deleteHotel } from "../redux/hotelsSlice";
 import DetailedVerifiedLayout from "../Layouts/DetailedVerifiedLayout";
 import useConfirmDialog from "../hooks/useConfirmDialog";
 import ConfirmationDialog from "../components/ConfirmationDialog";
@@ -123,7 +122,6 @@ const handleConfirmDelete = async () => {
   
 
 
- /*  Confirmation dialog using hook */
       {isOpen && (
         <ConfirmationDialog
           message={`Do you really want to delete "${payload?.name}"?`}
