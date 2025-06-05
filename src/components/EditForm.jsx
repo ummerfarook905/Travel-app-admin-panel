@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TimePicker from 'react-time-picker';
 
 const EditForm = ({
   register,
@@ -44,77 +45,14 @@ const EditForm = ({
     }
   };
 
-  // Common validation rules that can be reused
-const validationRules = {
-  name: {
-    required: 'Name is required',
-    minLength: { value: 3, message: 'Name must be at least 3 characters' },
-    maxLength: { value: 50, message: 'Name must be at most 50 characters' }
-  },
-  description: {
-    required: 'Description is required',
-    minLength: { value: 10, message: 'Description must be at least 10 characters' }
-  },
-  price: {
-    required: 'Price is required',
-    pattern: { value: /^\d*\.?\d+$/, message: 'Price must be a number' },
-    min: { value: 0, message: 'Price must be positive' },
-    max: { value: 99999, message: 'Price is too high' }
-  },
-  maxPersons: {
-    required: 'Max persons is required',
-    pattern: { value: /^\d+$/, message: 'Must be a whole number' },
-    min: { value: 1, message: 'Must be positive' },
-    max: { value: 100, message: 'Max persons must be 100 or less' }
-  },
-  contact: {
-    required: 'Contact number is required',
-    pattern: { value: /^\d{10}$/, message: 'Must be a valid 10-digit number' }
-  },
-  extraHead: {
-    pattern: { value: /^\d*\.?\d+$/, message: 'Extra per head must be a number' },
-    min: { value: 0, message: 'Extra per head can\'t be negative' }
-  },
-  time: {
-    required: 'Time is required'
-  },
-  location: {
-    required: 'Location is required'
-  },
-  // mapLink intentionally left without validation as per original requirements
-};
-  const getFieldValidation = (field) => {
-    const rules = { ...(field.validation || {}) };
-    
-    // Apply common validation if field type matches
-    if (validationRules[field.name]) {
-      return { ...validationRules[field.name], ...rules };
-    }
-    
-    // Apply type-based validation
-    switch (field.type) {
-      case 'text':
-        return { ...validationRules.name, ...rules };
-      case 'textarea':
-        return { ...validationRules.description, ...rules };
-      case 'number':
-        return { ...validationRules.price, ...rules };
-      case 'time':
-        return { ...validationRules.time, ...rules };
-      default:
-        return rules;
-    }
-  };
-
   const leftFields = fields.filter(field => field.column === 'left');
   const rightFields = fields.filter(field => field.column === 'right');
 
   const renderField = (field) => {
-    const validation = getFieldValidation(field);
     const error = errors[field.name];
-    
+
     const commonProps = {
-      ...register(field.name, validation),
+      ...register(field.name),
       className: `w-full px-3.5 py-2.5 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00493E] focus:border-[#00493E] text-gray-500`,
       placeholder: field.placeholder
     };
@@ -147,14 +85,12 @@ const validationRules = {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-md mx-auto max-w-7xl">
-      {/* Header */}
       <div className="bg-[#00493E] px-5 py-4 md:px-6 md:py-4 rounded-t-xl">
         <h2 className="text-lg md:text-xl font-semibold text-white">
           {formTitle}
         </h2>
       </div>
 
-      {/* Form Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 px-4 sm:px-5 md:px-6 py-5 gap-5 md:gap-6">
         {/* Left Column */}
         <div className="space-y-4 md:space-y-5">
@@ -195,7 +131,7 @@ const validationRules = {
                               <button
                                 type="button"
                                 onClick={() => removePhoto(idx)}
-                                className="mt-2 text-xs text-red-600 hover:text-red-800"
+                                className="mt-2 text-xs text-red-600 hover:text-red-800 cursor-pointer"
                               >
                                 Remove
                               </button>
@@ -206,7 +142,7 @@ const validationRules = {
                       <button
                         type="button"
                         onClick={addPhotoField}
-                        className="w-full py-2 text-sm font-medium rounded-3xl bg-[#00493E] text-white transition-colors mt-4 min-h-[50px]"
+                        className="w-full py-2 text-sm font-medium rounded-3xl bg-[#00493E] text-white transition-colors mt-4 min-h-[50px] cursor-pointer"
                       >
                         + Add Photo
                       </button>
@@ -237,7 +173,7 @@ const validationRules = {
                                 <button
                                   type="button"
                                   onClick={() => removeVideo(idx)}
-                                  className="mt-2 text-xs text-red-600 hover:text-red-800"
+                                  className="mt-2 text-xs text-red-600 hover:text-red-800 cursor-pointer"
                                 >
                                   Remove
                                 </button>
@@ -248,7 +184,7 @@ const validationRules = {
                         <button
                           type="button"
                           onClick={addVideoField}
-                          className="w-full py-2 text-sm font-medium rounded-3xl bg-[#00493E] text-white transition-colors mt-4 min-h-[50px]"
+                          className="w-full py-2 text-sm font-medium rounded-3xl bg-[#00493E] text-white transition-colors mt-4 min-h-[50px] cursor-pointer"
                         >
                           + Add Video
                         </button>
@@ -262,7 +198,6 @@ const validationRules = {
         </div>
       </div>
 
-      {/* Footer Buttons */}
       <div className="px-5 py-4 md:px-6 md:py-5 ">
         <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
           <button
