@@ -100,7 +100,7 @@ export default function Sidebar() {
                  {!isCollapsed && <span className="ml-3">{item.text}</span>}
               </NavLink>
                 {isCollapsed && (
-                  <span className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap">
+                  <span className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-100">
                     {item.text}
                   </span>
                 )}
