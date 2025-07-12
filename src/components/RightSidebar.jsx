@@ -1,49 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FiPlus, FiX } from "react-icons/fi";
 import { FaSpinner } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { setRecentData, setLoading } from '../redux/dashboardSlice';
 
 export default function RightSidebar({ isOpen, onClose }) {
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [recentData, setRecentData] = useState({
-    users: [],
-    hotels: [],
-    adventures: []
-  });
+
+  const loading = useSelector(state => state.dashboard.loading);
+  const recentData = useSelector(state => state.dashboard.recentData);
 
   useEffect(() => {
     const fetchRecentData = async () => {
-      try {
-        setLoading(true);
-        
-        // SIMULATED API CALLS - REPLACE WITH ACTUAL API CALLS
-        setTimeout(() => {
-          setRecentData({
-            users: [
-              { name: "John Doe", email: "john@example.com" },
-              { name: "Jane Smith", email: "jane@example.com" }
-            ],
-            hotels: [
-              { name: "Royal Stay", info: "New York" },
-              { name: "Sea Breeze", info: "Miami" }
-            ],
-            adventures: [
-              { name: "Mountain Trek", info: "Hiking" },
-              { name: "Desert Safari", info: "Adventure" }
-            ]
-          });
-          setLoading(false);
-        }, 800);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      }
+      dispatch(setLoading(true));
+      
+      // Simulate API call (replace with real API later)
+      setTimeout(() => {
+        dispatch(setRecentData({
+          users: [
+            { name: "John Doe", email: "john@example.com" },
+            { name: "Jane Smith", email: "jane@example.com" }
+          ],
+          hotels: [
+            { name: "Royal Stay", info: "New York" },
+            { name: "Sea Breeze", info: "Miami" }
+          ],
+          adventures: [
+            { name: "Mountain Trek", info: "Hiking" },
+            { name: "Desert Safari", info: "Adventure" }
+          ]
+        }));
+        dispatch(setLoading(false));
+      }, 800);
     };
 
     fetchRecentData();
-  }, []);
-  
+  }, [dispatch]);
+
   const handleViewMoreUsers = () => navigate("/users");
   const handleViewMoredefault = () => navigate("/dashboard");
 
@@ -54,7 +49,6 @@ export default function RightSidebar({ isOpen, onClose }) {
       ${isOpen ? 'translate-x-0 shadow-xl' : 'translate-x-full'}
       md:relative md:translate-x-0 md:top-0 md:h-auto
     `}>
-      {/* Close Button (Mobile Only) - Positioned top-left */}
       <button 
         onClick={onClose}
         className="md:hidden absolute top-2 left-2 p-1 text-gray-600 hover:text-gray-800 cursor-pointer"
@@ -69,11 +63,12 @@ export default function RightSidebar({ isOpen, onClose }) {
         </div>
       ) : (
         <>
+          {/* Users */}
           <div className="mb-4 mt-6 md:mt-0">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Users</h2>
-              <button  onClick={() => navigate('/users')}  className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm ">
-                <FiPlus className="text-sm  cursor-pointer" />
+              <button onClick={() => navigate('/users')} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
+                <FiPlus className="text-sm cursor-pointer" />
               </button>
             </div>
             <ul className="mb-2 space-y-1">
@@ -84,17 +79,17 @@ export default function RightSidebar({ isOpen, onClose }) {
                 </li>
               ))}
             </ul>
-            <button onClick={handleViewMoreUsers}
-             className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200 cursor-pointer">
+            <button onClick={handleViewMoreUsers} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200 cursor-pointer">
               View More
             </button>
           </div>
 
+          {/* Hotels */}
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Hotels</h2>
               <button onClick={() => navigate('/verified-hotels')} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
-                <FiPlus className="text-sm  cursor-pointer" />
+                <FiPlus className="text-sm cursor-pointer" />
               </button>
             </div>
             <ul className="mb-2 space-y-1">
@@ -110,11 +105,12 @@ export default function RightSidebar({ isOpen, onClose }) {
             </button>
           </div>
 
-          <div className="mb-4 pb-5"> {/* Added pb-5 (20px padding bottom) here */}
+          {/* Adventures */}
+          <div className="mb-4 pb-5">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Adventures</h2>
               <button onClick={() => navigate('/verified-adventures')} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
-                <FiPlus className="text-sm  cursor-pointer" />
+                <FiPlus className="text-sm cursor-pointer" />
               </button>
             </div>
             <ul className="mb-2 space-y-1">

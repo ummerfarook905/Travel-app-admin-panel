@@ -1,6 +1,15 @@
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from "react-redux";
+import { markAllAsRead, closeAllDropdowns } from "../redux/headerSlice";
 
-const NotificationDropdown = ({ notifications, onClose, onMarkAllAsRead }) => {
+const NotificationDropdown = () => {
+  const dispatch = useDispatch();
+  const notifications = useSelector((state) => state.header.notifications);
+
+  const handleMarkAllAsRead = () => {
+    dispatch(markAllAsRead());
+    dispatch(closeAllDropdowns());
+  };
+
   return (
     <div className="absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg z-50 border border-gray-200">
       <div className="p-3 border-b border-gray-200">
@@ -20,7 +29,7 @@ const NotificationDropdown = ({ notifications, onClose, onMarkAllAsRead }) => {
       </div>
       <div className="p-2 border-t border-gray-200 text-center">
         <button 
-          onClick={onMarkAllAsRead}
+          onClick={handleMarkAllAsRead}
           className="text-sm text-blue-600 hover:text-blue-800"
         >
           Mark all as read
@@ -28,12 +37,6 @@ const NotificationDropdown = ({ notifications, onClose, onMarkAllAsRead }) => {
       </div>
     </div>
   );
-};
-
-NotificationDropdown.propTypes = {
-  notifications: PropTypes.array.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onMarkAllAsRead: PropTypes.func.isRequired
 };
 
 export default NotificationDropdown;

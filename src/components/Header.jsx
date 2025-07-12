@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  toggleNotifications,
+  toggleProfileDropdown,
+  closeAllDropdowns,
+  markAllAsRead,
+} from "../redux/headerSlice";
 import { FiMenu, FiSettings, FiSearch } from "react-icons/fi";
 import NotificationIcon from "./NotificationIcon";
 import NotificationDropdown from "./NotificationDropdown";
@@ -32,6 +39,11 @@ const pageTitles = {
 const Header = ({ toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const dispatch = useDispatch();
+
+  const notifications = useSelector((state) => state.header.notifications);
+  const showNotifications = useSelector((state) => state.header.showNotifications);
+  const showProfileDropdown = useSelector((state) => state.header.showProfileDropdown);
 
   const getTitle = (path) => {
     if (path.startsWith("/pending-adventures/")) return "Pending Adventures";
@@ -46,43 +58,13 @@ const Header = ({ toggleSidebar }) => {
   };
 
   const title = getTitle(currentPath);
-
-  const [notifications, setNotifications] = useState([
-    { id: 1, message: "New booking received", time: "10 mins ago", read: false },
-    { id: 2, message: "System update available", time: "1 hour ago", read: false },
-  ]);
-
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const unreadCount = notifications.filter((n) => !n.read).length;
 
-  const toggleNotifications = (e) => {
-    e.stopPropagation();
-    setShowNotifications(!showNotifications);
-    setShowProfileDropdown(false);
-  };
-
-  const toggleProfileDropdown = (e) => {
-    e.stopPropagation();
-    setShowProfileDropdown(!showProfileDropdown);
-    setShowNotifications(false);
-  };
-
-  const markAllAsRead = () => {
-    setNotifications(notifications.map((n) => ({ ...n, read: true })));
-    setShowNotifications(false);
-  };
-
-  const closeAllDropdowns = () => {
-    setShowNotifications(false);
-    setShowProfileDropdown(false);
-  };
-
   useEffect(() => {
-    const handleClickOutside = () => closeAllDropdowns();
+    const handleClickOutside = () => dispatch(closeAllDropdowns());
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
+  }, [dispatch]);
 
   return (
     <header className="bg-white shadow-sm p-4 flex items-center justify-between relative">
@@ -122,19 +104,30 @@ const Header = ({ toggleSidebar }) => {
           </button>
 
           <div className="relative cursor-pointer">
-            <NotificationIcon count={unreadCount} onClick={toggleNotifications} />
+            <NotificationIcon count={unreadCount} onClick={(e) => {
+              e.stopPropagation();
+              dispatch(toggleNotifications());
+            }} />
             {showNotifications && (
               <NotificationDropdown
                 notifications={notifications}
-                onClose={closeAllDropdowns}
-                onMarkAllAsRead={markAllAsRead}
+                onClose={() => dispatch(closeAllDropdowns())}
+                onMarkAllAsRead={() => dispatch(markAllAsRead())}
               />
             )}
           </div>
 
           <div className="relative">
-            <ProfileIcon onClick={toggleProfileDropdown} showName={true} />
-            {showProfileDropdown && <ProfileDropdown onClose={closeAllDropdowns} />}
+            <ProfileIcon
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(toggleProfileDropdown());
+              }}
+              showName={true}
+            />
+            {showProfileDropdown && (
+              <ProfileDropdown onClose={() => dispatch(closeAllDropdowns())} />
+            )}
           </div>
         </div>
       </div>

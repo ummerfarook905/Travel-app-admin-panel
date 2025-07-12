@@ -6,10 +6,12 @@ import RightSidebar from "../components/RightSidebar";
 import PendingHotelRequests from '../components/PendingHotelRequests';
 import PendingAdventureRequests from '../components/PendingAdventureRequests';
 import AppPerformanceChart from '../components/AppPerformanceChart';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Dashboard() {
-  const [showRightSidebar, setShowRightSidebar] = useState(false);
-  const stats = useStats();
+  const dispatch = useDispatch();
+  const showRightSidebar = useSelector((state) => state.dashboard.showRightSidebar);
+  const stats = useSelector((state) => state.stats.stats); 
 
   return (
     <div className="flex h-full bg-[#F3F4FF]">
@@ -35,7 +37,7 @@ export default function Dashboard() {
 
       <RightSidebar 
         isOpen={showRightSidebar} 
-        onClose={() => setShowRightSidebar(false)}
+        onClose={() => dispatch(showRightSidebar())}
       />
     </div>
   );

@@ -1,5 +1,11 @@
-import { useState } from "react";
+
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  toggleSidebar,
+  closeSidebar,
+  toggleCollapse,
+} from "../redux/sidebarSlice";
 import { 
   FiUsers, 
   FiClock, 
@@ -16,11 +22,9 @@ import { BiHomeAlt } from "react-icons/bi";
 import { FaHotel, FaUmbrellaBeach } from "react-icons/fa";
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(false);
-   const [isCollapsed, setIsCollapsed] = useState(false);
-  const toggleSidebar = () =>  setIsOpen(!isOpen);
-  const closeSidebar = () =>  setIsOpen(false);
-  const toggleCollapse = () => setIsCollapsed(!isCollapsed);
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state) => state.sidebar.isOpen);
+  const isCollapsed = useSelector((state) => state.sidebar.isCollapsed);
 
   const navItems = [
     { to: "/dashboard", icon: <BiHomeAlt className="mr-3 text-lg" />, text: "Dashboard" },
@@ -38,7 +42,7 @@ export default function Sidebar() {
     <>
       {/* Mobile toggle button */}
       <button
-        onClick={toggleSidebar}
+        onClick={() => dispatch(toggleSidebar())}
         className="md:hidden fixed top-4 left-4 z-50 bg-[#00493E] text-white p-2 rounded-md"
       >
         <FiMenu size={20} />
@@ -48,7 +52,7 @@ export default function Sidebar() {
       {isOpen && (
         <div
           className="fixed inset-0  bg-opacity-50 z-40 md:hidden"
-          onClick={closeSidebar}
+          onClick={() => dispatch(closeSidebar())}
         ></div>
       )}
 
@@ -63,7 +67,7 @@ export default function Sidebar() {
         {/* Collapse/Expand button */}
         <div className="hidden md:block absolute top-4 -right-4 z-50">
           <button
-            onClick={toggleCollapse}
+            onClick={() => dispatch(toggleCollapse())}
             className="bg-[#00493E] text-white p-1 border border-white rounded-full shadow cursor-pointer"
           >
             {isCollapsed ? <FiChevronRight /> : <FiChevronLeft />}
@@ -72,7 +76,7 @@ export default function Sidebar() {
 
         {/* Close button inside sidebar */}
         <button
-          onClick={closeSidebar}
+          onClick={() => dispatch(closeSidebar())}
           className="md:hidden absolute top-2 right-2 text-white hover:text-gray-200 border-2 border-white rounded-full p-1"
         >
           <FiX size={20} />
@@ -94,7 +98,7 @@ export default function Sidebar() {
                       : 'hover:bg-white hover:text-[#00493E] rounded-3xl '
                   }${isCollapsed ? "justify-center" : ""}`
                 }
-                onClick={closeSidebar}
+                onClick={() => dispatch(closeSidebar())}
               >
                  <span className="text-lg ml-2">{item.icon}</span>
                  {!isCollapsed && <span className="ml-3">{item.text}</span>}
