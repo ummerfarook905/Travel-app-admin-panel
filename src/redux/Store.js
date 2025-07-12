@@ -6,7 +6,8 @@ import usersReducer from './userSlice';
 import dashboardReducer from './dashboardSlice'
 import statsReducer from './statsSlice'
 import sidebarReducer from './sidebarSlice'
-import headerReducer from './headerSlice'
+import headerReducer from './headerSlice' 
+import authReducer from './authSlice'
 export const store = configureStore({
   reducer: {
     adventures: adventuresReducer,
@@ -16,6 +17,7 @@ export const store = configureStore({
     dashboard: dashboardReducer,
     stats: statsReducer,
     sidebar: sidebarReducer,
-    header: headerReducer// Ensure you have usersReducer imported
+    header: headerReducer,// Ensure you have usersReducer imported 
+    auth: authReducer,
   }
 });

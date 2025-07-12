@@ -1,16 +1,12 @@
-// ProtectedRoute.jsx
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import LoadingSpinner from "./LoadingSpinner";
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { user, isInitialized } = useSelector((state) => state.auth);
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  if (!isInitialized) return <LoadingSpinner />;
+  return user ? children : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

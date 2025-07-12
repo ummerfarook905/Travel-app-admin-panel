@@ -1,15 +1,14 @@
 import { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import ConfirmationDialog from '../components/ConfirmationDialog';
 import { useDispatch } from 'react-redux';
-import { closeAllDropdowns } from '../redux/headerSlice';
+import { logout } from '../redux/authSlice';
+import ConfirmationDialog from '../components/ConfirmationDialog';
+import PropTypes from 'prop-types';
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({ onClose }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
-  const { logout } = useAuth();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const dropdownRef = useRef();
 
   const handleSignOutClick = (e) => {
@@ -19,7 +18,7 @@ const ProfileDropdown = () => {
 
   const handleConfirm = () => {
     setShowConfirm(false);
-    logout();
+    dispatch(logout()); 
     navigate("/login", { replace: true });
   };
 
@@ -31,32 +30,29 @@ const ProfileDropdown = () => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowConfirm(false);
-        dispatch(closeAllDropdowns());
+        onClose();
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [dispatch]);
+  }, [onClose]);
 
   return (
-    <div
-      ref={dropdownRef}
-      className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200"
-    >
+    <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200">
       <div className="py-1">
-        <a
-          href="/profile"
+        <a 
+          href="/profile" 
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          onClick={() => dispatch(closeAllDropdowns())}
+          onClick={onClose}
         >
           Your Profile
         </a>
-        <a
-          href="/settings"
+        <a 
+          href="/settings" 
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          onClick={() => dispatch(closeAllDropdowns())}
+          onClick={onClose}
         >
           Settings
         </a>
@@ -76,6 +72,10 @@ const ProfileDropdown = () => {
       )}
     </div>
   );
+};
+
+ProfileDropdown.propTypes = {
+  onClose: PropTypes.func.isRequired
 };
 
 export default ProfileDropdown;

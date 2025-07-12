@@ -1,15 +1,26 @@
+// app.jsx
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import AppRoutes from './routes/AppRoutes';
-import { AuthProvider } from './context/AuthContext';
+// import { AuthProvider } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from './context/UserContext';
 
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { initializeAuth } from './redux/authSlice';
+
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initializeAuth()); 
+  }, [dispatch]);
+
   return (
     <Router>
-      <AuthProvider>
         <UserProvider>
         <AppRoutes />
         <ToastContainer
@@ -24,8 +35,7 @@ function App() {
           pauseOnHover
           theme="colored"
         />
-        </UserProvider> 
-      </AuthProvider>
+        </UserProvider>
     </Router>
   );
 }
