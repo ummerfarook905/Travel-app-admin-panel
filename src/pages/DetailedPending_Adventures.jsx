@@ -1,5 +1,7 @@
+
+
 // React Router & Redux hooks
-import { useLocation,  useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DetailedPendingLayout from "../Layouts/DetailedPendingLayout";
 
@@ -52,17 +54,30 @@ const DetailedPending_Adventures = () => {
     { icon: <FiUser />, text: adventure.username },
   ];
 
-  // Image gallery setup
-  const galleryImages = adventure.images.map((img, index) => ({
-    url: img || `https://source.unsplash.com/random/300x300/?adventure,${index}`,
-    alt: `Adventure view ${index + 1}`,
-  }));
+  // Safe image fallback for gallery
+  const galleryImages = Array.isArray(adventure.images) && adventure.images.length > 0
+    ? adventure.images.map((img, index) => ({
+        url: img?.startsWith('http') ? img : '/default-image.jpg',
+        alt: `Adventure view ${index + 1}`
+      }))
+    : [
+        {
+          url: '/default-image.jpg',
+          alt: 'Fallback adventure view'
+        }
+      ];
 
   return (
-<DetailedPendingLayout
+    <DetailedPendingLayout
       headerProps={{
-        coverImage: adventure.coverImage,
-        profileImage: adventure.coverImage,
+        coverImage:
+          adventure.coverImage?.startsWith('http') || adventure.coverImage?.startsWith('/')
+            ? adventure.coverImage
+            : '/default-cover.jpg',
+        profileImage:
+          adventure.coverImage?.startsWith('http') || adventure.coverImage?.startsWith('/')
+            ? adventure.coverImage
+            : '/default-profile.png',
         title: adventure.name,
       }}
       infoItems={infoItems}

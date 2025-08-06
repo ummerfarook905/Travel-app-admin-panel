@@ -8,6 +8,10 @@ import statsReducer from './statsSlice'
 import sidebarReducer from './sidebarSlice'
 import headerReducer from './headerSlice' 
 import authReducer from './authSlice'
+import destinationReducer from './destinationSlice'
+import performanceReducer from './performanceSlice';
+
+
 export const store = configureStore({
   reducer: {
     adventures: adventuresReducer,
@@ -19,5 +23,11 @@ export const store = configureStore({
     sidebar: sidebarReducer,
     header: headerReducer,// Ensure you have usersReducer imported 
     auth: authReducer,
+    destinations:destinationReducer,
+    performance: performanceReducer
   }
 });
+
+
+
+

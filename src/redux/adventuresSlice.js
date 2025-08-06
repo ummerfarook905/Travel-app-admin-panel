@@ -1,189 +1,61 @@
-import { createSlice } from '@reduxjs/toolkit';
-import {ADVENTURE_IMAGES} from "../Constants/images.js";
 
+
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { ADVENTURE_IMAGES } from '../Constants/images';
+
+// ✅ Fetch pending adventures from Postman mock server
+export const fetchPendingAdventures = createAsyncThunk(
+  'adventures/fetchPendingAdventures',
+  async () => {
+    const response = await fetch('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/pending');
+    const data = await response.json();
+    return data.map(item => ({
+      ...item,
+      coverImage: ADVENTURE_IMAGES[item.imageKey] || item.coverImage,
+      images: item.imageKeys?.map(key => ADVENTURE_IMAGES[key]) || []
+    }));
+  }
+);
+
+// ✅ Fetch verified adventures from Postman mock server
+export const fetchVerifiedAdventures = createAsyncThunk(
+  'adventures/fetchVerifiedAdventures',
+  async () => {
+    const response = await fetch('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/verified');
+    const data = await response.json();
+    return data.map(item => ({
+      ...item,
+      coverImage: ADVENTURE_IMAGES[item.imageKey] || item.coverImage,
+      images: item.imageKeys?.map(key => ADVENTURE_IMAGES[key]) || []
+    }));
+  }
+);
+
+
+
+export const fetchAdventureBookings = createAsyncThunk(
+  'adventures/fetchAdventureBookings',
+  async () => {
+    const response = await fetch('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/booking');
+    const data = await response.json();
+    
+    return data.map(item => ({
+      ...item,
+      type: "adventure" // ✅ Add this so filtering works
+    }));
+  }
+);
+
+
+
+
+// ✅ Initial state
 const initialState = {
-  pending: [
-    {
-        name: 'Kayaking',
-        id: '#ADV12345',
-        joined: 'March 25, 2021',
-        updated: 'March 28, 2021',
-        location: 'Lake Tahoe, California',
-        phone: '+1 234 567 890',
-        email: 'kayaking@example.com',
-        username: 'kayakPro',
-        description: `Explore the crystal-clear waters of Lake Tahoe with expert kayaking guides.
-    Experience the serene beauty of the surrounding mountains while paddling in calm waters.
-    Perfect for both beginners and seasoned adventurers seeking outdoor thrills.`,
-        price: '45',
-        coverImage: ADVENTURE_IMAGES.kayaking,
-        
-        // mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Lake+Tahoe,CA&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CLake+Tahoe,CA&key=YOUR_API_KEY",
-        images: [
-           ADVENTURE_IMAGES.kayaking,
-ADVENTURE_IMAGES.kayaking2,
-ADVENTURE_IMAGES.kayaking,
-ADVENTURE_IMAGES.kayaking,
-ADVENTURE_IMAGES.kayaking2
-
-          
-        ]
-      },
-      {
-        name: 'Paragliding',
-        id: '#ADV67890',
-        joined: 'April 10, 2021',
-        updated: 'April 15, 2021',
-        location: 'Varkala, Kerala',
-        phone: '+91 98765 43210',
-        email: 'paraglide@adventure.com',
-        username: 'skyRider',
-        description: `Fly high above the coast of Varkala and enjoy an adrenaline rush like no other!
-    Capture stunning aerial views of the Arabian Sea as you glide over scenic cliffs.
-    Our certified instructors ensure a safe and thrilling paragliding experience.`,
-        price: '60',
-        coverImage: ADVENTURE_IMAGES.paragliding,
-        // mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Varkala,Kerala&zoom=12&size=600x400&maptype=terrain&markers=color:red%7CVarkala,Kerala&key=YOUR_API_KEY",
-         images: [
-        
-          ADVENTURE_IMAGES.paragliding,
-         ]
-      },
-      {
-        name: 'Mountain Hiking',
-        id: '#ADV24680',
-        joined: 'May 5, 2021',
-        updated: 'May 10, 2021',
-        location: 'Swiss Alps, Switzerland',
-        phone: '+41 123 456 789',
-        email: 'hiking@alps.com',
-        username: 'alpineExplorer',
-        description: `Challenging hikes through breathtaking alpine landscapes with experienced guides.
-    Discover hidden trails, glacial valleys, and panoramic mountain views along the way.
-    An unforgettable journey for nature lovers and adventure seekers alike.`,
-        price: '75',
-        coverImage: ADVENTURE_IMAGES.hiking,
-        // mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Swiss+Alps&zoom=8&size=600x400&maptype=terrain&markers=color:red%7CSwiss+Alps&key=YOUR_API_KEY",
-       images: [
-        
-        ADVENTURE_IMAGES.hiking
-        ]
-      },{
-        name: 'Desert Safari Adventure',
-        id: '#ADV13579',
-        joined: 'March 12, 2022',
-        updated: 'March 18, 2022',
-        location: 'Dubai Desert, UAE',
-        phone: '+971 50 123 4567',
-        email: 'safari@desertadventures.ae',
-        username: 'duneRider',
-        description: `Experience the thrill of a desert safari with dune bashing, camel rides, and traditional Bedouin hospitality.
-      Enjoy cultural performances and stargazing in the vast desert under a clear night sky.`,
-        price: '90',
-        coverImage: "https://images.unsplash.com/photo-1549887534-ec58fdd6d8d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        // mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Dubai+Desert&zoom=8&size=600x400&maptype=terrain&markers=color:red%7CDubai+Desert&key=YOUR_API_KEY",
-        // images: [
-        //   "https://images.unsplash.com/photo-1581320543617-6480df1b6971?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        //   "https://images.unsplash.com/photo-1602774947641-5e40e719d76b?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        //   "https://images.unsplash.com/photo-1577621459711-6b0d0dc34b89?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
-        // ]
-      },
-      {
-        name: 'Rainforest Expedition',
-        id: '#ADV35791',
-        joined: 'August 8, 2023',
-        updated: 'August 15, 2023',
-        location: 'Amazon Rainforest, Brazil',
-        phone: '+55 21 98765 4321',
-        email: 'expedition@amazonexplore.com',
-        username: 'jungleTrekker',
-        description: `Immerse yourself in the heart of the Amazon rainforest.
-      Explore vibrant flora and fauna, cruise along rivers, and engage with local tribes while learning about their sustainable ways of life.`,
-        price: '120',
-        coverImage: "https://images.unsplash.com/photo-1591221798654-d41d3be9789b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Amazon+Rainforest&zoom=6&size=600x400&maptype=terrain&markers=color:red%7CAmazon+Rainforest&key=YOUR_API_KEY",
-        // images: [
-        //   "https://images.unsplash.com/photo-1591221798654-d41d3be9789b?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        //   "https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80",
-        //   "https://images.unsplash.com/photo-1559582794-97a2c6c9c1d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80"
-        // ]
-      }
-      
-      
-    // ... other pending adventures
-  ],
-  verified: [
-    {
-      name: 'Northern Lights Tour',
-      id: '#ADV86420',
-      joined: 'December 1, 2021',
-      updated: 'December 10, 2021',
-      location: 'Tromsø, Norway',
-      phone: '+47 923 456 789',
-      email: 'lights@auroratours.no',
-      username: 'auroraChaser',
-      description: `Witness the magical aurora borealis in the Arctic sky.
-        Join expert-led tours to the best viewing spots, complete with warm gear, hot drinks, and unforgettable photography opportunities.`,
-      price: '110',
-      coverImage: ADVENTURE_IMAGES.scuba,
-      mapImage: "https://maps.googleapis.com/maps/api/staticmap?center=Tromsø,Norway&zoom=8&size=600x400&maptype=terrain&markers=color:red%7CTromsø&key=YOUR_API_KEY",
-     images: [
-      ADVENTURE_IMAGES.scuba,
-      ADVENTURE_IMAGES.scuba2,
-      ]
-    }
-  ],
-  bookings: [
-    {
-      id: 'book#1',
-      adventureId: '#ADV12345',
-      adventureName: 'Kayaking',
-      userName: 'Alex Johnson',
-      userEmail: 'alex@example.com',
-      checkIn: '2023-06-15',
-      checkOut: '2023-06-17',
-      price: 135,
-      status: 'confirmed',
-      guests: 2
-    },
-    {
-      id: 'book#2',
-      adventureId: '#ADV12346',
-      adventureName: 'Mountain Hiking',
-      userName: 'Sarah Lee',
-      userEmail: 'sarah@example.com',
-      checkIn: '2023-07-10',
-      checkOut: '2023-07-12',
-      price: 200,
-      status: 'pending',
-      guests: 4
-    },
-    {
-      id: 'book#3',
-      adventureId: '#ADV12347',
-      adventureName: 'Scuba Diving',
-      userName: 'John Smith',
-      userEmail: 'john@example.com',
-      checkIn: '2023-08-05',
-      checkOut: '2023-08-07',
-      price: 250,
-      status: 'confirmed',
-      guests: 1
-    },
-    {
-      id: 'book#4',
-      adventureId: '#ADV12348',
-      adventureName: 'Safari Tour',
-      userName: 'Emily Davis',
-      userEmail: 'emily@example.com',
-      checkIn: '2023-09-20',
-      checkOut: '2023-09-22',
-      price: 300,
-      status: 'cancelled',
-      guests: 3
-    }
-    // ... other initial bookings (same as your context)
-  ]
+  pending: [],
+  verified: [],
+  bookings: [],
+  loading: false,
+  error: null
 };
 
 const adventuresSlice = createSlice({
@@ -201,57 +73,68 @@ const adventuresSlice = createSlice({
       state.pending = state.pending.filter(a => a.id !== action.payload.id);
     },
     deactivateAdventure: (state, action) => {
-      const adventure = state.verified.find(a => a.id === action.payload.id);
-      if (adventure) {
-        adventure.status = 'Inactive';
-      }
+      const adv = state.verified.find(a => a.id === action.payload.id);
+      if (adv) adv.status = 'Inactive';
     },
     activateAdventure: (state, action) => {
-      const adventure = state.verified.find(a => a.id === action.payload.id);
-      if (adventure) {
-        adventure.status = 'Active';
-      }
+      const adv = state.verified.find(a => a.id === action.payload.id);
+      if (adv) adv.status = 'Active';
     },
     deleteAdventure: (state, action) => {
       state.verified = state.verified.filter(a => a.id !== action.payload.id);
     },
     cancelBooking: (state, action) => {
-      const booking = state.bookings.find(b => b.id === action.payload.id);
-      if (booking) {
-        booking.status = 'cancelled';
-      }
+      const booking = state.bookings.find(b => b.bookingId === action.payload.id);
+      if (booking) booking.status = 'cancelled';
     },
     confirmBooking: (state, action) => {
-      const booking = state.bookings.find(b => b.id === action.payload.id);
-      if (booking) {
-        booking.status = 'confirmed';
-      }
+      const booking = state.bookings.find(b => b.bookingId === action.payload.id);
+      if (booking) booking.status = 'confirmed';
     },
     deleteBooking: (state, action) => {
-      state.bookings = state.bookings.filter(b => b.id !== action.payload.id);
+      state.bookings = state.bookings.filter(b => b.bookingId !== action.payload.id);
     },
-        updateAdventure: (state, action) => {
+    updateAdventure: (state, action) => {
       const { id, updatedData } = action.payload;
-      // Update in pending adventures
-      const pendingIndex = state.pending.findIndex(a => a.id === id);
-      if (pendingIndex !== -1) {
-        state.pending[pendingIndex] = { 
-          ...state.pending[pendingIndex], 
-          ...updatedData 
-        };
-      }
-      // Update in verified adventures
-      const verifiedIndex = state.verified.findIndex(a => a.id === id);
-      if (verifiedIndex !== -1) {
-        state.verified[verifiedIndex] = { 
-          ...state.verified[verifiedIndex], 
-          ...updatedData 
-        };
-      }
-    },
+      const update = (list) => {
+        const index = list.findIndex(a => a.id === id);
+        if (index !== -1) {
+          list[index] = { ...list[index], ...updatedData };
+        }
+      };
+      update(state.pending);
+      update(state.verified);
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      // Pending
+      .addCase(fetchPendingAdventures.fulfilled, (state, action) => {
+        state.pending = action.payload;
+      })
+
+      // Verified
+      .addCase(fetchVerifiedAdventures.fulfilled, (state, action) => {
+        state.verified = action.payload;
+      })
+
+      // Bookings
+      .addCase(fetchAdventureBookings.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAdventureBookings.fulfilled, (state, action) => {
+        state.bookings = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchAdventureBookings.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   }
 });
 
+// ✅ Export actions
 export const {
   approveAdventure,
   rejectAdventure,
@@ -264,4 +147,5 @@ export const {
   updateAdventure
 } = adventuresSlice.actions;
 
+// ✅ Export reducer
 export default adventuresSlice.reducer;

@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import TimePicker from 'react-time-picker';
 
@@ -45,11 +47,18 @@ const EditForm = ({
     }
   };
 
-  const leftFields = fields.filter(field => field.column === 'left');
-  const rightFields = fields.filter(field => field.column === 'right');
+  // ✅ Guard: Handle undefined or empty fields
+  if (!Array.isArray(fields) || fields.length === 0) {
+    return <p className="text-center text-gray-500 py-10">Loading form fields...</p>;
+  }
+
+  // ✅ Filter out invalid entries
+  const safeFields = fields.filter(Boolean);
+  const leftFields = safeFields.filter(field => field.column === 'left');
+  const rightFields = safeFields.filter(field => field.column === 'right');
 
   const renderField = (field) => {
-    const error = errors[field.name];
+    const error = errors?.[field.name];
 
     const commonProps = {
       ...register(field.name),
@@ -107,11 +116,11 @@ const EditForm = ({
               {field.name === 'contact' && mediaOptions.photos && (
                 <div className="space-y-3 mt-12 mb-[42px]">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
-                    {/* Photos Section */}
+                    {/* Photos */}
                     <div className="col-span-1 space-y-3">
                       {photos.map((photo, idx) => (
                         <div key={`photo-${idx}`}>
-                          <div className="border-dashed border border-gray-300 p-4 rounded-lg  min-h-[113px]">
+                          <div className="border-dashed border border-gray-300 p-4 rounded-lg min-h-[113px]">
                             <label className="block text-sm font-medium text-[#303972] mb-2">
                               {photos.length > 1 ? `Photo ${idx + 1} *` : "Photo *"}
                             </label>
@@ -148,7 +157,7 @@ const EditForm = ({
                       </button>
                     </div>
 
-                    {/* Videos Section */}
+                    {/* Videos */}
                     {mediaOptions.videos && (
                       <div className="col-span-1 space-y-3">
                         {videos.map((video, idx) => (
@@ -198,7 +207,7 @@ const EditForm = ({
         </div>
       </div>
 
-      <div className="px-5 py-4 md:px-6 md:py-5 ">
+      <div className="px-5 py-4 md:px-6 md:py-5">
         <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
           <button
             type="button"

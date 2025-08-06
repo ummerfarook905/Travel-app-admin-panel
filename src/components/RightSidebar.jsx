@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { FiPlus, FiX } from "react-icons/fi";
 import { FaSpinner } from "react-icons/fa";
@@ -15,32 +16,38 @@ export default function RightSidebar({ isOpen, onClose }) {
   useEffect(() => {
     const fetchRecentData = async () => {
       dispatch(setLoading(true));
-      
-      // Simulate API call (replace with real API later)
-      setTimeout(() => {
+      try {
+        const [usersRes, hotelsRes, adventuresRes] = await Promise.all([
+          fetch('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/api/admin/users'),
+          fetch('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/hotels'),
+          fetch('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/verified')
+        ]);
+
+        const usersData = await usersRes.json();
+        const hotelsData = await hotelsRes.json();
+        const adventuresData = await adventuresRes.json();
+
         dispatch(setRecentData({
-          users: [
-            { name: "John Doe", email: "john@example.com" },
-            { name: "Jane Smith", email: "jane@example.com" }
-          ],
-          hotels: [
-            { name: "Royal Stay", info: "New York" },
-            { name: "Sea Breeze", info: "Miami" }
-          ],
-          adventures: [
-            { name: "Mountain Trek", info: "Hiking" },
-            { name: "Desert Safari", info: "Adventure" }
-          ]
+          users: usersData?.slice(0, 2) || [],
+          hotels: hotelsData?.verified?.slice(0, 2) || [],
+          adventures: adventuresData?.slice(0, 2).map(item => ({
+            name: item.name,
+            info: item.category || item.location || "Adventure"
+          })) || []
         }));
+      } catch (error) {
+        console.error('Error fetching recent data:', error);
+      } finally {
         dispatch(setLoading(false));
-      }, 800);
+      }
     };
 
     fetchRecentData();
   }, [dispatch]);
 
   const handleViewMoreUsers = () => navigate("/users");
-  const handleViewMoredefault = () => navigate("/dashboard");
+  const handleViewMoreHotels = () => navigate("/verified-hotels");
+  const handleViewMoreAdventures = () => navigate("/verified-adventures");
 
   return (
     <div className={`
@@ -67,19 +74,19 @@ export default function RightSidebar({ isOpen, onClose }) {
           <div className="mb-4 mt-6 md:mt-0">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Users</h2>
-              <button onClick={() => navigate('/users')} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
-                <FiPlus className="text-sm cursor-pointer" />
+              <button onClick={handleViewMoreUsers} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
+                <FiPlus className="text-sm" />
               </button>
             </div>
             <ul className="mb-2 space-y-1">
               {recentData.users.map((user, index) => (
                 <li key={index} className="px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
                   {user.name}
-                  <p className="text-gray-500 text-xs">{user.email}</p>
+                  <p className="text-gray-500 text-xs">{user.contact?.email || user.email}</p>
                 </li>
               ))}
             </ul>
-            <button onClick={handleViewMoreUsers} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200 cursor-pointer">
+            <button onClick={handleViewMoreUsers} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200">
               View More
             </button>
           </div>
@@ -88,19 +95,19 @@ export default function RightSidebar({ isOpen, onClose }) {
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Hotels</h2>
-              <button onClick={() => navigate('/verified-hotels')} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
-                <FiPlus className="text-sm cursor-pointer" />
+              <button onClick={handleViewMoreHotels} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
+                <FiPlus className="text-sm" />
               </button>
             </div>
             <ul className="mb-2 space-y-1">
               {recentData.hotels.map((hotel, index) => (
                 <li key={index} className="px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
                   {hotel.name}
-                  <p className="text-gray-500 text-xs">{hotel.info}</p>
+                  <p className="text-gray-500 text-xs">{hotel.location || hotel.info}</p>
                 </li>
               ))}
             </ul>
-            <button onClick={handleViewMoredefault} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200 cursor-pointer">
+            <button onClick={handleViewMoreHotels} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200">
               View More
             </button>
           </div>
@@ -109,8 +116,8 @@ export default function RightSidebar({ isOpen, onClose }) {
           <div className="mb-4 pb-5">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold">Recent Adventures</h2>
-              <button onClick={() => navigate('/verified-adventures')} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
-                <FiPlus className="text-sm cursor-pointer" />
+              <button onClick={handleViewMoreAdventures} className="w-7 h-7 rounded-full bg-[#00493E] text-white flex items-center justify-center hover:bg-[#00382E] transition-colors shadow-sm">
+                <FiPlus className="text-sm" />
               </button>
             </div>
             <ul className="mb-2 space-y-1">
@@ -121,7 +128,7 @@ export default function RightSidebar({ isOpen, onClose }) {
                 </li>
               ))}
             </ul>
-            <button onClick={handleViewMoredefault} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200 cursor-pointer">
+            <button onClick={handleViewMoreAdventures} className="w-full bg-[#00493E] text-white text-sm font-semibold py-2 px-3 rounded-full hover:bg-[#00382E] transition-colors duration-200">
               View More
             </button>
           </div>

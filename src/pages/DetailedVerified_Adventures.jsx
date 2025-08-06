@@ -1,5 +1,5 @@
-import { useLocation, useParams, useNavigate } from "react-router-dom";
 
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { GrLocation } from "react-icons/gr";
 import { IoCallOutline } from "react-icons/io5";
 import { MdMailOutline } from "react-icons/md";
@@ -18,21 +18,31 @@ const DetailedVerified_Adventures = () => {
   const [adventure, setAdventure] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  
   useEffect(() => {
     if (state?.adventure) {
       setAdventure(state.adventure);
       setLoading(false);
     } else {
-      fetchAdventure();
+      fetchAdventureFromMockServer();
     }
   }, [id, state]);
 
-  const fetchAdventure = async () => {
+  // ✅ Updated to fetch from mock server
+  const fetchAdventureFromMockServer = async () => {
     try {
-      const response = await fetch(`/api/adventures/${id.replace('#', '')}`);
+      const response = await fetch('https://48a5441e-bdc2-403f-9f31-ff4b623b23cd.mock.pstmn.io/verified');
       const data = await response.json();
-      setAdventure(data);
+
+      // Match adventure by ID (strip '#' from param or match both)
+      const found = data.find(item =>
+        item.id === id || item.id === `#${id}` || item.id.replace('#', '') === id
+      );
+
+      if (found) {
+        setAdventure(found);
+      } else {
+        toast.error("Adventure not found");
+      }
     } catch (error) {
       console.error("Error fetching adventure:", error);
       toast.error("Failed to load adventure details");
@@ -50,7 +60,7 @@ const DetailedVerified_Adventures = () => {
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to permanently delete "${adventure.name}"?`)) {
       try {
-        await dispatch(deleteAdventure({ id })).unwrap();
+        await dispatch(deleteAdventure({ id: adventure.id })).unwrap();
         toast.success("Adventure deleted successfully");
         navigate('/verified-adventures');
       } catch (error) {
@@ -89,7 +99,7 @@ const DetailedVerified_Adventures = () => {
   })) || [];
 
   return (
-       <DetailedVerifiedLayout
+    <DetailedVerifiedLayout
       title={adventure.name}
       description={adventure.description}
       coverImage={adventure.coverImage || 'https://source.unsplash.com/random/800x400/?adventure'}
@@ -97,10 +107,8 @@ const DetailedVerified_Adventures = () => {
       price={adventure.price}
       infoItems={infoItems}
       galleryImages={galleryImages}
-      // mapImage={adventure.mapImage || 'https://maps.googleapis.com/maps/api/staticmap?size=600x400&maptype=terrain&markers=color:red&key=YOUR_API_KEY'}
-
-        coordinates={adventure.coordinates} // for LocationMap
-    location={adventure.location}       // for LocationMap
+      coordinates={adventure.coordinates}
+      location={adventure.location}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
     />

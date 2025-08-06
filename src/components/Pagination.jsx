@@ -1,6 +1,7 @@
-import React, { useState, cloneElement } from 'react';
+
+import React, { useState, useEffect, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+
 const Pagination = ({
   data = [],
   config = {},
@@ -33,23 +34,16 @@ const Pagination = ({
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-  useEffect(() => {
-  const start = (currentPage - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const currentItems = data.slice(start, end);
-  onPageChange(currentItems); // 👈 This must be called!
-}, [currentPage, data]);
 
+  useEffect(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    onPageChange(data.slice(start, end));
+  }, [currentPage, data, itemsPerPage]);
 
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
-      onPageChange({
-        currentPage: pageNumber,
-        itemsPerPage,
-        totalPages,
-        currentItems: data.slice((pageNumber - 1) * itemsPerPage, pageNumber * itemsPerPage),
-      });
     }
   };
 
@@ -59,15 +53,6 @@ const Pagination = ({
     const newTotalPages = Math.ceil(totalItems / newItemsPerPage);
     const newCurrentPage = Math.min(currentPage, newTotalPages);
     setCurrentPage(newCurrentPage);
-    onPageChange({
-      currentPage: newCurrentPage,
-      itemsPerPage: newItemsPerPage,
-      totalPages: newTotalPages,
-      currentItems: data.slice(
-        (newCurrentPage - 1) * newItemsPerPage,
-        newCurrentPage * newItemsPerPage
-      ),
-    });
   };
 
   const renderControls = (position) => {
@@ -77,7 +62,7 @@ const Pagination = ({
     }
 
     return (
-      <div className={`flex flex-col sm:flex-row justify-between items-center ${position === 'top' ? 'mb-4' : 'mt-4'} gap-2`}>
+      <div className={`flex flex-col sm:flex-row justify-between items-center ${position === 'top' ? 'mb-4' : 'mt-4'} gap-4`}>
         {paginationConfig.showItemsInfo && (
           <div className="flex items-center space-x-2">
             <span className="text-sm text-gray-600">Items per page:</span>
@@ -87,9 +72,7 @@ const Pagination = ({
               className="border border-gray-300 rounded-md px-2 py-1 text-sm"
             >
               {paginationConfig.itemsPerPageOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
+                <option key={option} value={option}>{option}</option>
               ))}
             </select>
           </div>
@@ -106,18 +89,13 @@ const Pagination = ({
             Page {currentPage} of {totalPages}
           </div>
 
-          <div className="flex space-x-1">
+          <div className="flex flex-wrap space-x-1">
             {paginationConfig.showFirstLast && (
               <button
                 onClick={() => paginate(1)}
                 disabled={currentPage === 1}
-                className={`px-3 py-1 rounded-md text-sm ${currentPage === 1
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "text-white"
-                  }`}
-                style={{
-                  backgroundColor: currentPage !== 1 ? paginationConfig.style.activePageColor : '',
-                }}
+                className={`px-3 py-1 rounded-md text-sm ${currentPage === 1 ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "text-white"}`}
+                style={{ backgroundColor: currentPage !== 1 ? paginationConfig.style.activePageColor : '' }}
               >
                 First
               </button>
@@ -127,15 +105,10 @@ const Pagination = ({
               <button
                 onClick={() => paginate(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`px-3 py-1 rounded-md text-sm ${currentPage === 1
-                  ? `bg-gray-200 text-gray-400 cursor-not-allowed`
-                  : `text-white`
-                  }`}
-                style={{
-                  backgroundColor: currentPage !== 1 ? paginationConfig.style.activePageColor : '',
-                }}
+                className={`px-3 py-1 rounded-md text-sm ${currentPage === 1 ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "text-white"}`}
+                style={{ backgroundColor: currentPage !== 1 ? paginationConfig.style.activePageColor : '' }}
               >
-                Previous
+                Prev
               </button>
             )}
 
@@ -151,14 +124,8 @@ const Pagination = ({
                   <button
                     key={pageNum}
                     onClick={() => paginate(pageNum)}
-                    className={`px-3 py-1 rounded-md text-sm ${currentPage === pageNum
-                      ? `text-white`
-                      : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-                    style={{
-                      backgroundColor: currentPage === pageNum
-                        ? paginationConfig.style.activePageColor
-                        : '',
-                    }}
+                    className={`px-3 py-1 rounded-md text-sm ${currentPage === pageNum ? "text-white" : "bg-white text-gray-700 hover:bg-gray-100"}`}
+                    style={{ backgroundColor: currentPage === pageNum ? paginationConfig.style.activePageColor : '' }}
                   >
                     {pageNum}
                   </button>
@@ -169,15 +136,8 @@ const Pagination = ({
               <button
                 onClick={() => paginate(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`px-3 py-1 rounded-md text-sm ${currentPage === totalPages
-                  ? `bg-gray-200 text-gray-400 cursor-not-allowed`
-                  : `text-white`
-                  }`}
-                style={{
-                  backgroundColor: currentPage !== totalPages
-                    ? paginationConfig.style.activePageColor
-                    : '',
-                }}
+                className={`px-3 py-1 rounded-md text-sm ${currentPage === totalPages ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "text-white"}`}
+                style={{ backgroundColor: currentPage !== totalPages ? paginationConfig.style.activePageColor : '' }}
               >
                 Next
               </button>
@@ -187,15 +147,8 @@ const Pagination = ({
               <button
                 onClick={() => paginate(totalPages)}
                 disabled={currentPage === totalPages}
-                className={`px-3 py-1 rounded-md text-sm ${currentPage === totalPages
-                  ? `bg-gray-200 text-gray-400 cursor-not-allowed`
-                  : `text-white`
-                  }`}
-                style={{
-                  backgroundColor: currentPage !== totalPages
-                    ? paginationConfig.style.activePageColor
-                    : '',
-                }}
+                className={`px-3 py-1 rounded-md text-sm ${currentPage === totalPages ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "text-white"}`}
+                style={{ backgroundColor: currentPage !== totalPages ? paginationConfig.style.activePageColor : '' }}
               >
                 Last
               </button>
@@ -209,7 +162,6 @@ const Pagination = ({
   return (
     <>
       {renderControls('top')}
-      {/* ✅ Pass currentItems to child as rows */}
       {children && React.Children.map(children, (child) =>
         cloneElement(child, { rows: currentItems })
       )}

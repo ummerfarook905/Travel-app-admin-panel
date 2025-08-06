@@ -1,26 +1,70 @@
 
-import { createSlice } from "@reduxjs/toolkit";
-import { FiUsers, FiMapPin } from "react-icons/fi";
-import { FaUmbrellaBeach, FaHotel } from "react-icons/fa";
+// import { createSlice } from "@reduxjs/toolkit";
+// import { FiUsers, FiMapPin } from "react-icons/fi";
+// import { FaUmbrellaBeach, FaHotel } from "react-icons/fa";
 
-const initialState = {
-  stats: [
-    { title: "Users", value: "932", icon: FiUsers },
-    { title: "Destinations", value: "754", icon: FiMapPin },
-    { title: "Hotels", value: "40", icon: FaHotel },
-    { title: "Adventures", value: "32K", icon: FaUmbrellaBeach },
-  ],
-};
 
-const statsSlice = createSlice({
-  name: "stats",
-  initialState,
-  reducers: {
-    setStats: (state, action) => {
-      state.stats = action.payload;
-    },
-  },
+
+// const initialState = {
+//   stats: [
+//     { title: "Users", value: "932", iconKey: "FiUsers" },
+//     { title: "Destinations", value: "754", iconKey: "FiMapPin" },
+//     { title: "Hotels", value: "40", iconKey: "FaHotel" },
+//     { title: "Adventures", value: "32K", iconKey: "FaUmbrellaBeach" },
+//   ],
+// };
+
+
+
+// const statsSlice = createSlice({
+//   name: "stats",
+//   initialState, 
+//   reducers: {
+//     setStats: (state, action) => {
+//       state.stats = action.payload;
+//     },
+//   },
+// });
+
+// export const { setStats } = statsSlice.actions;
+// export default statsSlice.reducer;
+
+
+
+
+
+
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+// Async thunk
+export const fetchStats = createAsyncThunk('stats/fetchStats', async () => {
+  const response = await axios.get('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/api/admin/dashboard-stats');
+  return response.data.stats;
 });
 
-export const { setStats } = statsSlice.actions;
+const statsSlice = createSlice({
+  name: 'stats',
+  initialState: {
+    stats: [],
+    status: 'idle',
+    error: null
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchStats.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchStats.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.stats = action.payload;
+      })
+      .addCase(fetchStats.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+  }
+});
+
 export default statsSlice.reducer;

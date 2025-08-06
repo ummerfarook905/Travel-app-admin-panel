@@ -1,17 +1,23 @@
-// src/pages/Verified_Adventures.js
+
+
+import { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../components/Table";
-import { useState, useMemo, useEffect } from "react";
-import { deleteAdventure } from "../redux/adventuresSlice";
 import SearchInput from "../components/SearchInput";
+import { fetchVerifiedAdventures, deleteAdventure } from "../redux/adventuresSlice";
+
 const Verified_Adventures = () => {
-  // Get verified adventures from Redux store
   const verified = useSelector(state => state.adventures.verified);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
+
+  // 🚀 Fetch verified data from Postman
+  useEffect(() => {
+    dispatch(fetchVerifiedAdventures());
+  }, [dispatch]);
 
   useEffect(() => {
     if (location.state?.message) {
@@ -32,10 +38,8 @@ const Verified_Adventures = () => {
 
   const handleViewDetails = (adventure) => {
     const urlId = adventure.id.replace('#', '');
-    navigate(`/verified-adventures/${urlId}`, { 
-      state: { adventure } 
-    });
-    return null; // No toast for view action
+    navigate(`/verified-adventures/${urlId}`, { state: { adventure } });
+    return null;
   };
 
   const handleDelete = (adventure) => {
@@ -48,21 +52,12 @@ const Verified_Adventures = () => {
     navigate(`/edit-adventure/${urlId}`, {
       state: { adventure }
     });
-    return null; // No toast for edit action
+    return null;
   };
-  
+
   const actions = [
-    {
-      label: 'View Details',
-      handler: handleViewDetails,
-      requireConfirmation: false
-    },
-    {
-      label: 'Edit',
-      variant: 'primary',
-      handler: handleEdit,
-      requireConfirmation: false
-    },
+    { label: 'View Details', handler: handleViewDetails },
+    { label: 'Edit', variant: 'primary', handler: handleEdit },
     {
       label: 'Delete',
       variant: 'danger',
@@ -72,6 +67,7 @@ const Verified_Adventures = () => {
       handler: handleDelete
     }
   ];
+
   const filtered = useMemo(() => {
     const q = searchQuery.toLowerCase();
     return verified.filter(adventure =>
@@ -88,20 +84,20 @@ const Verified_Adventures = () => {
           {location.state.message}
         </div>
       )}
-       <div className="mb-4 flex">
-  <SearchInput onSearch={setSearchQuery} placeholder="Search adventures..." />      </div>
-      <Table 
+      <div className="mb-4 flex">
+        <SearchInput onSearch={setSearchQuery} placeholder="Search adventures..." />
+      </div>
+      <Table
         headers={headers}
         renderedData={filtered}
         actions={actions}
         nameAsLink={true}
         onNameClick={handleViewDetails}
-        
-           pagination={{
-    enabled: true,
-    itemsPerPage: 2,
-    position: 'top', // or 'bottom'
-  }}
+        pagination={{
+          enabled: true,
+          itemsPerPage: 2,
+          position: 'top',
+        }}
       />
     </div>
   );

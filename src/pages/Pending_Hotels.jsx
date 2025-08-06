@@ -1,17 +1,29 @@
-// src/pages/Pending_Hotels.js
+
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
 import Table from "../components/Table";
-import { approveHotel, rejectHotel } from "../redux/hotelsSlice";
 import SearchInput from "../components/SearchInput";
-import { useState, useMemo } from "react";
+import {
+  approveHotel,
+  rejectHotel,
+  fetchHotelsAsync,
+} from "../redux/hotelsSlice";
 
 const Pending_Hotels = () => {
-  // Get pending hotels from Redux store
-  const pending = useSelector(state => state.hotels.pending);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Fetch hotels from Redux state
+  const pending = useSelector(state => state.hotels.pending);
+  const status = useSelector(state => state.hotels.status);
+  const error = useSelector(state => state.hotels.error);
+
+  // Fetch data on mount
+  useEffect(() => {
+    dispatch(fetchHotelsAsync());
+  }, [dispatch]);
 
   const headers = [
     { key: 'name', label: 'Name' },
@@ -19,23 +31,23 @@ const Pending_Hotels = () => {
     { key: 'joined', label: 'Joined on' },
     { key: 'updated', label: 'Updated On' },
     { key: 'location', label: 'Location' },
-    { key: 'rooms', label: 'Rooms' }
+    { key: 'rooms', label: 'Rooms' },
   ];
-  
+
   const handleApprove = (hotel) => {
     dispatch(approveHotel({ id: hotel.id }));
-        return `Hotel ${hotel.id} approved successfully!`;
+    return `Hotel ${hotel.id} approved successfully!`;
   };
 
   const handleReject = (hotel) => {
     dispatch(rejectHotel({ id: hotel.id }));
-     return `Adventure ${hotel.id} rejected!`; 
+    return `Hotel ${hotel.id} rejected!`;
   };
 
   const handleViewDetails = (hotel) => {
     const urlId = hotel.id.replace('#', '');
-    navigate(`/pending-hotels/${urlId}`, { 
-      state: { hotel } 
+    navigate(`/pending-hotels/${urlId}`, {
+      state: { hotel },
     });
   };
 
@@ -45,21 +57,20 @@ const Pending_Hotels = () => {
       variant: 'success',
       requireConfirmation: true,
       confirmationMessage: 'Are you sure you want to approve this hotel?',
-      confirmationVariant: 'success', // This will make the dialog green
-
-      handler: handleApprove
+      confirmationVariant: 'success',
+      handler: handleApprove,
     },
     {
       label: 'Reject',
       variant: 'danger',
       requireConfirmation: true,
       confirmationMessage: 'Are you sure you want to reject this hotel?',
-      handler: handleReject
+      handler: handleReject,
     },
     {
       label: 'View Details',
-      handler: handleViewDetails
-    }
+      handler: handleViewDetails,
+    },
   ];
 
   const filtered = useMemo(() => {
@@ -71,27 +82,45 @@ const Pending_Hotels = () => {
     );
   }, [pending, searchQuery]);
 
+  // Show loading/error states
+  if (status === 'loading') {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">Loading hotels...</p>
+      </div>
+    );
+  }
+
+  if (status === 'failed') {
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-500">Error fetching hotels: {error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-4 flex">
-  <SearchInput onSearch={setSearchQuery} placeholder="Search adventures..." />      </div>
+        <SearchInput onSearch={setSearchQuery} placeholder="Search hotels..." />
+      </div>
+
       {filtered.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-500">No pending hotels awaiting approval</p>
         </div>
       ) : (
-        <Table 
+        <Table
           headers={headers}
           renderedData={filtered}
           actions={actions}
           nameAsLink={true}
           onNameClick={handleViewDetails}
-          
-           pagination={{
-    enabled: true,
-    itemsPerPage: 2,
-    position: 'top', // or 'bottom'
-  }}
+          pagination={{
+            enabled: true,
+            itemsPerPage: 2,
+            position: 'top',
+          }}
         />
       )}
     </div>

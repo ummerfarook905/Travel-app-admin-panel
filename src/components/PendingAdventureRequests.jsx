@@ -21,3 +21,5 @@ const PendingAdventureRequests = () => {
 };
 
 export default PendingAdventureRequests;
+
+
