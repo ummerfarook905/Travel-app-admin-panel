@@ -7,8 +7,10 @@ import { ADVENTURE_IMAGES } from '../Constants/images';
 export const fetchPendingAdventures = createAsyncThunk(
   'adventures/fetchPendingAdventures',
   async () => {
-    const response = await fetch('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/pending');
+    const response = await fetch('https://a8b00789-ccd3-439b-848d-85c4a830e824.mock.pstmn.io/pending');
     const data = await response.json();
+    console.log(data);
+    
     return data.map(item => ({
       ...item,
       coverImage: ADVENTURE_IMAGES[item.imageKey] || item.coverImage,
@@ -21,7 +23,7 @@ export const fetchPendingAdventures = createAsyncThunk(
 export const fetchVerifiedAdventures = createAsyncThunk(
   'adventures/fetchVerifiedAdventures',
   async () => {
-    const response = await fetch('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/verified');
+    const response = await fetch('https://a8b00789-ccd3-439b-848d-85c4a830e824.mock.pstmn.io/verified');
     const data = await response.json();
     return data.map(item => ({
       ...item,
@@ -36,10 +38,14 @@ export const fetchVerifiedAdventures = createAsyncThunk(
 export const fetchAdventureBookings = createAsyncThunk(
   'adventures/fetchAdventureBookings',
   async () => {
-    const response = await fetch('https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/booking');
+    console.log("FETCHING ADVENTURE BOOKINGS…");
+    const response = await fetch('https://a8b00789-ccd3-439b-848d-85c4a830e824.mock.pstmn.io/booking');
     const data = await response.json();
+
     
-    return data.map(item => ({
+    console.log("API Response:", data);
+    
+    return data.map(item => ({  
       ...item,
       type: "adventure" // ✅ Add this so filtering works
     }));

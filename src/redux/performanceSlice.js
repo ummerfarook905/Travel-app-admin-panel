@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 
-const API_URL = 'https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/app-performance';
+const API_URL = 'https://a8b00789-ccd3-439b-848d-85c4a830e824.mock.pstmn.io/app-performance';
 
 export const fetchPerformance = createAsyncThunk('performance/fetchPerformance', async () => {
   const response = await axios.get(API_URL);

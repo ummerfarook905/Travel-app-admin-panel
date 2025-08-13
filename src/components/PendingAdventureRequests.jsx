@@ -6,7 +6,7 @@ const PendingAdventureRequests = () => {
   const pendingAdventures = useSelector(state => state.adventures.pending);
 
  
-  const adventuresToShow = pendingAdventures.slice(0, 5);
+  const adventuresToShow = pendingAdventures.slice(0, 3);
 
   return (
     <PendingRequestCard

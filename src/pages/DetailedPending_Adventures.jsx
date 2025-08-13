@@ -5,6 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DetailedPendingLayout from "../Layouts/DetailedPendingLayout";
 
+
+  import { ADVENTURE_IMAGES } from "../Constants/images"; // adjust the path if needed
+
 // Icons
 import { GrLocation } from "react-icons/gr";
 import { IoCallOutline } from "react-icons/io5";
@@ -55,17 +58,27 @@ const DetailedPending_Adventures = () => {
   ];
 
   // Safe image fallback for gallery
-  const galleryImages = Array.isArray(adventure.images) && adventure.images.length > 0
-    ? adventure.images.map((img, index) => ({
-        url: img?.startsWith('http') ? img : '/default-image.jpg',
-        alt: `Adventure view ${index + 1}`
-      }))
-    : [
-        {
-          url: '/default-image.jpg',
-          alt: 'Fallback adventure view'
-        }
-      ];
+  // const galleryImages = Array.isArray(adventure.images) && adventure.images.length > 0
+  //   ? adventure.images.map((img, index) => ({
+  //       url: img?.startsWith('http') ? img : '/default-image.jpg',
+  //       alt: `Adventure view ${index + 1}`
+  //     }))
+  //   : [
+  //       {
+  //         url: '/default-image.jpg',
+  //         alt: 'Fallback adventure view'
+  //       }
+  //     ];
+
+
+const galleryImages = adventure.images?.length
+  ? adventure.images
+  : (adventure.imageKeys || [adventure.imageKey]).map(
+      (key) => ADVENTURE_IMAGES[key] || '/default-image.jpg'
+    );
+
+
+
 
   return (
     <DetailedPendingLayout
@@ -92,3 +105,5 @@ const DetailedPending_Adventures = () => {
 };
 
 export default DetailedPending_Adventures;
+
+

@@ -34,6 +34,9 @@ const DetailedHotelBookings = lazy(() => import("../pages/DetailedHotelBooking")
 
 const Settings = lazy(() => import("../pages/Settings"));
 const Profile = lazy(() => import("../pages/Profile"));
+const NotificationSettings = lazy(() => import("../pages/NotificationSettings"));
+
+
 
 export const publicRoutes = [
   { path: "/login", element: <Login /> },
@@ -70,7 +73,10 @@ export const protectedRoutes = [
   { path: "/hotel-bookings", element: <HotelBookings /> },
   { path: "/hotel-bookings/:type/:id", element: <DetailedHotelBookings /> },
 
-  // Settings & Profile
+  // Settings & Profile & Notification 
   { path: "/settings", element: <Settings /> },
   { path: "/profile", element: <Profile /> },
+  { path: "/settings/notifications", element: <NotificationSettings /> },
+
+  
 ];

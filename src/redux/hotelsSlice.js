@@ -186,7 +186,8 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = "https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/hotels";
+// const API_URL = "https://759842bf-625b-4075-a472-726abeeab20e.mock.pstmn.io/hotels";
+const API_URL = "https://4e7b561a-4243-4720-ba07-9e9485fa6bd1.mock.pstmn.io/api/admin/hotels";
 
 // ✅ ADDED: Async thunk for deleting a hotel
 export const fetchHotelsAsync = createAsyncThunk(

@@ -10,6 +10,7 @@ import headerReducer from './headerSlice'
 import authReducer from './authSlice'
 import destinationReducer from './destinationSlice'
 import performanceReducer from './performanceSlice';
+import reviewsReducer from './reviewsSlice'
 
 
 export const store = configureStore({
@@ -21,10 +22,11 @@ export const store = configureStore({
     dashboard: dashboardReducer,
     stats: statsReducer,
     sidebar: sidebarReducer,
-    header: headerReducer,// Ensure you have usersReducer imported 
+    header: headerReducer,
     auth: authReducer,
     destinations:destinationReducer,
-    performance: performanceReducer
+    performance: performanceReducer,
+    reviews: reviewsReducer
   }
 });
 

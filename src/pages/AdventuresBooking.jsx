@@ -18,7 +18,7 @@ const AdventuresBookings = () => {
   const allBookings = useSelector((state) => state.adventures.bookings);
 
   const bookings = useMemo(() => {
-    // ✅ Ensure only adventure bookings are shown (relies on 'type' field)
+    
     return allBookings.filter((b) => b.type === "adventure");
   }, [allBookings]);
 
