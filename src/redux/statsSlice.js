@@ -39,7 +39,7 @@ import axios from 'axios';
 
 // Async thunk
 export const fetchStats = createAsyncThunk('stats/fetchStats', async () => {
-  const response = await axios.get('https://a8b00789-ccd3-439b-848d-85c4a830e824.mock.pstmn.io/api/admin/dashboard-stats');
+  const response = await axios.get('https://cea5f969-06fa-48ac-a3b5-3d3fc06c84e4.mock.pstmn.io/api/admin/dashboard-stats');
   return response.data.stats;
 });
 

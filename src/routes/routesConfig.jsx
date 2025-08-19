@@ -1,7 +1,7 @@
 import { lazy } from "react";
 
 // Public Pages
-const Login = lazy(() => import("../pages/Login"));
+const Login = lazy(() => import("../pages/login"));
 const Signup = lazy(() => import("../pages/Signup"));
 
 // Protected Pages

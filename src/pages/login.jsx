@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { FaUserAlt, FaLock, FaSpinner } from 'react-icons/fa';
-import InputField from '../components/InputField';
+import InputField from '../components/InputField'; 
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Login = () => {
@@ -26,15 +26,34 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  if (!isInitialized) return <LoadingSpinner />;
-  if (user) return <Navigate to="/dashboard" replace />;
+  // if (!isInitialized) return <LoadingSpinner />;
+  // if (user) return <Navigate to="/dashboard" replace />;
 
-  const onSubmit = async (data) => {
-    const result = await dispatch(loginUser(data));
-    if (result.meta.requestStatus === 'fulfilled') {
-      navigate('/dashboard');
-    }
-  };
+  // const onSubmit = async (data) => {
+  //   const result = await dispatch(loginUser(data));
+  //   if (result.meta.requestStatus === 'fulfilled') {
+  //     navigate('/dashboard');
+  //   }
+  // };
+
+
+  if (!isInitialized) return <LoadingSpinner />;
+
+// Redirect only if the logged-in user actually has an email or other required field
+if (user && user.email) {
+  return <Navigate to="/dashboard" replace />;
+}
+
+const onSubmit = async (data) => {
+  const result = await dispatch(loginUser(data));
+
+  // Navigate only if a real user object came back
+  if (result.meta.requestStatus === 'fulfilled' && result.payload?.email) {
+    navigate('/dashboard');
+  }
+};
+
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#00493E] to-[#006B56] px-4">

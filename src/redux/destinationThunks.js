@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setDestinations } from './destinationSlice';
 
 // Replace with your actual Postman mock server URL
-const DESTINATION_URL = "https://a8b00789-ccd3-439b-848d-85c4a830e824.mock.pstmn.io/api/places";
+const DESTINATION_URL = "https://cea5f969-06fa-48ac-a3b5-3d3fc06c84e4.mock.pstmn.io/api/places";
 
 // Thunk to fetch destinations
 export const fetchDestinations = createAsyncThunk(

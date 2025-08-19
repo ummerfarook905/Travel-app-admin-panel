@@ -18,9 +18,9 @@ export default function RightSidebar({ isOpen, onClose }) {
       dispatch(setLoading(true));
       try {
         const [usersRes, hotelsRes, adventuresRes] = await Promise.all([
-          fetch('https://a8b00789-ccd3-439b-848d-85c4a830e824.mock.pstmn.io/api/admin/users'),
-          fetch('https://a8b00789-ccd3-439b-848d-85c4a830e824.mock.pstmn.io/api/hotels'),
-          fetch('https://a8b00789-ccd3-439b-848d-85c4a830e824.mock.pstmn.io/verified')
+          fetch('https://cea5f969-06fa-48ac-a3b5-3d3fc06c84e4.mock.pstmn.io/api/admin/users'),
+          fetch('https://4e7b561a-4243-4720-ba07-9e9485fa6bd1.mock.pstmn.io/api/admin/hotels'),
+          fetch('https://cea5f969-06fa-48ac-a3b5-3d3fc06c84e4.mock.pstmn.io/verified-adventures')
         ]);
 
         const usersData = await usersRes.json();
